@@ -1,0 +1,12 @@
+{
+  "name": "Java Silver SE 17 Trainer - Java Edition",
+  "short_name": "Java Silver 17",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#1237d6",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

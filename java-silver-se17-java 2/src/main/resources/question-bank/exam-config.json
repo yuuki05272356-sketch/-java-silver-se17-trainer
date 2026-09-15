@@ -1,0 +1,24 @@
+{
+  "certification": "Oracle Certified Java Programmer, Silver SE 17",
+  "examName": "Java SE 17 Programmer I",
+  "examCode": "1Z0-825-JPN",
+  "questionCount": 60,
+  "durationMinutes": 90,
+  "passPercent": 65,
+  "javaVersion": 17,
+  "questionCountOptions": [
+    5,
+    10,
+    20,
+    30,
+    60
+  ],
+  "durationMinuteOptions": [
+    5,
+    10,
+    20,
+    30,
+    60,
+    90
+  ]
+}

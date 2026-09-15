@@ -1,0 +1,890 @@
+[
+  {
+    "id": "JS17-0001",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Parent {\n    String pick(Number n) { return \"PN\"; }\n    String pick(Integer i) { return \"PI\"; }\n}\n\nclass Child extends Parent {\n    @Override\n    String pick(Number n) { return \"CN\"; }\n    String pick(Long l) { return \"CL\"; }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        Number n = Integer.valueOf(10);\n        System.out.print(p.pick(n));\n        System.out.print(p.pick(10));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "PNPI"
+      },
+      {
+        "id": "B",
+        "text": "CNPI"
+      },
+      {
+        "id": "C",
+        "text": "CNCN"
+      },
+      {
+        "id": "D",
+        "text": "CNCL"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "オーバーロードはコンパイル時に参照型と引数の静的型から決まる。p の参照型は Parent。p.pick(n) は n が Number 型なので pick(Number) が選ばれ、instanceメソッドなので実行時に Child の override が呼ばれて CN。p.pick(10) は Parent にある pick(Integer) が、int→Integer のboxingで pick(Number) より具体的に選ばれ、Child は pick(Integer) をoverrideしていないため Parent の PI が呼ばれる。",
+    "choiceExplanations": {
+      "A": "誤り。pick(Number) はinstanceメソッドなので、Child実体に対してはoverrideされた Child.pick(Number) が実行される。",
+      "B": "正しい。1回目は Child.pick(Number)、2回目は Parent.pick(Integer) が実行される。",
+      "C": "誤り。2回目はコンパイル時に pick(Integer) が選択されるため、pick(Number) のoverrideには進まない。",
+      "D": "誤り。Parent参照から Child にだけ存在する pick(Long) はoverload候補にならず、int から Long への直接boxingも行われない。",
+      "E": "誤り。すべて有効なオーバーロード・オーバーライドでありコンパイルできる。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "overload",
+      "override",
+      "polymorphism",
+      "reference-type",
+      "boxing"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0002",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Parent {\n    String run(CharSequence s) { return \"P\"; }\n}\n\nclass Child extends Parent {\n    @Override\n    String run(CharSequence s) { return \"C\"; }\n\n    String run(String s) { return \"S\"; }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        System.out.println(p.run(\"java\"));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "P"
+      },
+      {
+        "id": "B",
+        "text": "C"
+      },
+      {
+        "id": "C",
+        "text": "S"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "コンパイル時のoverload解決では、変数 p の参照型 Parent に見えるメソッドだけを候補にする。Parent には run(CharSequence) しかないためそれが選ばれる。その後、instanceメソッドのoverride判定で実体型 Child の run(CharSequence) が実行され、Cとなる。Childにだけある run(String) は候補にならない。",
+    "choiceExplanations": {
+      "A": "誤り。run(CharSequence) はChildでoverrideされているため、実体型Childの実装が呼ばれる。",
+      "B": "正しい。overloadはParent参照で決定し、その後overrideによりChild.run(CharSequence)が呼ばれる。",
+      "C": "誤り。Child.run(String) はParent参照からはoverload候補として見えない。",
+      "D": "誤り。StringはCharSequenceを実装しているため呼び出しは有効。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "overload",
+      "override",
+      "polymorphism",
+      "reference-type",
+      "runtime-type"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0003",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static String test(long x) { return \"L\"; }\n    static String test(Integer x) { return \"I\"; }\n\n    public static void main(String[] args) {\n        System.out.println(test(10));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "L"
+      },
+      {
+        "id": "B",
+        "text": "I"
+      },
+      {
+        "id": "C",
+        "text": "LI"
+      },
+      {
+        "id": "D",
+        "text": "呼び出しが曖昧でコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "intリテラル10に対するオーバーロード解決では、プリミティブの拡大変換 int→long がboxing int→Integer より先に適用されるため test(long) が選ばれる。",
+    "choiceExplanations": {
+      "A": "正しい。プリミティブのwideningがboxingより優先される。",
+      "B": "誤り。Integerへのboxingも可能だが、longへのwideningが先に選ばれる。",
+      "C": "誤り。オーバーロードでは1つのメソッドだけが選択される。",
+      "D": "誤り。適用段階の優先順位により test(long) が一意に決まる。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "overload",
+      "primitive-widening",
+      "boxing",
+      "method-resolution"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0004",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Parent {\n    static String s() { return \"P\"; }\n    String i() { return \"p\"; }\n}\n\nclass Child extends Parent {\n    static String s() { return \"C\"; }\n    @Override\n    String i() { return \"c\"; }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        System.out.println(p.s() + p.i());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Pp"
+      },
+      {
+        "id": "B",
+        "text": "Pc"
+      },
+      {
+        "id": "C",
+        "text": "Cp"
+      },
+      {
+        "id": "D",
+        "text": "Cc"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "staticメソッドはoverrideされず隠蔽されるため、呼び出しは参照型Parentに基づき Parent.s() となる。一方i()はinstanceメソッドなので実体型Childのoverrideが実行される。したがって Pc。",
+    "choiceExplanations": {
+      "A": "誤り。instanceメソッドi()はChildでoverrideされている。",
+      "B": "正しい。staticは参照型Parent、instanceは実体型Childを見る。",
+      "C": "誤り。staticメソッドは実体型で動的ディスパッチされない。",
+      "D": "誤り。p.s()はParent.s()に束縛される。"
+    },
+    "category": "17. static",
+    "tags": [
+      "static",
+      "method-hiding",
+      "override",
+      "polymorphism",
+      "reference-type"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0005",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class Parent { }\nclass Child extends Parent { }\n\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Parent();\n        Child c = (Child) p;\n        System.out.println(c);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "コンパイルエラーになる"
+      },
+      {
+        "id": "B",
+        "text": "null が出力される"
+      },
+      {
+        "id": "C",
+        "text": "Childオブジェクトが出力される"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルは成功するが実行時にClassCastExceptionが発生する"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "ParentとChildには継承関係があるため、Parent参照をChildへ明示的にdowncastするコード自体はコンパイルできる。しかしpが実際に参照しているのはParentオブジェクトでありChildではないため、実行時の型検査に失敗してClassCastExceptionとなる。",
+    "choiceExplanations": {
+      "A": "誤り。継承関係があるため明示的downcastはコンパイル可能。",
+      "B": "誤り。キャスト失敗時にnullへ変換されることはない。",
+      "C": "誤り。実体はParentでありChildにはならない。",
+      "D": "正しい。コンパイル時は許可されるが、実体型が不適合なので実行時例外。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "cast",
+      "downcast",
+      "ClassCastException",
+      "compile-time",
+      "runtime"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0006",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Parent {\n    Number value() { return 1; }\n}\n\nclass Child extends Parent {\n    @Override\n    Integer value() { return 2; }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        Number n = p.value();\n        System.out.println(n);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1"
+      },
+      {
+        "id": "B",
+        "text": "2"
+      },
+      {
+        "id": "C",
+        "text": "共変戻り値は認められないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "実行時にClassCastException"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "overrideでは、戻り値型を元の戻り値型のサブタイプにする共変戻り値が認められる。IntegerはNumberのサブタイプなのでChild.value()は有効なoverride。instanceメソッドなのでChild実体のvalue()が呼ばれ2が返る。",
+    "choiceExplanations": {
+      "A": "誤り。実体型Childのoverrideが実行される。",
+      "B": "正しい。IntegerはNumberのサブタイプであり共変戻り値として有効。",
+      "C": "誤り。参照型の戻り値では共変戻り値が許可される。",
+      "D": "誤り。返されたIntegerはNumber変数nへ安全に代入できる。"
+    },
+    "category": "23. override",
+    "tags": [
+      "override",
+      "covariant-return",
+      "polymorphism",
+      "reference-type"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0007",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class MyException extends Exception { }\n\nclass Parent {\n    void run() throws MyException { }\n}\n\nclass Child extends Parent {\n    @Override\n    void run() throws Exception { }\n}\n\npublic class Main {\n    public static void main(String[] args) { }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "正常にコンパイルできる"
+      },
+      {
+        "id": "B",
+        "text": "MyExceptionがchecked exceptionなのでParentがコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "Child.run()がより広いchecked exceptionであるExceptionを宣言しているためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "@Overrideを削除すればコンパイルできる"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "overrideするメソッドは、親メソッドより広いchecked exceptionを新たにthrowsできない。Parent.run()はMyExceptionだけを宣言しているのに、Child.run()はその上位型Exceptionを宣言しているため不正。@Override注釈を外してもシグネチャが同じなのでoverrideである事実は変わらない。",
+    "choiceExplanations": {
+      "A": "誤り。checked exceptionのthrows規則に違反する。",
+      "B": "誤り。checked exceptionをthrows節で宣言しているためParent.run()自体は有効。",
+      "C": "正しい。override側でより広いchecked exceptionは宣言できない。",
+      "D": "誤り。@Overrideは検査用注釈であり、削除してもoverride関係そのものは変わらない。"
+    },
+    "category": "32. カスタム例外",
+    "tags": [
+      "custom-exception",
+      "checked-exception",
+      "override",
+      "throws"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0008",
+    "question": "次のコードを実行したときの動作として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static void work() {\n        throw new NullPointerException();\n    }\n\n    public static void main(String[] args) {\n        try {\n            work();\n            System.out.print(\"A\");\n        } catch (IllegalArgumentException e) {\n            System.out.print(\"I\");\n        } finally {\n            System.out.print(\"F\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A"
+      },
+      {
+        "id": "B",
+        "text": "IF"
+      },
+      {
+        "id": "C",
+        "text": "F を出力した後、NullPointerExceptionが伝播して異常終了する"
+      },
+      {
+        "id": "D",
+        "text": "何も出力せずNullPointerExceptionで終了する"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "NullPointerExceptionはIllegalArgumentExceptionのサブクラスではないためcatchされない。ただしfinallyは例外がcatchされない場合でも通常実行されるのでFが出力され、その後NullPointerExceptionがmainの外へ伝播する。",
+    "choiceExplanations": {
+      "A": "誤り。work()で例外が発生するためAには到達しない。",
+      "B": "誤り。NullPointerExceptionはIllegalArgumentExceptionではないのでcatch節Iは実行されない。",
+      "C": "正しい。finallyのFは実行され、その後未処理のNullPointerExceptionが伝播する。",
+      "D": "誤り。finallyは実行されるためFは出力される。"
+    },
+    "category": "30. try-catch",
+    "tags": [
+      "try-catch",
+      "finally",
+      "exception-propagation",
+      "unchecked-exception"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0009",
+    "question": "次のコードを実行したときの動作として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            throw new AssertionError(\"boom\");\n        } catch (Exception e) {\n            System.out.print(\"E\");\n        } finally {\n            System.out.print(\"F\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "EF"
+      },
+      {
+        "id": "B",
+        "text": "E"
+      },
+      {
+        "id": "C",
+        "text": "F を出力した後、AssertionErrorが伝播して異常終了する"
+      },
+      {
+        "id": "D",
+        "text": "AssertionErrorはchecked exceptionなのでコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "AssertionErrorはErrorのサブクラスでありExceptionのサブクラスではないため catch (Exception e) では捕捉されない。finallyは実行されFが出力され、その後AssertionErrorが伝播する。Errorはchecked exceptionではない。",
+    "choiceExplanations": {
+      "A": "誤り。catch(Exception)はAssertionErrorを捕捉しない。",
+      "B": "誤り。Eは出力されず、finallyのFは実行される。",
+      "C": "正しい。ErrorとExceptionはThrowable直下の別系統であり、finally後にAssertionErrorが伝播する。",
+      "D": "誤り。Errorはコンパイル時に処理を強制されるchecked exceptionではない。"
+    },
+    "category": "29. 例外",
+    "tags": [
+      "Error",
+      "Exception",
+      "AssertionError",
+      "finally",
+      "exception-hierarchy"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0010",
+    "question": "プロジェクトルートに src/study/app/Main.java があり、先頭が package study.app; である。クラスファイルを out 配下に生成し、その後Mainを実行する正しい組み合わせを1つ選びなさい。",
+    "code": "package study.app;\n\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"OK\");\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "javac -d out src/study/app/Main.java  →  java -cp out study.app.Main"
+      },
+      {
+        "id": "B",
+        "text": "javac src/study/app/Main.java -cp out  →  java Main"
+      },
+      {
+        "id": "C",
+        "text": "javac -d out src/study/app/Main.java  →  java -cp out Main"
+      },
+      {
+        "id": "D",
+        "text": "javac -cp out study.app.Main  →  java -d out study.app.Main"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "javac -d out はpackage構造に合わせて out/study/app/Main.class を生成する。実行時はクラスパスのルートoutを -cp で指定し、packageを含む完全修飾クラス名 study.app.Main を java コマンドへ渡す。",
+    "choiceExplanations": {
+      "A": "正しい。出力先ルートと完全修飾クラス名の組み合わせが正しい。",
+      "B": "誤り。-cpはコンパイル時のクラス探索指定であり出力先指定ではない。またpackage付きクラスをMainだけでは実行できない。",
+      "C": "誤り。実行時にはpackageを含む study.app.Main が必要。",
+      "D": "誤り。javacにはソースファイルを渡し、javaには-dオプションで出力先を指定しない。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "javac",
+      "java",
+      "classpath",
+      "package",
+      "fully-qualified-name"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0011",
+    "question": "Javaアプリケーションのエントリーポイントとして有効なmainメソッドを2つ選びなさい。",
+    "code": null,
+    "choices": [
+      {
+        "id": "A",
+        "text": "public static void main(String[] args)"
+      },
+      {
+        "id": "B",
+        "text": "public void static main(String[] args)"
+      },
+      {
+        "id": "C",
+        "text": "public static int main(String[] args)"
+      },
+      {
+        "id": "D",
+        "text": "static public void main(String... args)"
+      },
+      {
+        "id": "E",
+        "text": "public static void main(String args)"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "D"
+    ],
+    "explanation": "起動用mainは public static void で、引数は String[] または同等のvarargs String... である必要がある。修飾子 public と static の順序は入れ替えてよい。",
+    "choiceExplanations": {
+      "A": "正しい。標準的なmain宣言。",
+      "B": "誤り。void と static の順序ではなく、メソッド宣言の文法として戻り値型voidの前に修飾子staticを置く必要があり、この並びは不正。",
+      "C": "誤り。起動用mainの戻り値型はvoidでなければならない。",
+      "D": "正しい。String... は String[] と同等に扱われ、修飾子の順序も有効。",
+      "E": "誤り。String単体の引数を持つメソッドはoverloadとしては作れるが、起動用mainにはならない。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "main",
+      "varargs",
+      "method-signature",
+      "entry-point"
+    ],
+    "difficulty": 3,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0012",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static int length(Object o) {\n        if (!(o instanceof String s)) {\n            return -1;\n        }\n        return s.length();\n    }\n\n    public static void main(String[] args) {\n        System.out.println(length(\"Java\") + \":\" + length(null));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "4:-1"
+      },
+      {
+        "id": "B",
+        "text": "4:0"
+      },
+      {
+        "id": "C",
+        "text": "-1:-1"
+      },
+      {
+        "id": "D",
+        "text": "sがif文の外なのでスコープ外となりコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "否定パターン !(o instanceof String s) がtrueなら即returnするため、その後の文へ到達する経路では必ずoがStringでsが確定している。このフロー解析により return s.length() でsを使用できる。nullはinstanceofで常にfalseなので-1。",
+    "choiceExplanations": {
+      "A": "正しい。\"Java\"ではsが有効で長さ4、nullでは否定条件がtrueになり-1。",
+      "B": "誤り。null instanceof String はfalseであり、length(null)は-1を返す。",
+      "C": "誤り。\"Java\"はStringなのでパターンマッチし長さ4を返す。",
+      "D": "誤り。returnによるフロー解析で、if後ではsが確実にマッチ済みと判断される。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "instanceof",
+      "pattern-matching",
+      "scope",
+      "flow-scoping",
+      "null",
+      "if"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0013",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int n = 2;\n        var result = switch (n) {\n            case 1 -> \"A\";\n            case 2 -> {\n                System.out.print(\"X\");\n                yield \"B\";\n            }\n            default -> \"C\";\n        };\n        System.out.print(result);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "B"
+      },
+      {
+        "id": "B",
+        "text": "XB"
+      },
+      {
+        "id": "C",
+        "text": "XC"
+      },
+      {
+        "id": "D",
+        "text": "yieldはswitch式では使用できないためコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "switch式のcaseでブロックを使い値を返す場合はyieldを使用できる。case 2のブロックでまずXを出力し、yield \"B\" によりswitch式の値がBとなり、その後resultが出力されるのでXB。",
+    "choiceExplanations": {
+      "A": "誤り。yield前にSystem.out.print(\"X\")が実行される。",
+      "B": "正しい。case 2の副作用Xの後、switch式の値Bが出力される。",
+      "C": "誤り。nは2なのでdefaultには進まない。",
+      "D": "誤り。yieldはswitch式のブロックから値を返すために使用する。"
+    },
+    "category": "10. switch式 / yield",
+    "tags": [
+      "switch-expression",
+      "yield",
+      "var",
+      "control-flow"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0014",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "interface A {\n    default String name() { return \"A\"; }\n}\n\ninterface B {\n    default String name() { return \"B\"; }\n}\n\nclass C implements A, B {\n    @Override\n    public String name() {\n        return A.super.name() + B.super.name();\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(new C().name());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A"
+      },
+      {
+        "id": "B",
+        "text": "B"
+      },
+      {
+        "id": "C",
+        "text": "AB"
+      },
+      {
+        "id": "D",
+        "text": "2つのdefaultメソッドがあるため、overrideしていてもコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "同じシグネチャのdefaultメソッドを複数interfaceから継承する場合、実装クラスは競合を解消するためoverrideする必要がある。Cはname()をoverrideし、A.super.name()とB.super.name()を明示的に呼んでいるため有効でABとなる。",
+    "choiceExplanations": {
+      "A": "誤り。C.name()はAだけでなくBのdefaultも連結している。",
+      "B": "誤り。C.name()はAとBの両方を呼ぶ。",
+      "C": "正しい。競合をoverrideで解消し、各interfaceのdefaultを明示呼び出ししている。",
+      "D": "誤り。競合は実装クラスでoverrideすれば解消できる。"
+    },
+    "category": "27. default / private interface method",
+    "tags": [
+      "interface",
+      "default-method",
+      "multiple-inheritance",
+      "override"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0015",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "interface Helper {\n    private String secret() { return \"S\"; }\n\n    default String value() {\n        return secret();\n    }\n}\n\nclass Impl implements Helper {\n    public String other() {\n        return secret();\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(new Impl().value());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "S"
+      },
+      {
+        "id": "B",
+        "text": "null"
+      },
+      {
+        "id": "C",
+        "text": "Impl.other()からsecret()を呼び出しているためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "interfaceにprivateメソッドは宣言できないためコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "Java 9以降、interfaceにはprivateメソッドを宣言でき、同じinterface内のdefaultメソッドなどから利用できる。ただしprivateメソッドは実装クラスへ継承されず、Implから直接呼び出せないため other() の secret() 呼び出しでコンパイルエラーになる。",
+    "choiceExplanations": {
+      "A": "誤り。Helper.value()自体はsecret()を呼べるが、クラス全体がImpl.other()の不正呼び出しによりコンパイルできない。",
+      "B": "誤り。privateメソッドがnullを返すわけではない。",
+      "C": "正しい。interfaceのprivateメソッドは実装クラスから見えず継承もされない。",
+      "D": "誤り。Java SE 17ではinterfaceにprivateメソッドを宣言できる。"
+    },
+    "category": "27. default / private interface method",
+    "tags": [
+      "interface",
+      "private-method",
+      "default-method",
+      "access-control"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0016",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class Parent {\n    Parent(int x) {\n        System.out.print(\"P\");\n    }\n}\n\nclass Child extends Parent {\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        new Child();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "P と出力される"
+      },
+      {
+        "id": "B",
+        "text": "何も出力されない"
+      },
+      {
+        "id": "C",
+        "text": "Childの暗黙コンストラクタがsuper()を呼ぼうとするがParent()が存在しないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "実行時にNoSuchMethodErrorが発生する"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "Childにコンストラクタを宣言しない場合、コンパイラは引数なしのデフォルトコンストラクタを生成し、その先頭で暗黙にsuper()を呼ぶ。しかしParentにはParent(int)しかなくParent()が存在しないためコンパイルエラーになる。",
+    "choiceExplanations": {
+      "A": "誤り。Parent(int)へ渡す引数がないためそこまで到達しない。",
+      "B": "誤り。実行可能なクラスファイルが作られない。",
+      "C": "正しい。暗黙のsuper()に対応する親の引数なしコンストラクタがない。",
+      "D": "誤り。この問題はコンパイル時に検出される。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "constructor",
+      "default-constructor",
+      "super",
+      "inheritance",
+      "instantiation"
+    ],
+    "difficulty": 3,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0017",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "record Score(int value) {\n    Score {\n        if (value < 0) {\n            value = 0;\n        }\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(new Score(-5).value());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "-5"
+      },
+      {
+        "id": "B",
+        "text": "0"
+      },
+      {
+        "id": "C",
+        "text": "recordのコンポーネントはfinalなので、compact constructor内で引数valueを書き換えるとコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "recordにはコンストラクタを宣言できないためコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "compact canonical constructorでは、コンポーネントと同名のコンストラクタ引数を検証・正規化できる。ここで書き換えているのは暗黙フィールドthis.valueではなくパラメータvalueであり、コンストラクタ本体の最後にその値がコンポーネントへ代入されるため0となる。",
+    "choiceExplanations": {
+      "A": "誤り。valueパラメータは0へ変更され、その値がコンポーネントへ代入される。",
+      "B": "正しい。compact constructorでパラメータを正規化できる。",
+      "C": "誤り。コンポーネントのフィールドはfinalだが、compact constructorのパラメータ自体は再代入できる。",
+      "D": "誤り。recordはcanonical constructorやcompact canonical constructorを宣言できる。"
+    },
+    "category": "20. record",
+    "tags": [
+      "record",
+      "compact-constructor",
+      "canonical-constructor",
+      "final"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0018",
+    "question": "ローカル変数のvarについて、コンパイルできる宣言を2つ選びなさい。各選択肢はそれぞれ独立しているものとする。",
+    "code": null,
+    "choices": [
+      {
+        "id": "A",
+        "text": "var a = 10;"
+      },
+      {
+        "id": "B",
+        "text": "var b;"
+      },
+      {
+        "id": "C",
+        "text": "var c = null;"
+      },
+      {
+        "id": "D",
+        "text": "var d = (String) null;"
+      },
+      {
+        "id": "E",
+        "text": "var[] e = new int[2];"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "D"
+    ],
+    "explanation": "varはローカル変数で初期化子から型を推論できる場合に使用できる。Aはint、Dは明示キャストによりStringと推論できる。初期化子なし、nullだけ、var[]という型表記はいずれも不可。",
+    "choiceExplanations": {
+      "A": "正しい。10からintと推論される。",
+      "B": "誤り。varには宣言時の初期化子が必要。",
+      "C": "誤り。null単独から具体的な型を推論できない。",
+      "D": "正しい。(String)nullによりStringと推論できる。",
+      "E": "誤り。varは型名の一部としてvar[]のようには使用できない。"
+    },
+    "category": "3. var",
+    "tags": [
+      "var",
+      "type-inference",
+      "local-variable",
+      "null"
+    ],
+    "difficulty": 3,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0019",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int[] values = {1, 2, 3, 4};\n        int total = 0;\n\n        for (int n : values) {\n            if (n == 2) continue;\n            if (n == 4) break;\n            total += n;\n        }\n\n        System.out.println(total);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "3"
+      },
+      {
+        "id": "B",
+        "text": "4"
+      },
+      {
+        "id": "C",
+        "text": "6"
+      },
+      {
+        "id": "D",
+        "text": "10"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "拡張forで1は加算される。2はcontinueにより加算を飛ばす。3は加算され合計4。4ではbreakが先に実行されループを終了するため4は加算されない。",
+    "choiceExplanations": {
+      "A": "誤り。1と3の両方が加算されるので4。",
+      "B": "正しい。1 + 3 = 4。",
+      "C": "誤り。2はcontinueで飛ばされる。",
+      "D": "誤り。2はcontinue、4はbreakにより加算されない。"
+    },
+    "category": "11. while / do-while / for / 拡張for",
+    "tags": [
+      "enhanced-for",
+      "array",
+      "continue",
+      "break",
+      "loop"
+    ],
+    "difficulty": 3,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0020",
+    "question": "次のコードを実行したときの動作として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        Number[] values = new Integer[2];\n        values[0] = 10;\n        values[1] = 2.5;\n        System.out.println(\"OK\");\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "OK と出力される"
+      },
+      {
+        "id": "B",
+        "text": "values[0] = 10; でArrayStoreExceptionが発生する"
+      },
+      {
+        "id": "C",
+        "text": "values[1] = 2.5; でArrayStoreExceptionが発生する"
+      },
+      {
+        "id": "D",
+        "text": "Number[] に Integer[] は代入できないためコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "配列は共変なのでInteger[]をNumber[]参照へ代入できる。しかし実体の配列型はInteger[]のまま。10はIntegerへboxingされるので格納可能だが、2.5はDoubleへboxingされ、Integer[]へ格納できないため実行時にArrayStoreExceptionとなる。",
+    "choiceExplanations": {
+      "A": "誤り。2.5の格納時に例外が発生するためOKには到達しない。",
+      "B": "誤り。10はIntegerにboxingされ、Integer[]へ格納可能。",
+      "C": "正しい。2.5はDoubleとなり、実体Integer[]へは格納できない。",
+      "D": "誤り。Javaの参照型配列は共変なのでコンパイル時の代入自体は可能。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "array",
+      "array-covariance",
+      "ArrayStoreException",
+      "boxing",
+      "runtime"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  }
+]
