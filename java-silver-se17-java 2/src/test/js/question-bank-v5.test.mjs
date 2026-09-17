@@ -13,16 +13,16 @@ const questions = manifest.files.flatMap(file =>
   JSON.parse(fs.readFileSync(path.join(bankDir, file), 'utf8'))
 );
 
-test('V5 question bank contains 70 unique questions and supports full mock exam default', () => {
-  assert.equal(questions.length, 70);
-  assert.equal(new Set(questions.map(q => q.id)).size, 70);
+test('V6 question bank contains 100 unique questions and supports full mock exam default', () => {
+  assert.equal(questions.length, 100);
+  assert.equal(new Set(questions.map(q => q.id)).size, 100);
   assert.equal(config.questionCount, 60);
-  assert.deepEqual(manifest.files, ['questions-001.json', 'questions-002.json']);
+  assert.deepEqual(manifest.files, ['questions-001.json', 'questions-002.json', 'questions-003.json', 'questions-004.json', 'questions-005.json']);
 });
 
-test('new V5 questions occupy JS17-0021 through JS17-0070', () => {
-  const newIds = questions.slice(20).map(q => q.id);
-  const expected = Array.from({ length: 50 }, (_, i) => `JS17-${String(i + 21).padStart(4, '0')}`);
+test('new V6 questions occupy JS17-0071 through JS17-0100', () => {
+  const newIds = questions.slice(70).map(q => q.id);
+  const expected = Array.from({ length: 30 }, (_, i) => `JS17-${String(i + 71).padStart(4, '0')}`);
   assert.deepEqual(newIds, expected);
 });
 
