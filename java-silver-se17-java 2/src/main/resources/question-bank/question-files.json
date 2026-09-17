@@ -2,6 +2,9 @@
   "version": 1,
   "files": [
     "questions-001.json",
-    "questions-002.json"
+    "questions-002.json",
+    "questions-003.json",
+    "questions-004.json",
+    "questions-005.json"
   ]
 }
