@@ -1,5 +1,5 @@
-const CACHE = 'java-silver-java-shell-v4';
-const SHELL = ['/', '/index.html', '/css/styles.css', '/js/app.js', '/js/api.js', '/js/storage.js', '/js/result-review.js', '/manifest.webmanifest'];
+const CACHE = 'java-silver-java-shell-v6';
+const SHELL = ['/', '/index.html', '/css/styles.css', '/js/app.js', '/js/api.js', '/js/storage.js', '/js/result-review.js', '/js/result-correct-review.js', '/manifest.webmanifest'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)));
