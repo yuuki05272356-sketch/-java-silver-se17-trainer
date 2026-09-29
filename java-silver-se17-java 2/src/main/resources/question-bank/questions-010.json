@@ -1,0 +1,917 @@
+[
+  {
+    "id": "JS17-0181",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "public class Main {\n    static void work(int n) {\n        try {\n            if (n == 0) throw new ArithmeticException();\n            System.out.print(\"A\");\n        }\n        catch (ArithmeticException | NullPointerException e) {\n            System.out.print(\"C\");\n        }\n        finally {\n            System.out.print(\"F\");\n        }\n    }\n    public static void main(String[] args) {\n        work(0);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "multi-catchの2型に継承関係はないので有効"
+      },
+      {
+        "id": "B",
+        "text": "出力はCF"
+      },
+      {
+        "id": "C",
+        "text": "出力はACF"
+      },
+      {
+        "id": "D",
+        "text": "finallyは例外をcatchした場合は実行されない"
+      },
+      {
+        "id": "E",
+        "text": "ArithmeticExceptionはchecked例外である"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "兄弟関係のRuntimeExceptionサブクラスをmulti-catchに並べるのは有効で、Cの後finally Fが実行されます。",
+    "choiceExplanations": {
+      "A": "正しい。兄弟関係のRuntimeExceptionサブクラスをmulti-catchに並べるのは有効で、Cの後finally Fが実行されます。",
+      "B": "正しい。兄弟関係のRuntimeExceptionサブクラスをmulti-catchに並べるのは有効で、Cの後finally Fが実行されます。",
+      "C": "誤り。兄弟関係のRuntimeExceptionサブクラスをmulti-catchに並べるのは有効で、Cの後finally Fが実行されます。",
+      "D": "誤り。兄弟関係のRuntimeExceptionサブクラスをmulti-catchに並べるのは有効で、Cの後finally Fが実行されます。",
+      "E": "誤り。兄弟関係のRuntimeExceptionサブクラスをmulti-catchに並べるのは有効で、Cの後finally Fが実行されます。"
+    },
+    "category": "33. multi-catch",
+    "tags": [
+      "multi-catch",
+      "finally",
+      "unchecked-exception"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0182",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class E extends Exception {\n}\npublic class Main {\n    static int f() throws E {\n        try {\n            throw new E();\n        }\n        catch (E e) {\n            return 1;\n        }\n        finally {\n            System.out.print(\"F \");\n        }\n    }\n    public static void main(String[] args) throws E {\n        System.out.println(f());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1"
+      },
+      {
+        "id": "B",
+        "text": "F 1"
+      },
+      {
+        "id": "C",
+        "text": "Fの後Eが再送出される"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "catchのreturn 1が予定されますが、その前にfinallyが実行されFを出力し、その後1が返ります。",
+    "choiceExplanations": {
+      "A": "誤り。catchのreturn 1が予定されますが、その前にfinallyが実行されFを出力し、その後1が返ります。",
+      "B": "正しい。catchのreturn 1が予定されますが、その前にfinallyが実行されFを出力し、その後1が返ります。",
+      "C": "誤り。catchのreturn 1が予定されますが、その前にfinallyが実行されFを出力し、その後1が返ります。",
+      "D": "誤り。catchのreturn 1が予定されますが、その前にfinallyが実行されFを出力し、その後1が返ります。"
+    },
+    "category": "30. try-catch",
+    "tags": [
+      "catch",
+      "finally",
+      "return",
+      "checked-exception"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0183",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class E extends Exception {\n}\npublic class Main {\n    static void throwIt() throws E {\n        throw new E();\n    }\n    public static void main(String[] args) {\n        try {\n            throwIt();\n        }\n        catch (RuntimeException e) {\n            System.out.println(\"R\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "R"
+      },
+      {
+        "id": "B",
+        "text": "EはRuntimeExceptionとして捕捉される"
+      },
+      {
+        "id": "C",
+        "text": "checked Eを処理していないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "何も表示されず正常終了"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "EはException直下のchecked例外で、RuntimeException catchでは処理されません。mainでcatch(E)するかthrows Eが必要です。",
+    "choiceExplanations": {
+      "A": "誤り。EはException直下のchecked例外で、RuntimeException catchでは処理されません。mainでcatch(E)するかthrows Eが必要です。",
+      "B": "誤り。EはException直下のchecked例外で、RuntimeException catchでは処理されません。mainでcatch(E)するかthrows Eが必要です。",
+      "C": "正しい。EはException直下のchecked例外で、RuntimeException catchでは処理されません。mainでcatch(E)するかthrows Eが必要です。",
+      "D": "誤り。EはException直下のchecked例外で、RuntimeException catchでは処理されません。mainでcatch(E)するかthrows Eが必要です。"
+    },
+    "category": "32. カスタム例外",
+    "tags": [
+      "checked-exception",
+      "catch",
+      "compile-error"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0184",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class R implements AutoCloseable {\n    public void close() throws Exception {\n        throw new Exception(\"close\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R r = new R()) {\n            System.out.println(\"body\");\n        }\n        catch (Exception e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "body と出力される"
+      },
+      {
+        "id": "B",
+        "text": "その後 close と出力される"
+      },
+      {
+        "id": "C",
+        "text": "close()のchecked例外はtry-with-resourcesが自動で握りつぶす"
+      },
+      {
+        "id": "D",
+        "text": "catch(Exception)がなくてもclose()のchecked例外は自動的に処理済みになる"
+      },
+      {
+        "id": "E",
+        "text": "RはAutoCloseableを実装できない"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "try本体正常終了後close()が呼ばれ、そこで投げられたExceptionがcatchされます。",
+    "choiceExplanations": {
+      "A": "正しい。try本体正常終了後close()が呼ばれ、そこで投げられたExceptionがcatchされます。",
+      "B": "正しい。try本体正常終了後close()が呼ばれ、そこで投げられたExceptionがcatchされます。",
+      "C": "誤り。try本体正常終了後close()が呼ばれ、そこで投げられたExceptionがcatchされます。",
+      "D": "誤り。try本体正常終了後close()が呼ばれ、そこで投げられたExceptionがcatchされます。",
+      "E": "誤り。try本体正常終了後close()が呼ばれ、そこで投げられたExceptionがcatchされます。"
+    },
+    "category": "31. try-with-resources",
+    "tags": [
+      "AutoCloseable",
+      "checked-exception",
+      "close"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0185",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "interface A {\n    default String m() {\n        return \"A\";\n    }\n}\ninterface B extends A {\n    default String m() {\n        return \"B\";\n    }\n}\nclass C implements B {\n    @Override public String m() {\n        return B.super.m() + \"C\";\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A a = new C();\n        System.out.println(a.m());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A"
+      },
+      {
+        "id": "B",
+        "text": "B"
+      },
+      {
+        "id": "C",
+        "text": "BC"
+      },
+      {
+        "id": "D",
+        "text": "AC"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "Cは直接実装しているBのdefaultをB.super.m()で呼べます。動的ディスパッチでC.m()が実行されBCです。",
+    "choiceExplanations": {
+      "A": "誤り。Cは直接実装しているBのdefaultをB.super.m()で呼べます。動的ディスパッチでC.m()が実行されBCです。",
+      "B": "誤り。Cは直接実装しているBのdefaultをB.super.m()で呼べます。動的ディスパッチでC.m()が実行されBCです。",
+      "C": "正しい。Cは直接実装しているBのdefaultをB.super.m()で呼べます。動的ディスパッチでC.m()が実行されBCです。",
+      "D": "誤り。Cは直接実装しているBのdefaultをB.super.m()で呼べます。動的ディスパッチでC.m()が実行されBCです。",
+      "E": "誤り。Cは直接実装しているBのdefaultをB.super.m()で呼べます。動的ディスパッチでC.m()が実行されBCです。"
+    },
+    "category": "27. default / private interface method",
+    "tags": [
+      "default-method",
+      "super",
+      "override",
+      "polymorphism"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0186",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "interface Service {\n    default void run() {\n        helper();\n    }\n    private void helper() {\n        System.out.print(\"I\");\n    }\n}\nclass App implements Service {\n    public void run() {\n        Service.super.run();\n        System.out.print(\"A\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new App().run();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "IA と出力される"
+      },
+      {
+        "id": "B",
+        "text": "Service.super.run() はAppから有効"
+      },
+      {
+        "id": "C",
+        "text": "Appからhelper()を直接呼べる"
+      },
+      {
+        "id": "D",
+        "text": "private interface methodは実装クラスへ継承される"
+      },
+      {
+        "id": "E",
+        "text": "run()はstaticなのでoverrideできない"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "Appは直接実装したServiceのdefaultをsuper形式で呼べます。helper()はService内部だけから利用でき、IAが出力されます。",
+    "choiceExplanations": {
+      "A": "正しい。Appは直接実装したServiceのdefaultをsuper形式で呼べます。helper()はService内部だけから利用でき、IAが出力されます。",
+      "B": "正しい。Appは直接実装したServiceのdefaultをsuper形式で呼べます。helper()はService内部だけから利用でき、IAが出力されます。",
+      "C": "誤り。Appは直接実装したServiceのdefaultをsuper形式で呼べます。helper()はService内部だけから利用でき、IAが出力されます。",
+      "D": "誤り。Appは直接実装したServiceのdefaultをsuper形式で呼べます。helper()はService内部だけから利用でき、IAが出力されます。",
+      "E": "誤り。Appは直接実装したServiceのdefaultをsuper形式で呼べます。helper()はService内部だけから利用でき、IAが出力されます。"
+    },
+    "category": "27. default / private interface method",
+    "tags": [
+      "private-interface-method",
+      "default-method",
+      "super"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0187",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "interface A {\n    void m();\n}\nabstract class B implements A {\n    public abstract void m();\n}\nclass C extends B {\n    void m() {\n        System.out.println(\"C\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A a = new C();\n        a.m();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "C"
+      },
+      {
+        "id": "B",
+        "text": "Bでpublic宣言されたm()をCがpackage-privateへ狭めているためコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "abstractメソッドを再宣言できないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "interface参照から呼べない"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "override時にアクセスレベルを狭められません。B.m()はpublicなのでC.m()もpublicである必要があります。",
+    "choiceExplanations": {
+      "A": "誤り。override時にアクセスレベルを狭められません。B.m()はpublicなのでC.m()もpublicである必要があります。",
+      "B": "正しい。override時にアクセスレベルを狭められません。B.m()はpublicなのでC.m()もpublicである必要があります。",
+      "C": "誤り。override時にアクセスレベルを狭められません。B.m()はpublicなのでC.m()もpublicである必要があります。",
+      "D": "誤り。override時にアクセスレベルを狭められません。B.m()はpublicなのでC.m()もpublicである必要があります。"
+    },
+    "category": "23. override",
+    "tags": [
+      "override",
+      "access-modifier",
+      "interface",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0188",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "import java.io.*;\ninterface ReaderI {\n    void read() throws IOException;\n}\nclass FastReader implements ReaderI {\n    public void read() throws FileNotFoundException {\n        System.out.println(\"fast\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        ReaderI r = new FastReader();\n        r.read();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "fast"
+      },
+      {
+        "id": "B",
+        "text": "FileNotFoundExceptionはIOExceptionより広いのでoverrideとして有効"
+      },
+      {
+        "id": "C",
+        "text": "戻り値がないためoverrideできない"
+      },
+      {
+        "id": "D",
+        "text": "throws型が完全一致しないためコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "FileNotFoundExceptionはIOExceptionのサブクラスで、overrideではより狭いchecked例外を宣言できます。実行結果はfastです。",
+    "choiceExplanations": {
+      "A": "正しい。FileNotFoundExceptionはIOExceptionのサブクラスで、overrideではより狭いchecked例外を宣言できます。実行結果はfastです。",
+      "B": "誤り。FileNotFoundExceptionはIOExceptionのサブクラスで、overrideではより狭いchecked例外を宣言できます。実行結果はfastです。",
+      "C": "誤り。FileNotFoundExceptionはIOExceptionのサブクラスで、overrideではより狭いchecked例外を宣言できます。実行結果はfastです。",
+      "D": "誤り。FileNotFoundExceptionはIOExceptionのサブクラスで、overrideではより狭いchecked例外を宣言できます。実行結果はfastです。"
+    },
+    "category": "26. interface",
+    "tags": [
+      "interface",
+      "override",
+      "checked-exception",
+      "narrower-throws"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0189",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "interface A {\n    static void s() {\n        System.out.print(\"A\");\n    }\n    default void d() {\n        System.out.print(\"a\");\n    }\n}\nclass B implements A {\n    static void s() {\n        System.out.print(\"B\");\n    }\n    @Override public void d() {\n        System.out.print(\"b\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A.s();\n        new B().d();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Ab と出力される"
+      },
+      {
+        "id": "B",
+        "text": "interfaceのstatic s()はA.s()で呼ぶ"
+      },
+      {
+        "id": "C",
+        "text": "B.s()はA.s()をoverrideしている"
+      },
+      {
+        "id": "D",
+        "text": "A型参照からBのstatic s()が動的に選ばれる"
+      },
+      {
+        "id": "E",
+        "text": "default d()はoverrideできない"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "interface staticメソッドは継承されずinterface名で呼びます。一方default instanceメソッドはBでoverrideされます。",
+    "choiceExplanations": {
+      "A": "正しい。interface staticメソッドは継承されずinterface名で呼びます。一方default instanceメソッドはBでoverrideされます。",
+      "B": "正しい。interface staticメソッドは継承されずinterface名で呼びます。一方default instanceメソッドはBでoverrideされます。",
+      "C": "誤り。interface staticメソッドは継承されずinterface名で呼びます。一方default instanceメソッドはBでoverrideされます。",
+      "D": "誤り。interface staticメソッドは継承されずinterface名で呼びます。一方default instanceメソッドはBでoverrideされます。",
+      "E": "誤り。interface staticメソッドは継承されずinterface名で呼びます。一方default instanceメソッドはBでoverrideされます。"
+    },
+    "category": "26. interface",
+    "tags": [
+      "interface",
+      "static-method",
+      "default-method",
+      "override"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0190",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "interface A {\n    default void m() {\n    }\n}\ninterface B {\n    void m();\n}\nabstract class X implements A, B {\n}\nclass Y extends X {\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Y().m();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "正常にコンパイルされA.m()が使われる"
+      },
+      {
+        "id": "B",
+        "text": "Bのabstract宣言がAのdefaultを無効化し、XまたはYで実装が必要なためコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "Yはabstractでなくてもよい"
+      },
+      {
+        "id": "D",
+        "text": "実行時にAbstractMethodError"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "無関係なinterfaceの一方がdefault、もう一方が同じシグネチャをabstract宣言している場合、単純にdefaultで満たされたとは扱えず競合解消が必要です。",
+    "choiceExplanations": {
+      "A": "誤り。無関係なinterfaceの一方がdefault、もう一方が同じシグネチャをabstract宣言している場合、単純にdefaultで満たされたとは扱えず競合解消が必要です。",
+      "B": "正しい。無関係なinterfaceの一方がdefault、もう一方が同じシグネチャをabstract宣言している場合、単純にdefaultで満たされたとは扱えず競合解消が必要です。",
+      "C": "誤り。無関係なinterfaceの一方がdefault、もう一方が同じシグネチャをabstract宣言している場合、単純にdefaultで満たされたとは扱えず競合解消が必要です。",
+      "D": "誤り。無関係なinterfaceの一方がdefault、もう一方が同じシグネチャをabstract宣言している場合、単純にdefaultで満たされたとは扱えず競合解消が必要です。"
+    },
+    "category": "26. interface",
+    "tags": [
+      "default-method",
+      "abstract-method",
+      "conflict",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0191",
+    "question": "次のソースを `javac App.java` でコンパイルする場合について正しいものを1つ選びなさい。",
+    "code": "public class Tool {\n    static void run() {\n        System.out.println(\"T\");\n    }\n}\nclass App {\n    public static void main(String[] args) {\n        Tool.run();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Tool.classとApp.classが生成される"
+      },
+      {
+        "id": "B",
+        "text": "public class Toolがあるのでファイル名はTool.javaでなければならずコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "Appがpublicでないためmainを持てない"
+      },
+      {
+        "id": "D",
+        "text": "java Appではpublicクラスでないため必ず起動不可"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "publicトップレベルクラスToolを含むソースファイル名はTool.javaでなければなりません。",
+    "choiceExplanations": {
+      "A": "誤り。publicトップレベルクラスToolを含むソースファイル名はTool.javaでなければなりません。",
+      "B": "正しい。publicトップレベルクラスToolを含むソースファイル名はTool.javaでなければなりません。",
+      "C": "誤り。publicトップレベルクラスToolを含むソースファイル名はTool.javaでなければなりません。",
+      "D": "誤り。publicトップレベルクラスToolを含むソースファイル名はTool.javaでなければなりません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "javac",
+      "public-class",
+      "file-name",
+      "main"
+    ],
+    "difficulty": 3,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0192",
+    "question": "Main.javaをコンパイル後、`java Main one two three` と実行した場合の結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        if (args.length < 2) {\n            System.out.println(\"few\");\n            return;\n        }\n        String x = args[1];\n        for (int i = args.length - 1; i >= 0; i--) {\n            if (args[i].equals(x)) continue;\n            System.out.print(args[i].charAt(0));\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "to"
+      },
+      {
+        "id": "B",
+        "text": "toh"
+      },
+      {
+        "id": "C",
+        "text": "tto"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "ArrayIndexOutOfBoundsException"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "args[1]はtwo。逆順でthree→tを出力、twoはcontinue、one→oを出力してtoです。",
+    "choiceExplanations": {
+      "A": "正しい。args[1]はtwo。逆順でthree→tを出力、twoはcontinue、one→oを出力してtoです。",
+      "B": "誤り。args[1]はtwo。逆順でthree→tを出力、twoはcontinue、one→oを出力してtoです。",
+      "C": "誤り。args[1]はtwo。逆順でthree→tを出力、twoはcontinue、one→oを出力してtoです。",
+      "D": "誤り。args[1]はtwo。逆順でthree→tを出力、twoはcontinue、one→oを出力してtoです。",
+      "E": "誤り。args[1]はtwo。逆順でthree→tを出力、twoはcontinue、one→oを出力してtoです。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "command-line",
+      "array",
+      "for",
+      "continue"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0193",
+    "question": "次の構成で `classes` ディレクトリへコンパイルし実行したい。正しいコマンドの組み合わせを1つ選びなさい。",
+    "code": "// src/app/Main.java\npackage app;\nimport util.Message;\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(Message.text());\n    }\n}\n// src/util/Message.java\npackage util;\npublic class Message {\n    public static String text() {\n        return \"OK\";\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "`javac -d classes src/app/Main.java src/util/Message.java` → `java -cp classes app.Main`"
+      },
+      {
+        "id": "B",
+        "text": "`javac src/app/Main.java` → `java Main`"
+      },
+      {
+        "id": "C",
+        "text": "`javac -d classes src/app/Main.java` → `java -cp src app.Main`"
+      },
+      {
+        "id": "D",
+        "text": "`javac -d classes src/util/Message.java` → `java app.Main`"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "-dでpackage階層に従ったclass出力をclasses配下へ作り、classpathの基点classesから完全修飾名app.Mainで起動します。",
+    "choiceExplanations": {
+      "A": "正しい。-dでpackage階層に従ったclass出力をclasses配下へ作り、classpathの基点classesから完全修飾名app.Mainで起動します。",
+      "B": "誤り。-dでpackage階層に従ったclass出力をclasses配下へ作り、classpathの基点classesから完全修飾名app.Mainで起動します。",
+      "C": "誤り。-dでpackage階層に従ったclass出力をclasses配下へ作り、classpathの基点classesから完全修飾名app.Mainで起動します。",
+      "D": "誤り。-dでpackage階層に従ったclass出力をclasses配下へ作り、classpathの基点classesから完全修飾名app.Mainで起動します。"
+    },
+    "category": "34. package / import",
+    "tags": [
+      "javac",
+      "classpath",
+      "package",
+      "-d"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0194",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "public class Main {\n    public static int main(String[] args) {\n        return 0;\n    }\n    public static void main(Object[] args) {\n        System.out.println(\"O\");\n    }\n    static void main(String s) {\n        System.out.println(\"S\");\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "ソース自体はコンパイルできる"
+      },
+      {
+        "id": "B",
+        "text": "javaランチャーが要求するpublic static void main(String[])がない"
+      },
+      {
+        "id": "C",
+        "text": "戻り値intのmainが起動点になる"
+      },
+      {
+        "id": "D",
+        "text": "Object[]版がString[]を受け取れるので起動点になる"
+      },
+      {
+        "id": "E",
+        "text": "同名mainをoverloadできないためコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "mainという名前のメソッドは自由にoverloadできますが、ランチャーの起動点はpublic static void main(String[]/String...)に限定されます。",
+    "choiceExplanations": {
+      "A": "正しい。mainという名前のメソッドは自由にoverloadできますが、ランチャーの起動点はpublic static void main(String[]/String...)に限定されます。",
+      "B": "正しい。mainという名前のメソッドは自由にoverloadできますが、ランチャーの起動点はpublic static void main(String[]/String...)に限定されます。",
+      "C": "誤り。mainという名前のメソッドは自由にoverloadできますが、ランチャーの起動点はpublic static void main(String[]/String...)に限定されます。",
+      "D": "誤り。mainという名前のメソッドは自由にoverloadできますが、ランチャーの起動点はpublic static void main(String[]/String...)に限定されます。",
+      "E": "誤り。mainという名前のメソッドは自由にoverloadできますが、ランチャーの起動点はpublic static void main(String[]/String...)に限定されます。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "main",
+      "overload",
+      "launcher",
+      "signature"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0195",
+    "question": "次のコードを `java Main 3` と実行した結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static void main(int n) {\n        System.out.println(\"I\" + n);\n    }\n    public static void main(String[] args) {\n        int n = Integer.parseInt(args[0]);\n        while (n-- > 0) {\n            if (n == 1) continue;\n            System.out.print(n);\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "210"
+      },
+      {
+        "id": "B",
+        "text": "20"
+      },
+      {
+        "id": "C",
+        "text": "I3"
+      },
+      {
+        "id": "D",
+        "text": "2"
+      },
+      {
+        "id": "E",
+        "text": "NumberFormatException"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "起動されるのはString[]版です。n=3から条件判定後2を出力、次はn=1でcontinue、次はn=0を出力して20です。",
+    "choiceExplanations": {
+      "A": "誤り。起動されるのはString[]版です。n=3から条件判定後2を出力、次はn=1でcontinue、次はn=0を出力して20です。",
+      "B": "正しい。起動されるのはString[]版です。n=3から条件判定後2を出力、次はn=1でcontinue、次はn=0を出力して20です。",
+      "C": "誤り。起動されるのはString[]版です。n=3から条件判定後2を出力、次はn=1でcontinue、次はn=0を出力して20です。",
+      "D": "誤り。起動されるのはString[]版です。n=3から条件判定後2を出力、次はn=1でcontinue、次はn=0を出力して20です。",
+      "E": "誤り。起動されるのはString[]版です。n=3から条件判定後2を出力、次はn=1でcontinue、次はn=0を出力して20です。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "main",
+      "overload",
+      "command-line",
+      "while",
+      "continue"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0196",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "interface I {\n    default String who() {\n        return \"I\";\n    }\n}\nclass A {\n    String who() {\n        return \"A\";\n    }\n    static int x = 1;\n}\nclass B extends A implements I {\n    @Override public String who() {\n        return \"B\";\n    }\n    static int x = 2;\n}\npublic class Main {\n    public static void main(String[] args) {\n        A a = new B();\n        if (a instanceof B b) {\n            System.out.println(a.x + \":\" + b.x + \":\" + a.who());\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1:2:B"
+      },
+      {
+        "id": "B",
+        "text": "2:2:B"
+      },
+      {
+        "id": "C",
+        "text": "1:1:A"
+      },
+      {
+        "id": "D",
+        "text": "defaultメソッドとA.who()が競合してコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "Aの具体メソッドがinterface defaultより優先され、Bでoverrideされています。staticフィールドはアクセス式の型に基づきa.x=1、b.x=2です。",
+    "choiceExplanations": {
+      "A": "正しい。Aの具体メソッドがinterface defaultより優先され、Bでoverrideされています。staticフィールドはアクセス式の型に基づきa.x=1、b.x=2です。",
+      "B": "誤り。Aの具体メソッドがinterface defaultより優先され、Bでoverrideされています。staticフィールドはアクセス式の型に基づきa.x=1、b.x=2です。",
+      "C": "誤り。Aの具体メソッドがinterface defaultより優先され、Bでoverrideされています。staticフィールドはアクセス式の型に基づきa.x=1、b.x=2です。",
+      "D": "誤り。Aの具体メソッドがinterface defaultより優先され、Bでoverrideされています。staticフィールドはアクセス式の型に基づきa.x=1、b.x=2です。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "instanceof",
+      "static-field",
+      "override",
+      "default-method"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0197",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "record Data(int[] values) {\n}\npublic class Main {\n    public static void main(String[] args) {\n        int[] a = {\n            1, 2\n        }\n        ;\n        Data d = new Data(a);\n        a[0] = 9;\n        System.out.println(d.values()[0]);\n        d.values()[1] = 8;\n        System.out.println(a[1]);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "最初に9と出力される"
+      },
+      {
+        "id": "B",
+        "text": "次に8と出力される"
+      },
+      {
+        "id": "C",
+        "text": "recordは配列を自動的に防御コピーする"
+      },
+      {
+        "id": "D",
+        "text": "values()は配列のコピーを返す"
+      },
+      {
+        "id": "E",
+        "text": "recordコンポーネントは必ずdeep immutableになる"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "recordは参照をそのまま保持するため、配列など可変オブジェクトが自動でdeep immutableになるわけではありません。",
+    "choiceExplanations": {
+      "A": "正しい。recordは参照をそのまま保持するため、配列など可変オブジェクトが自動でdeep immutableになるわけではありません。",
+      "B": "正しい。recordは参照をそのまま保持するため、配列など可変オブジェクトが自動でdeep immutableになるわけではありません。",
+      "C": "誤り。recordは参照をそのまま保持するため、配列など可変オブジェクトが自動でdeep immutableになるわけではありません。",
+      "D": "誤り。recordは参照をそのまま保持するため、配列など可変オブジェクトが自動でdeep immutableになるわけではありません。",
+      "E": "誤り。recordは参照をそのまま保持するため、配列など可変オブジェクトが自動でdeep immutableになるわけではありません。"
+    },
+    "category": "20. record",
+    "tags": [
+      "record",
+      "array",
+      "mutability",
+      "reference"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0198",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class MyException extends Exception {\n}\nclass Base {\n    Base() throws MyException {\n        if (System.currentTimeMillis() < 0) throw new MyException();\n    }\n}\nclass Child extends Base {\n    Child() {\n        System.out.println(\"C\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Child();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "C"
+      },
+      {
+        "id": "B",
+        "text": "Base()が実際には例外を投げないためコンパイルできる"
+      },
+      {
+        "id": "C",
+        "text": "Child()は暗黙super()が投げ得るchecked例外を処理または宣言していないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "実行時にMyException"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "Childコンストラクタ先頭には暗黙super()があります。Base()がchecked MyExceptionを宣言するため、Child側もthrowsするなどの対応が必要です。",
+    "choiceExplanations": {
+      "A": "誤り。Childコンストラクタ先頭には暗黙super()があります。Base()がchecked MyExceptionを宣言するため、Child側もthrowsするなどの対応が必要です。",
+      "B": "誤り。Childコンストラクタ先頭には暗黙super()があります。Base()がchecked MyExceptionを宣言するため、Child側もthrowsするなどの対応が必要です。",
+      "C": "正しい。Childコンストラクタ先頭には暗黙super()があります。Base()がchecked MyExceptionを宣言するため、Child側もthrowsするなどの対応が必要です。",
+      "D": "誤り。Childコンストラクタ先頭には暗黙super()があります。Base()がchecked MyExceptionを宣言するため、Child側もthrowsするなどの対応が必要です。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "constructor",
+      "implicit-super",
+      "checked-exception",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0199",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class R implements AutoCloseable {\n    final int id;\n    R(int id) {\n        this.id = id;\n        System.out.print(\"N\" + id + \" \");\n    }\n    public void close() {\n        System.out.print(\"C\" + id + \" \");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        int x = 1;\n        try (R a = new R(x); R b = new R(++x)) {\n            var result = switch (x) {\n                case 2 -> \"T\";\n                default -> \"F\";\n            }\n            ;\n            System.out.print(result + \" \");\n        }\n        System.out.println(x);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "N1 N2 T C2 C1 2"
+      },
+      {
+        "id": "B",
+        "text": "N1 N2 T C1 C2 2"
+      },
+      {
+        "id": "C",
+        "text": "N1 N1 F C1 C1 1"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "リソースは左から生成されxは2、switch式はT。closeは逆順でC2,C1、最後にx=2です。",
+    "choiceExplanations": {
+      "A": "正しい。リソースは左から生成されxは2、switch式はT。closeは逆順でC2,C1、最後にx=2です。",
+      "B": "誤り。リソースは左から生成されxは2、switch式はT。closeは逆順でC2,C1、最後にx=2です。",
+      "C": "誤り。リソースは左から生成されxは2、switch式はT。closeは逆順でC2,C1、最後にx=2です。",
+      "D": "誤り。リソースは左から生成されxは2、switch式はT。closeは逆順でC2,C1、最後にx=2です。"
+    },
+    "category": "31. try-with-resources",
+    "tags": [
+      "try-with-resources",
+      "switch-expression",
+      "var",
+      "close-order"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0200",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "interface Calc {\n    default int calc(int x) {\n        return helper(x);\n    }\n    private int helper(int x) {\n        return x * 2;\n    }\n}\nclass Base implements Calc {\n    static int seed = 1;\n    public int calc(int x) {\n        return x + seed;\n    }\n}\nclass Sub extends Base {\n    static int seed = 10;\n    @Override public int calc(int x) {\n        return super.calc(x) + seed;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Calc c = new Sub();\n        var n = c.calc(2);\n        System.out.println(n);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "13 と出力される"
+      },
+      {
+        "id": "B",
+        "text": "Sub.calc()が動的に呼ばれる"
+      },
+      {
+        "id": "C",
+        "text": "Calcのprivate helper()がSubへ継承される"
+      },
+      {
+        "id": "D",
+        "text": "Base.seedへの参照はSub.seedを動的に選ぶ"
+      },
+      {
+        "id": "E",
+        "text": "default calc()はクラス側のメソッドより優先される"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "Calc参照でも実体Subのcalc()が呼ばれます。super.calc(2)はBase.seed=1を使い3、そこへSub.seed=10で13です。クラスメソッドがdefaultより優先されます。",
+    "choiceExplanations": {
+      "A": "正しい。Calc参照でも実体Subのcalc()が呼ばれます。super.calc(2)はBase.seed=1を使い3、そこへSub.seed=10で13です。クラスメソッドがdefaultより優先されます。",
+      "B": "正しい。Calc参照でも実体Subのcalc()が呼ばれます。super.calc(2)はBase.seed=1を使い3、そこへSub.seed=10で13です。クラスメソッドがdefaultより優先されます。",
+      "C": "誤り。Calc参照でも実体Subのcalc()が呼ばれます。super.calc(2)はBase.seed=1を使い3、そこへSub.seed=10で13です。クラスメソッドがdefaultより優先されます。",
+      "D": "誤り。Calc参照でも実体Subのcalc()が呼ばれます。super.calc(2)はBase.seed=1を使い3、そこへSub.seed=10で13です。クラスメソッドがdefaultより優先されます。",
+      "E": "誤り。Calc参照でも実体Subのcalc()が呼ばれます。super.calc(2)はBase.seed=1を使い3、そこへSub.seed=10で13です。クラスメソッドがdefaultより優先されます。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "interface",
+      "default-method",
+      "override",
+      "static-field",
+      "var"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true,
+    "original": true
+  }
+]

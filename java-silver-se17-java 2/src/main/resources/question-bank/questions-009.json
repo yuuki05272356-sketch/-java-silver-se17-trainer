@@ -1,0 +1,905 @@
+[
+  {
+    "id": "JS17-0161",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int i = 0;\n        outer:\n        while (i < 3) {\n            int j = 0;\n            do {\n                j++;\n                if (j == 2) {\n                    i++;\n                    continue outer;\n                }\n                System.out.print(i + \":\" + j + \" \");\n            }\n            while (j < 3);\n            i++;\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "0:1 1:1 2:1"
+      },
+      {
+        "id": "B",
+        "text": "0:1 0:3 1:1 1:3 2:1 2:3"
+      },
+      {
+        "id": "C",
+        "text": "0:1 のみ"
+      },
+      {
+        "id": "D",
+        "text": "無限ループ"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "各外側反復でj=1だけ出力し、j=2でiを増やしてcontinue outerします。",
+    "choiceExplanations": {
+      "A": "正しい。各外側反復でj=1だけ出力し、j=2でiを増やしてcontinue outerします。",
+      "B": "誤り。各外側反復でj=1だけ出力し、j=2でiを増やしてcontinue outerします。",
+      "C": "誤り。各外側反復でj=1だけ出力し、j=2でiを増やしてcontinue outerします。",
+      "D": "誤り。各外側反復でj=1だけ出力し、j=2でiを増やしてcontinue outerします。",
+      "E": "誤り。各外側反復でj=1だけ出力し、j=2でiを増やしてcontinue outerします。"
+    },
+    "category": "12. break / continue",
+    "tags": [
+      "labeled-continue",
+      "while",
+      "do-while",
+      "nested-loop"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0162",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int total = 0;\n        for (int i = 0; i < 4; i++) {\n            if (i == 1) continue;\n            if (i == 3) break;\n            total += i;\n        }\n        System.out.println(total);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "0と2だけが加算対象になる"
+      },
+      {
+        "id": "B",
+        "text": "出力は2"
+      },
+      {
+        "id": "C",
+        "text": "continueするとfor文の更新式i++も実行されない"
+      },
+      {
+        "id": "D",
+        "text": "breakすると外側のmainメソッドも終了する"
+      },
+      {
+        "id": "E",
+        "text": "i==3のときtotalへ3を加えてからbreakする"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "continueは更新式へ進み、breakはforループだけを抜けます。加算はi=0と2で合計2です。",
+    "choiceExplanations": {
+      "A": "正しい。continueは更新式へ進み、breakはforループだけを抜けます。加算はi=0と2で合計2です。",
+      "B": "正しい。continueは更新式へ進み、breakはforループだけを抜けます。加算はi=0と2で合計2です。",
+      "C": "誤り。continueは更新式へ進み、breakはforループだけを抜けます。加算はi=0と2で合計2です。",
+      "D": "誤り。continueは更新式へ進み、breakはforループだけを抜けます。加算はi=0と2で合計2です。",
+      "E": "誤り。continueは更新式へ進み、breakはforループだけを抜けます。加算はi=0と2で合計2です。"
+    },
+    "category": "11. while / do-while / for / 拡張for",
+    "tags": [
+      "for",
+      "break",
+      "continue"
+    ],
+    "difficulty": 3,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0163",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int[] a = {\n            1, 2, 3\n        }\n        ;\n        for (int x : a) {\n            x *= 10;\n        }\n        for (int x : a) {\n            System.out.print(x);\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "123"
+      },
+      {
+        "id": "B",
+        "text": "102030"
+      },
+      {
+        "id": "C",
+        "text": "111213"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "拡張forのxは各要素の値のコピーです。xを変更しても配列要素は変わりません。",
+    "choiceExplanations": {
+      "A": "正しい。拡張forのxは各要素の値のコピーです。xを変更しても配列要素は変わりません。",
+      "B": "誤り。拡張forのxは各要素の値のコピーです。xを変更しても配列要素は変わりません。",
+      "C": "誤り。拡張forのxは各要素の値のコピーです。xを変更しても配列要素は変わりません。",
+      "D": "誤り。拡張forのxは各要素の値のコピーです。xを変更しても配列要素は変わりません。"
+    },
+    "category": "11. while / do-while / for / 拡張for",
+    "tags": [
+      "enhanced-for",
+      "array",
+      "value-copy"
+    ],
+    "difficulty": 3,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0164",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int i = 0;\n        do {\n            System.out.print(i);\n            i++;\n        }\n        while (false);\n        while (i < 2) {\n            System.out.print(i);\n            i++;\n        }\n        System.out.println(i);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "012"
+      },
+      {
+        "id": "B",
+        "text": "0112"
+      },
+      {
+        "id": "C",
+        "text": "0012"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "do-whileは条件がfalseでも本体を1回実行して0。その後whileでi=1を出力し、最後に2をprintlnします。",
+    "choiceExplanations": {
+      "A": "正しい。do-whileは条件がfalseでも本体を1回実行して0。その後whileでi=1を出力し、最後に2をprintlnします。",
+      "B": "誤り。do-whileは条件がfalseでも本体を1回実行して0。その後whileでi=1を出力し、最後に2をprintlnします。",
+      "C": "誤り。do-whileは条件がfalseでも本体を1回実行して0。その後whileでi=1を出力し、最後に2をprintlnします。",
+      "D": "誤り。do-whileは条件がfalseでも本体を1回実行して0。その後whileでi=1を出力し、最後に2をprintlnします。"
+    },
+    "category": "11. while / do-while / for / 拡張for",
+    "tags": [
+      "do-while",
+      "while",
+      "execution-order"
+    ],
+    "difficulty": 2,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0165",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int count = 0;\n        label:\n        for (int i = 0; i < 3; i++) {\n            for (int j = 0; j < 3; j++) {\n                if (i + j == 3) break label;\n                count++;\n            }\n        }\n        System.out.println(count);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "3"
+      },
+      {
+        "id": "B",
+        "text": "5"
+      },
+      {
+        "id": "C",
+        "text": "6"
+      },
+      {
+        "id": "D",
+        "text": "7"
+      },
+      {
+        "id": "E",
+        "text": "9"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "(0,0)(0,1)(0,2)(1,0)(1,1)の5回count++後、(1,2)で和3となりラベル付きbreakで両ループを抜けます。",
+    "choiceExplanations": {
+      "A": "誤り。(0,0)(0,1)(0,2)(1,0)(1,1)の5回count++後、(1,2)で和3となりラベル付きbreakで両ループを抜けます。",
+      "B": "正しい。(0,0)(0,1)(0,2)(1,0)(1,1)の5回count++後、(1,2)で和3となりラベル付きbreakで両ループを抜けます。",
+      "C": "誤り。(0,0)(0,1)(0,2)(1,0)(1,1)の5回count++後、(1,2)で和3となりラベル付きbreakで両ループを抜けます。",
+      "D": "誤り。(0,0)(0,1)(0,2)(1,0)(1,1)の5回count++後、(1,2)で和3となりラベル付きbreakで両ループを抜けます。",
+      "E": "誤り。(0,0)(0,1)(0,2)(1,0)(1,1)の5回count++後、(1,2)で和3となりラベル付きbreakで両ループを抜けます。"
+    },
+    "category": "12. break / continue",
+    "tags": [
+      "labeled-break",
+      "nested-loop",
+      "for"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0166",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int[][] a = new int[3][];\n        a[0] = new int[] {\n            1, 2\n        }\n        ;\n        a[1] = new int[1];\n        a[2] = new int[] {\n            3, 4, 5\n        }\n        ;\n        int total = 0;\n        for (int[] row : a) {\n            for (int x : row) total += x;\n        }\n        System.out.println(total + \":\" + a[1][0]);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "15:0"
+      },
+      {
+        "id": "B",
+        "text": "15:null"
+      },
+      {
+        "id": "C",
+        "text": "14:0"
+      },
+      {
+        "id": "D",
+        "text": "ArrayIndexOutOfBoundsException"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "不規則配列は有効で、new int[1]の要素はデフォルト0です。合計は1+2+0+3+4+5=15です。",
+    "choiceExplanations": {
+      "A": "正しい。不規則配列は有効で、new int[1]の要素はデフォルト0です。合計は1+2+0+3+4+5=15です。",
+      "B": "誤り。不規則配列は有効で、new int[1]の要素はデフォルト0です。合計は1+2+0+3+4+5=15です。",
+      "C": "誤り。不規則配列は有効で、new int[1]の要素はデフォルト0です。合計は1+2+0+3+4+5=15です。",
+      "D": "誤り。不規則配列は有効で、new int[1]の要素はデフォルト0です。合計は1+2+0+3+4+5=15です。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "jagged-array",
+      "default-value",
+      "enhanced-for"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0167",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class A {\n}\nclass B extends A {\n}\npublic class Main {\n    public static void main(String[] args) {\n        B[] bs = {\n            new B(), new B()\n        }\n        ;\n        A[] as = bs;\n        as[0] = new A();\n        System.out.println(as.length);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "2"
+      },
+      {
+        "id": "B",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "as[0]代入時にArrayStoreException"
+      },
+      {
+        "id": "D",
+        "text": "ClassCastException"
+      },
+      {
+        "id": "E",
+        "text": "NullPointerException"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "配列は共変なのでB[]をA[]へ代入できますが、実体配列はB[]です。Aインスタンスを格納しようとすると実行時にArrayStoreExceptionです。",
+    "choiceExplanations": {
+      "A": "誤り。配列は共変なのでB[]をA[]へ代入できますが、実体配列はB[]です。Aインスタンスを格納しようとすると実行時にArrayStoreExceptionです。",
+      "B": "誤り。配列は共変なのでB[]をA[]へ代入できますが、実体配列はB[]です。Aインスタンスを格納しようとすると実行時にArrayStoreExceptionです。",
+      "C": "正しい。配列は共変なのでB[]をA[]へ代入できますが、実体配列はB[]です。Aインスタンスを格納しようとすると実行時にArrayStoreExceptionです。",
+      "D": "誤り。配列は共変なのでB[]をA[]へ代入できますが、実体配列はB[]です。Aインスタンスを格納しようとすると実行時にArrayStoreExceptionです。",
+      "E": "誤り。配列は共変なのでB[]をA[]へ代入できますが、実体配列はB[]です。Aインスタンスを格納しようとすると実行時にArrayStoreExceptionです。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "array-covariance",
+      "ArrayStoreException",
+      "runtime-type"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0168",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        String[][] names = new String[2][3];\n        names[0][1] = \"A\";\n        names[1] = new String[] {\n            \"B\"\n        }\n        ;\n        System.out.println(names[0][0]);\n        System.out.println(names[1].length);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "最初の出力はnull"
+      },
+      {
+        "id": "B",
+        "text": "2つ目の出力は1"
+      },
+      {
+        "id": "C",
+        "text": "names[1]へ長さ1の配列を代入できない"
+      },
+      {
+        "id": "D",
+        "text": "new String[2][3]の全要素には空文字が入る"
+      },
+      {
+        "id": "E",
+        "text": "names[0].lengthも1になる"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "参照型配列要素のデフォルトはnullで、二次元配列の各行参照は別の長さの配列に置き換えられます。",
+    "choiceExplanations": {
+      "A": "正しい。参照型配列要素のデフォルトはnullで、二次元配列の各行参照は別の長さの配列に置き換えられます。",
+      "B": "正しい。参照型配列要素のデフォルトはnullで、二次元配列の各行参照は別の長さの配列に置き換えられます。",
+      "C": "誤り。参照型配列要素のデフォルトはnullで、二次元配列の各行参照は別の長さの配列に置き換えられます。",
+      "D": "誤り。参照型配列要素のデフォルトはnullで、二次元配列の各行参照は別の長さの配列に置き換えられます。",
+      "E": "誤り。参照型配列要素のデフォルトはnullで、二次元配列の各行参照は別の長さの配列に置き換えられます。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "multidimensional-array",
+      "reference-array",
+      "default-value"
+    ],
+    "difficulty": 3,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0169",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static void change(int[] a) {\n        a[0] = 9;\n        a = new int[] {\n            7, 8\n        }\n        ;\n        a[1] = 6;\n    }\n    public static void main(String[] args) {\n        int[] x = {\n            1, 2\n        }\n        ;\n        change(x);\n        System.out.println(x[0] + \":\" + x[1]);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1:2"
+      },
+      {
+        "id": "B",
+        "text": "9:2"
+      },
+      {
+        "id": "C",
+        "text": "7:6"
+      },
+      {
+        "id": "D",
+        "text": "9:6"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "配列参照も値渡しです。元配列のa[0]変更は残りますが、aへ新配列を再代入してもxの参照は変わりません。",
+    "choiceExplanations": {
+      "A": "誤り。配列参照も値渡しです。元配列のa[0]変更は残りますが、aへ新配列を再代入してもxの参照は変わりません。",
+      "B": "正しい。配列参照も値渡しです。元配列のa[0]変更は残りますが、aへ新配列を再代入してもxの参照は変わりません。",
+      "C": "誤り。配列参照も値渡しです。元配列のa[0]変更は残りますが、aへ新配列を再代入してもxの参照は変わりません。",
+      "D": "誤り。配列参照も値渡しです。元配列のa[0]変更は残りますが、aへ新配列を再代入してもxの参照は変わりません。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "array",
+      "reference",
+      "parameter"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0170",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int[][] a = {\n            {\n                1, 2\n            }\n            ,\n            null,\n            {\n                3\n            }\n        }\n        ;\n        int total = 0;\n        for (int[] row : a) {\n            total += row.length;\n        }\n        System.out.println(total);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "3"
+      },
+      {
+        "id": "B",
+        "text": "4"
+      },
+      {
+        "id": "C",
+        "text": "nullの行でNullPointerException"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "二次元配列の行参照自体はnullになり得ます。null.lengthでNullPointerExceptionです。",
+    "choiceExplanations": {
+      "A": "誤り。二次元配列の行参照自体はnullになり得ます。null.lengthでNullPointerExceptionです。",
+      "B": "誤り。二次元配列の行参照自体はnullになり得ます。null.lengthでNullPointerExceptionです。",
+      "C": "正しい。二次元配列の行参照自体はnullになり得ます。null.lengthでNullPointerExceptionです。",
+      "D": "誤り。二次元配列の行参照自体はnullになり得ます。null.lengthでNullPointerExceptionです。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "multidimensional-array",
+      "null",
+      "NullPointerException"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0171",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class A {\n}\nclass B extends A {\n}\npublic class Main {\n    public static void main(String[] args) {\n        A[] x = new B[2];\n        x[0] = new B();\n        Object o = x;\n        System.out.println(x.length);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "コードはコンパイルできる"
+      },
+      {
+        "id": "B",
+        "text": "2 と出力される"
+      },
+      {
+        "id": "C",
+        "text": "A[]とB[]には継承関係がない"
+      },
+      {
+        "id": "D",
+        "text": "Object o = x は配列なのでコンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "x[0] = new A() も安全に格納できる"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "参照型配列は共変で、すべての配列はObjectのサブタイプです。ただし実体がB[]なのでAの格納はArrayStoreExceptionになります。",
+    "choiceExplanations": {
+      "A": "正しい。参照型配列は共変で、すべての配列はObjectのサブタイプです。ただし実体がB[]なのでAの格納はArrayStoreExceptionになります。",
+      "B": "正しい。参照型配列は共変で、すべての配列はObjectのサブタイプです。ただし実体がB[]なのでAの格納はArrayStoreExceptionになります。",
+      "C": "誤り。参照型配列は共変で、すべての配列はObjectのサブタイプです。ただし実体がB[]なのでAの格納はArrayStoreExceptionになります。",
+      "D": "誤り。参照型配列は共変で、すべての配列はObjectのサブタイプです。ただし実体がB[]なのでAの格納はArrayStoreExceptionになります。",
+      "E": "誤り。参照型配列は共変で、すべての配列はObjectのサブタイプです。ただし実体がB[]なのでAの格納はArrayStoreExceptionになります。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "array-covariance",
+      "Object",
+      "runtime-type"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0172",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int[] a;\n        a = new int[] {\n            1, 2, 3\n        }\n        ;\n        int[] b = {\n            4, 5\n        }\n        ;\n        // int[] c;\n        // c = {6, 7};\n        System.out.println(a.length + b.length);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "現状コードの出力は4"
+      },
+      {
+        "id": "B",
+        "text": "コメントの2行を有効にしても有効"
+      },
+      {
+        "id": "C",
+        "text": "配列初期化子 `{6,7}` は宣言と分離した代入にはそのまま使えない"
+      },
+      {
+        "id": "D",
+        "text": "a = new int[]{...} も無効"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "配列初期化子だけの `{...}` は宣言時初期化で使えます。後から代入するならnew int[]{...}が必要です。現状コードの出力自体は5ですが、設問はコメントを含む仕様を問う選択肢でCが最も適切です。",
+    "choiceExplanations": {
+      "A": "誤り。配列初期化子だけの `{...}` は宣言時初期化で使えます。後から代入するならnew int[]{...}が必要です。現状コードの出力自体は5ですが、設問はコメントを含む仕様を問う選択肢でCが最も適切です。",
+      "B": "誤り。配列初期化子だけの `{...}` は宣言時初期化で使えます。後から代入するならnew int[]{...}が必要です。現状コードの出力自体は5ですが、設問はコメントを含む仕様を問う選択肢でCが最も適切です。",
+      "C": "正しい。配列初期化子だけの `{...}` は宣言時初期化で使えます。後から代入するならnew int[]{...}が必要です。現状コードの出力自体は5ですが、設問はコメントを含む仕様を問う選択肢でCが最も適切です。",
+      "D": "誤り。配列初期化子だけの `{...}` は宣言時初期化で使えます。後から代入するならnew int[]{...}が必要です。現状コードの出力自体は5ですが、設問はコメントを含む仕様を問う選択肢でCが最も適切です。",
+      "E": "誤り。配列初期化子だけの `{...}` は宣言時初期化で使えます。後から代入するならnew int[]{...}が必要です。現状コードの出力自体は5ですが、設問はコメントを含む仕様を問う選択肢でCが最も適切です。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "array-initializer",
+      "declaration",
+      "new-array"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0173",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class A {\n    int x = 1;\n    int get() {\n        return x;\n    }\n}\nclass B extends A {\n    int x = 2;\n    @Override int get() {\n        return x;\n    }\n    int own() {\n        return x * 10;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A a = new B();\n        B b = (B) a;\n        System.out.println(a.x + \":\" + a.get() + \":\" + b.own());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1:1:20"
+      },
+      {
+        "id": "B",
+        "text": "1:2:20"
+      },
+      {
+        "id": "C",
+        "text": "2:2:20"
+      },
+      {
+        "id": "D",
+        "text": "2:1:10"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "a.xは参照型Aのフィールド1、get()は実体Bのoverrideで2、キャストしたb.own()は20です。",
+    "choiceExplanations": {
+      "A": "誤り。a.xは参照型Aのフィールド1、get()は実体Bのoverrideで2、キャストしたb.own()は20です。",
+      "B": "正しい。a.xは参照型Aのフィールド1、get()は実体Bのoverrideで2、キャストしたb.own()は20です。",
+      "C": "誤り。a.xは参照型Aのフィールド1、get()は実体Bのoverrideで2、キャストしたb.own()は20です。",
+      "D": "誤り。a.xは参照型Aのフィールド1、get()は実体Bのoverrideで2、キャストしたb.own()は20です。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "field-hiding",
+      "override",
+      "downcast"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0174",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class A {\n}\nclass B extends A {\n}\nclass C extends B {\n}\npublic class Main {\n    static void m(A a) {\n        System.out.print(\"A\");\n    }\n    static void m(B b) {\n        System.out.print(\"B\");\n    }\n    public static void main(String[] args) {\n        A x = new C();\n        m(x);\n        m((B) x);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "AA"
+      },
+      {
+        "id": "B",
+        "text": "AB"
+      },
+      {
+        "id": "C",
+        "text": "BB"
+      },
+      {
+        "id": "D",
+        "text": "BC"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "オーバーロードはコンパイル時の式の型で決まります。xはA型なのでm(A)、キャスト式はB型なのでm(B)です。",
+    "choiceExplanations": {
+      "A": "誤り。オーバーロードはコンパイル時の式の型で決まります。xはA型なのでm(A)、キャスト式はB型なのでm(B)です。",
+      "B": "正しい。オーバーロードはコンパイル時の式の型で決まります。xはA型なのでm(A)、キャスト式はB型なのでm(B)です。",
+      "C": "誤り。オーバーロードはコンパイル時の式の型で決まります。xはA型なのでm(A)、キャスト式はB型なのでm(B)です。",
+      "D": "誤り。オーバーロードはコンパイル時の式の型で決まります。xはA型なのでm(A)、キャスト式はB型なのでm(B)です。",
+      "E": "誤り。オーバーロードはコンパイル時の式の型で決まります。xはA型なのでm(A)、キャスト式はB型なのでm(B)です。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "overload",
+      "cast",
+      "compile-time-type"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0175",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class A {\n    static int n = 1;\n    static int get() {\n        return n;\n    }\n}\nclass B extends A {\n    static int n = 2;\n    static int get() {\n        return n;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A a = new B();\n        System.out.println(a.n + \":\" + a.get());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "staticフィールドnは参照型A基準で1"
+      },
+      {
+        "id": "B",
+        "text": "static get()も参照型A基準で1を返す"
+      },
+      {
+        "id": "C",
+        "text": "実体がBなので2:2になる"
+      },
+      {
+        "id": "D",
+        "text": "staticメソッドは動的ディスパッチされる"
+      },
+      {
+        "id": "E",
+        "text": "B.get()はA.get()をoverrideしている"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "staticメンバーはインスタンス経由で呼べても参照型に基づいて解決され、overrideではなくhideです。",
+    "choiceExplanations": {
+      "A": "正しい。staticメンバーはインスタンス経由で呼べても参照型に基づいて解決され、overrideではなくhideです。",
+      "B": "正しい。staticメンバーはインスタンス経由で呼べても参照型に基づいて解決され、overrideではなくhideです。",
+      "C": "誤り。staticメンバーはインスタンス経由で呼べても参照型に基づいて解決され、overrideではなくhideです。",
+      "D": "誤り。staticメンバーはインスタンス経由で呼べても参照型に基づいて解決され、overrideではなくhideです。",
+      "E": "誤り。staticメンバーはインスタンス経由で呼べても参照型に基づいて解決され、overrideではなくhideです。"
+    },
+    "category": "17. static",
+    "tags": [
+      "static-hiding",
+      "field-hiding",
+      "reference-type"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0176",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "interface I {\n    void run();\n}\nclass A implements I {\n    public void run() {\n        System.out.print(\"A\");\n    }\n}\nclass B extends A {\n    @Override public void run() {\n        System.out.print(\"B\");\n    }\n    void own() {\n        System.out.print(\"X\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        I i = new B();\n        i.run();\n        ((B) i).own();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "AX"
+      },
+      {
+        "id": "B",
+        "text": "BX"
+      },
+      {
+        "id": "C",
+        "text": "BA"
+      },
+      {
+        "id": "D",
+        "text": "ClassCastException"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "interface参照でもinstanceメソッドは実体Bへ動的ディスパッチされます。実体がBなのでダウンキャストも成功します。",
+    "choiceExplanations": {
+      "A": "誤り。interface参照でもinstanceメソッドは実体Bへ動的ディスパッチされます。実体がBなのでダウンキャストも成功します。",
+      "B": "正しい。interface参照でもinstanceメソッドは実体Bへ動的ディスパッチされます。実体がBなのでダウンキャストも成功します。",
+      "C": "誤り。interface参照でもinstanceメソッドは実体Bへ動的ディスパッチされます。実体がBなのでダウンキャストも成功します。",
+      "D": "誤り。interface参照でもinstanceメソッドは実体Bへ動的ディスパッチされます。実体がBなのでダウンキャストも成功します。",
+      "E": "誤り。interface参照でもinstanceメソッドは実体Bへ動的ディスパッチされます。実体がBなのでダウンキャストも成功します。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "interface",
+      "polymorphism",
+      "cast"
+    ],
+    "difficulty": 3,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0177",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class A {\n}\nclass B extends A {\n}\npublic class Main {\n    static void test(Object o) {\n        if (o instanceof A a && a instanceof B b) {\n            System.out.println(b.getClass().getSimpleName());\n        }\n        else {\n            System.out.println(\"other\");\n        }\n    }\n    public static void main(String[] args) {\n        test(new B());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A"
+      },
+      {
+        "id": "B",
+        "text": "B"
+      },
+      {
+        "id": "C",
+        "text": "other"
+      },
+      {
+        "id": "D",
+        "text": "2つ目のinstanceofでaはスコープ外なのでコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "&&の右側では最初のパターン変数aが確実に束縛され、さらにB bへパターンマッチできます。",
+    "choiceExplanations": {
+      "A": "誤り。&&の右側では最初のパターン変数aが確実に束縛され、さらにB bへパターンマッチできます。",
+      "B": "正しい。&&の右側では最初のパターン変数aが確実に束縛され、さらにB bへパターンマッチできます。",
+      "C": "誤り。&&の右側では最初のパターン変数aが確実に束縛され、さらにB bへパターンマッチできます。",
+      "D": "誤り。&&の右側では最初のパターン変数aが確実に束縛され、さらにB bへパターンマッチできます。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "pattern-matching",
+      "and",
+      "scope",
+      "cast"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0178",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class A {\n    String id() {\n        return \"A\";\n    }\n}\nclass B extends A {\n    @Override String id() {\n        return \"B\";\n    }\n}\npublic class Main {\n    static A make() {\n        return new B();\n    }\n    public static void main(String[] args) {\n        A a = make();\n        System.out.println(a.id());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "make()の宣言上の戻り値型はA"
+      },
+      {
+        "id": "B",
+        "text": "実行時にはB.id()が呼ばれる"
+      },
+      {
+        "id": "C",
+        "text": "aのコンパイル時型はB"
+      },
+      {
+        "id": "D",
+        "text": "A型変数にはBオブジェクトを代入できない"
+      },
+      {
+        "id": "E",
+        "text": "id()はstaticに解決される"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "戻り値の参照型はAでも実体はBで、overrideされたid()は実体に基づきB版が実行されます。",
+    "choiceExplanations": {
+      "A": "正しい。戻り値の参照型はAでも実体はBで、overrideされたid()は実体に基づきB版が実行されます。",
+      "B": "正しい。戻り値の参照型はAでも実体はBで、overrideされたid()は実体に基づきB版が実行されます。",
+      "C": "誤り。戻り値の参照型はAでも実体はBで、overrideされたid()は実体に基づきB版が実行されます。",
+      "D": "誤り。戻り値の参照型はAでも実体はBで、overrideされたid()は実体に基づきB版が実行されます。",
+      "E": "誤り。戻り値の参照型はAでも実体はBで、overrideされたid()は実体に基づきB版が実行されます。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "return-type",
+      "polymorphism",
+      "override"
+    ],
+    "difficulty": 3,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0179",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class R implements AutoCloseable {\n    final String n;\n    R(String n) {\n        this.n = n;\n    }\n    public void close() {\n        System.out.print(\"C\" + n + \" \");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R a = new R(\"1\"); R b = new R(\"2\")) {\n            System.out.print(\"T \");\n        }\n        finally {\n            System.out.print(\"F\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "T C1 C2 F"
+      },
+      {
+        "id": "B",
+        "text": "T C2 C1 F"
+      },
+      {
+        "id": "C",
+        "text": "C2 C1 T F"
+      },
+      {
+        "id": "D",
+        "text": "T F C2 C1"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "リソースは宣言の逆順でcloseされ、その後finallyです。",
+    "choiceExplanations": {
+      "A": "誤り。リソースは宣言の逆順でcloseされ、その後finallyです。",
+      "B": "正しい。リソースは宣言の逆順でcloseされ、その後finallyです。",
+      "C": "誤り。リソースは宣言の逆順でcloseされ、その後finallyです。",
+      "D": "誤り。リソースは宣言の逆順でcloseされ、その後finallyです。"
+    },
+    "category": "31. try-with-resources",
+    "tags": [
+      "resource-close-order",
+      "finally",
+      "AutoCloseable"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0180",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "import java.io.IOException;\nclass P {\n    void m() throws IOException {\n    }\n}\nclass C extends P {\n    @Override\n    void m() {\n        throw new IllegalStateException();\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        P p = new C();\n        try {\n            p.m();\n        }\n        catch (IOException e) {\n            System.out.println(\"IO\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "IO"
+      },
+      {
+        "id": "B",
+        "text": "何も表示されない"
+      },
+      {
+        "id": "C",
+        "text": "IllegalStateExceptionが伝播する"
+      },
+      {
+        "id": "D",
+        "text": "Child側でthrows IOExceptionを省略できないためコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "override側は親のchecked例外を省略できます。呼び出しは宣言型Pに基づきIOException処理が必要ですが、実際にはC.m()のunchecked IllegalStateExceptionが伝播します。",
+    "choiceExplanations": {
+      "A": "誤り。override側は親のchecked例外を省略できます。呼び出しは宣言型Pに基づきIOException処理が必要ですが、実際にはC.m()のunchecked IllegalStateExceptionが伝播します。",
+      "B": "誤り。override側は親のchecked例外を省略できます。呼び出しは宣言型Pに基づきIOException処理が必要ですが、実際にはC.m()のunchecked IllegalStateExceptionが伝播します。",
+      "C": "正しい。override側は親のchecked例外を省略できます。呼び出しは宣言型Pに基づきIOException処理が必要ですが、実際にはC.m()のunchecked IllegalStateExceptionが伝播します。",
+      "D": "誤り。override側は親のchecked例外を省略できます。呼び出しは宣言型Pに基づきIOException処理が必要ですが、実際にはC.m()のunchecked IllegalStateExceptionが伝播します。"
+    },
+    "category": "23. override",
+    "tags": [
+      "override",
+      "throws",
+      "unchecked-exception",
+      "polymorphism"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  }
+]

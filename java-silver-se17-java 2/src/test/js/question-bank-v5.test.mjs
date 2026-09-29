@@ -13,17 +13,29 @@ const questions = manifest.files.flatMap(file =>
   JSON.parse(fs.readFileSync(path.join(bankDir, file), 'utf8'))
 );
 
-test('V6 question bank contains 100 unique questions and supports full mock exam default', () => {
-  assert.equal(questions.length, 100);
-  assert.equal(new Set(questions.map(q => q.id)).size, 100);
+test('V7 question bank contains 200 unique questions and supports full mock exam default', () => {
+  assert.equal(questions.length, 200);
+  assert.equal(new Set(questions.map(q => q.id)).size, 200);
   assert.equal(config.questionCount, 60);
-  assert.deepEqual(manifest.files, ['questions-001.json', 'questions-002.json', 'questions-003.json', 'questions-004.json', 'questions-005.json']);
+  assert.deepEqual(
+    manifest.files,
+    Array.from({ length: 10 }, (_, i) => `questions-${String(i + 1).padStart(3, '0')}.json`)
+  );
 });
 
-test('new V6 questions occupy JS17-0071 through JS17-0100', () => {
-  const newIds = questions.slice(70).map(q => q.id);
-  const expected = Array.from({ length: 30 }, (_, i) => `JS17-${String(i + 71).padStart(4, '0')}`);
+test('new V7 questions occupy JS17-0101 through JS17-0200', () => {
+  const newIds = questions.slice(100).map(q => q.id);
+  const expected = Array.from({ length: 100 }, (_, i) => `JS17-${String(i + 101).padStart(4, '0')}`);
   assert.deepEqual(newIds, expected);
+});
+
+test('V7 additions are code-heavy and include multiple-selection practice', () => {
+  const added = questions.slice(100);
+  assert.equal(added.length, 100);
+  assert.equal(added.filter(q => q.code && q.code.trim()).length, 100);
+  assert.ok(added.filter(q => q.code.split('\n').length >= 15).length >= 70);
+  assert.ok(added.filter(q => q.multipleChoice).length >= 18);
+  assert.ok(added.filter(q => q.difficulty >= 4).length >= 70);
 });
 
 test('all questions have complete review data and no exact duplicate prompt/code pair', () => {

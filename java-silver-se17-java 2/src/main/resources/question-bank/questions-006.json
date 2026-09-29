@@ -1,0 +1,918 @@
+[
+  {
+    "id": "JS17-0101",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Parent {\n    static {\n        System.out.print(\"PS \");\n    }\n    int p = mark(\"PF \");\n    {\n        System.out.print(\"PI \");\n    }\n    Parent() {\n        System.out.print(\"PC \");\n    }\n    static int mark(String s) {\n        System.out.print(s);\n        return 1;\n    }\n}\nclass Child extends Parent {\n    static {\n        System.out.print(\"CS \");\n    }\n    int c = mark(\"CF \");\n    {\n        System.out.print(\"CI \");\n    }\n    Child() {\n        System.out.print(\"CC \");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(\"M \");\n        new Child();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "PS CS M PF PI PC CF CI CC"
+      },
+      {
+        "id": "B",
+        "text": "M PS CS PF PI PC CF CI CC"
+      },
+      {
+        "id": "C",
+        "text": "PS CS PF PI PC CF CI CC M"
+      },
+      {
+        "id": "D",
+        "text": "PS M CS PF PI PC CF CI CC"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "mainの実行が始まってMを出力した後、new Child()でChildが初めて能動的に使用されます。その時点でParent→Childのstatic初期化が行われ、その後Parentのフィールド/初期化子/コンストラクタ、Childのフィールド/初期化子/コンストラクタの順に進みます。",
+    "choiceExplanations": {
+      "A": "誤り。mainの実行が始まってMを出力した後、new Child()でChildが初めて能動的に使用されます。その時点でParent→Childのstatic初期化が行われ、その後Parentのフィールド/初期化子/コンストラクタ、Childのフィールド/初期化子/コンストラクタの順に進みます。",
+      "B": "正しい。mainの実行が始まってMを出力した後、new Child()でChildが初めて能動的に使用されます。その時点でParent→Childのstatic初期化が行われ、その後Parentのフィールド/初期化子/コンストラクタ、Childのフィールド/初期化子/コンストラクタの順に進みます。",
+      "C": "誤り。mainの実行が始まってMを出力した後、new Child()でChildが初めて能動的に使用されます。その時点でParent→Childのstatic初期化が行われ、その後Parentのフィールド/初期化子/コンストラクタ、Childのフィールド/初期化子/コンストラクタの順に進みます。",
+      "D": "誤り。mainの実行が始まってMを出力した後、new Child()でChildが初めて能動的に使用されます。その時点でParent→Childのstatic初期化が行われ、その後Parentのフィールド/初期化子/コンストラクタ、Childのフィールド/初期化子/コンストラクタの順に進みます。"
+    },
+    "category": "13. クラス・オブジェクト",
+    "tags": [
+      "initialization",
+      "constructor",
+      "static",
+      "inheritance"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0102",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class Counter {\n    static int created;\n    int id = ++created;\n    Counter() {\n    }\n    protected void finalizeLike() {\n        System.out.print(id);\n    }\n}\npublic class Main {\n    static Counter make() {\n        Counter c = new Counter();\n        return c;\n    }\n    public static void main(String[] args) {\n        Counter a = make();\n        Counter b = make();\n        a = null;\n        System.out.println(Counter.created + \":\" + b.id);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "出力は 2:2 になる"
+      },
+      {
+        "id": "B",
+        "text": "a = null の直後に1番目のオブジェクトが必ず破棄される"
+      },
+      {
+        "id": "C",
+        "text": "created は全インスタンスで共有される"
+      },
+      {
+        "id": "D",
+        "text": "b.id はstaticなので2になる"
+      },
+      {
+        "id": "E",
+        "text": "make()を2回呼んでもcreatedは1のまま"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "C"
+    ],
+    "explanation": "static変数createdは共有され、2回newされるので2。null代入は参照を外すだけで、GCの実行時期や破棄は保証されません。",
+    "choiceExplanations": {
+      "A": "正しい。static変数createdは共有され、2回newされるので2。null代入は参照を外すだけで、GCの実行時期や破棄は保証されません。",
+      "B": "誤り。static変数createdは共有され、2回newされるので2。null代入は参照を外すだけで、GCの実行時期や破棄は保証されません。",
+      "C": "正しい。static変数createdは共有され、2回newされるので2。null代入は参照を外すだけで、GCの実行時期や破棄は保証されません。",
+      "D": "誤り。static変数createdは共有され、2回newされるので2。null代入は参照を外すだけで、GCの実行時期や破棄は保証されません。",
+      "E": "誤り。static変数createdは共有され、2回newされるので2。null代入は参照を外すだけで、GCの実行時期や破棄は保証されません。"
+    },
+    "category": "13. クラス・オブジェクト",
+    "tags": [
+      "object-lifecycle",
+      "static",
+      "reference",
+      "gc"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0103",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Box {\n    int value;\n    Box(int value) {\n        this.value = value;\n    }\n}\npublic class Main {\n    static void change(Box b, int n) {\n        b.value += n;\n        b = new Box(99);\n        b.value++;\n    }\n    public static void main(String[] args) {\n        Box x = new Box(10);\n        change(x, 5);\n        System.out.println(x.value);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "10"
+      },
+      {
+        "id": "B",
+        "text": "15"
+      },
+      {
+        "id": "C",
+        "text": "99"
+      },
+      {
+        "id": "D",
+        "text": "100"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "参照値は値渡しです。最初の b.value += 5 は元のBoxを変更しますが、その後bへ新しい参照を代入しても呼び出し元xは変わりません。",
+    "choiceExplanations": {
+      "A": "誤り。参照値は値渡しです。最初の b.value += 5 は元のBoxを変更しますが、その後bへ新しい参照を代入しても呼び出し元xは変わりません。",
+      "B": "正しい。参照値は値渡しです。最初の b.value += 5 は元のBoxを変更しますが、その後bへ新しい参照を代入しても呼び出し元xは変わりません。",
+      "C": "誤り。参照値は値渡しです。最初の b.value += 5 は元のBoxを変更しますが、その後bへ新しい参照を代入しても呼び出し元xは変わりません。",
+      "D": "誤り。参照値は値渡しです。最初の b.value += 5 は元のBoxを変更しますが、その後bへ新しい参照を代入しても呼び出し元xは変わりません。",
+      "E": "誤り。参照値は値渡しです。最初の b.value += 5 は元のBoxを変更しますが、その後bへ新しい参照を代入しても呼び出し元xは変わりません。"
+    },
+    "category": "13. クラス・オブジェクト",
+    "tags": [
+      "reference",
+      "parameter",
+      "object-state"
+    ],
+    "difficulty": 3,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0104",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class Base {\n    final int x;\n    Base() {\n        init();\n        x = 10;\n    }\n    void init() {\n        System.out.print(\"B:\" + x + \" \");\n    }\n}\nclass Sub extends Base {\n    int y = 20;\n    @Override void init() {\n        System.out.print(\"S:\" + y + \" \");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Sub s = new Sub();\n        System.out.println(s.x + \":\" + s.y);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "S:0 10:20"
+      },
+      {
+        "id": "B",
+        "text": "B:0 10:20"
+      },
+      {
+        "id": "C",
+        "text": "S:20 10:20"
+      },
+      {
+        "id": "D",
+        "text": "blank final x をinit()より前に初期化していないためコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "Baseコンストラクタからoverride可能なinit()を呼ぶとSub.init()が動きますが、Subのフィールド初期化前なのでyはデフォルト値0です。xはその後10に代入されます。",
+    "choiceExplanations": {
+      "A": "正しい。Baseコンストラクタからoverride可能なinit()を呼ぶとSub.init()が動きますが、Subのフィールド初期化前なのでyはデフォルト値0です。xはその後10に代入されます。",
+      "B": "誤り。Baseコンストラクタからoverride可能なinit()を呼ぶとSub.init()が動きますが、Subのフィールド初期化前なのでyはデフォルト値0です。xはその後10に代入されます。",
+      "C": "誤り。Baseコンストラクタからoverride可能なinit()を呼ぶとSub.init()が動きますが、Subのフィールド初期化前なのでyはデフォルト値0です。xはその後10に代入されます。",
+      "D": "誤り。Baseコンストラクタからoverride可能なinit()を呼ぶとSub.init()が動きますが、Subのフィールド初期化前なのでyはデフォルト値0です。xはその後10に代入されます。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "constructor",
+      "override",
+      "initialization-order",
+      "blank-final"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0105",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class Item {\n    static int count;\n    final int id;\n    Item() {\n        this(++count);\n    }\n    Item(int id) {\n        this.id = id;\n    }\n}\npublic class Main {\n    static Item create(boolean flag) {\n        var a = new Item();\n        if (flag) return a;\n        return new Item(50);\n    }\n    public static void main(String[] args) {\n        Item x = create(false);\n        System.out.println(Item.count + \":\" + x.id);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "出力は 1:50"
+      },
+      {
+        "id": "B",
+        "text": "出力は 2:50"
+      },
+      {
+        "id": "C",
+        "text": "Item()からItem(int)へのthis()呼び出しは無効"
+      },
+      {
+        "id": "D",
+        "text": "final id は宣言時にしか初期化できない"
+      },
+      {
+        "id": "E",
+        "text": "create(false)ではItemオブジェクトが2個生成される"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "E"
+    ],
+    "explanation": "最初にnew Item()でcountが1になり、その後new Item(50)が生成されますがこのコンストラクタはcountを増やしません。finalフィールドは各コンストラクタ経路で一度だけ代入すればよいです。",
+    "choiceExplanations": {
+      "A": "正しい。最初にnew Item()でcountが1になり、その後new Item(50)が生成されますがこのコンストラクタはcountを増やしません。finalフィールドは各コンストラクタ経路で一度だけ代入すればよいです。",
+      "B": "誤り。最初にnew Item()でcountが1になり、その後new Item(50)が生成されますがこのコンストラクタはcountを増やしません。finalフィールドは各コンストラクタ経路で一度だけ代入すればよいです。",
+      "C": "誤り。最初にnew Item()でcountが1になり、その後new Item(50)が生成されますがこのコンストラクタはcountを増やしません。finalフィールドは各コンストラクタ経路で一度だけ代入すればよいです。",
+      "D": "誤り。最初にnew Item()でcountが1になり、その後new Item(50)が生成されますがこのコンストラクタはcountを増やしません。finalフィールドは各コンストラクタ経路で一度だけ代入すればよいです。",
+      "E": "正しい。最初にnew Item()でcountが1になり、その後new Item(50)が生成されますがこのコンストラクタはcountを増やしません。finalフィールドは各コンストラクタ経路で一度だけ代入すればよいです。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "constructor-chain",
+      "final",
+      "static",
+      "object-creation"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0106",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "interface Shape {\n}\nrecord Circle(int r) implements Shape {\n}\nrecord Rect(int w, int h) implements Shape {\n}\npublic class Main {\n    static int areaCode(Shape s) {\n        if (s instanceof Circle c && c.r() > 2) {\n            return c.r() * 10;\n        }\n        if (s instanceof Rect r) {\n            return r.w() + r.h();\n        }\n        return -1;\n    }\n    public static void main(String[] args) {\n        Shape s = new Circle(3);\n        System.out.println(areaCode(s));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "-1"
+      },
+      {
+        "id": "B",
+        "text": "3"
+      },
+      {
+        "id": "C",
+        "text": "6"
+      },
+      {
+        "id": "D",
+        "text": "30"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "&&の右辺とif本体ではパターン変数cがスコープ内です。Circle(3)かつr>2なので30を返します。",
+    "choiceExplanations": {
+      "A": "誤り。&&の右辺とif本体ではパターン変数cがスコープ内です。Circle(3)かつr>2なので30を返します。",
+      "B": "誤り。&&の右辺とif本体ではパターン変数cがスコープ内です。Circle(3)かつr>2なので30を返します。",
+      "C": "誤り。&&の右辺とif本体ではパターン変数cがスコープ内です。Circle(3)かつr>2なので30を返します。",
+      "D": "正しい。&&の右辺とif本体ではパターン変数cがスコープ内です。Circle(3)かつr>2なので30を返します。",
+      "E": "誤り。&&の右辺とif本体ではパターン変数cがスコープ内です。Circle(3)かつr>2なので30を返します。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "instanceof",
+      "pattern-matching",
+      "scope",
+      "record"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0107",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class Animal {\n}\nclass Dog extends Animal {\n    int age = 4;\n}\npublic class Main {\n    static void check(Animal a) {\n        if (a instanceof Dog d || d.age > 3) {\n            System.out.println(d.age);\n        }\n    }\n    public static void main(String[] args) {\n        check(new Dog());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "4 と出力される"
+      },
+      {
+        "id": "B",
+        "text": "何も出力されない"
+      },
+      {
+        "id": "C",
+        "text": "dのスコープが保証されないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "ClassCastExceptionが発生する"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "||では左辺がtrueだと右辺が評価されないため、右辺でパターン変数dを安全に利用できません。またif本体でも条件全体がtrueでもdが必ず束縛されたとは限りません。",
+    "choiceExplanations": {
+      "A": "誤り。||では左辺がtrueだと右辺が評価されないため、右辺でパターン変数dを安全に利用できません。またif本体でも条件全体がtrueでもdが必ず束縛されたとは限りません。",
+      "B": "誤り。||では左辺がtrueだと右辺が評価されないため、右辺でパターン変数dを安全に利用できません。またif本体でも条件全体がtrueでもdが必ず束縛されたとは限りません。",
+      "C": "正しい。||では左辺がtrueだと右辺が評価されないため、右辺でパターン変数dを安全に利用できません。またif本体でも条件全体がtrueでもdが必ず束縛されたとは限りません。",
+      "D": "誤り。||では左辺がtrueだと右辺が評価されないため、右辺でパターン変数dを安全に利用できません。またif本体でも条件全体がtrueでもdが必ず束縛されたとは限りません。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "instanceof",
+      "pattern-variable",
+      "scope",
+      "or"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0108",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class A {\n    String name() {\n        return \"A\";\n    }\n}\nclass B extends A {\n    @Override String name() {\n        return \"B\";\n    }\n}\nclass C extends A {\n    @Override String name() {\n        return \"C\";\n    }\n}\npublic class Main {\n    static void print(A a) {\n        if (!(a instanceof B b)) {\n            System.out.println(\"notB:\" + a.name());\n            return;\n        }\n        System.out.println(\"B:\" + b.name());\n    }\n    public static void main(String[] args) {\n        print(new B());\n        print(new C());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "B:B\nnotB:C"
+      },
+      {
+        "id": "B",
+        "text": "B:A\nnotB:A"
+      },
+      {
+        "id": "C",
+        "text": "notB:B\nnotB:C"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "否定パターンからreturnする制御フローにより、その後ではbが確実にBとして束縛されています。name()はoverrideされるため実体型のメソッドが呼ばれます。",
+    "choiceExplanations": {
+      "A": "正しい。否定パターンからreturnする制御フローにより、その後ではbが確実にBとして束縛されています。name()はoverrideされるため実体型のメソッドが呼ばれます。",
+      "B": "誤り。否定パターンからreturnする制御フローにより、その後ではbが確実にBとして束縛されています。name()はoverrideされるため実体型のメソッドが呼ばれます。",
+      "C": "誤り。否定パターンからreturnする制御フローにより、その後ではbが確実にBとして束縛されています。name()はoverrideされるため実体型のメソッドが呼ばれます。",
+      "D": "誤り。否定パターンからreturnする制御フローにより、その後ではbが確実にBとして束縛されています。name()はoverrideされるため実体型のメソッドが呼ばれます。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "instanceof",
+      "flow-scoping",
+      "override",
+      "polymorphism"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0109",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class Parent {\n}\nclass Child extends Parent {\n}\npublic class Main {\n    static Parent pick(boolean f) {\n        return f ? new Child() : new Parent();\n    }\n    public static void main(String[] args) {\n        Parent p = pick(false);\n        if (p instanceof Child c) {\n            System.out.println(c);\n        }\n        Child c2 = (Child) p;\n        System.out.println(c2);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "コードはコンパイルできる"
+      },
+      {
+        "id": "B",
+        "text": "最後のキャストでClassCastExceptionが発生する"
+      },
+      {
+        "id": "C",
+        "text": "p instanceof Child がtrueになる"
+      },
+      {
+        "id": "D",
+        "text": "Childへの明示キャスト自体がコンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "cはif文の外でも利用できる"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "ParentからChildへのダウンキャストはコンパイル可能ですが、実体がParentなので実行時にClassCastExceptionです。パターン変数cはif本体に限定されます。",
+    "choiceExplanations": {
+      "A": "正しい。ParentからChildへのダウンキャストはコンパイル可能ですが、実体がParentなので実行時にClassCastExceptionです。パターン変数cはif本体に限定されます。",
+      "B": "正しい。ParentからChildへのダウンキャストはコンパイル可能ですが、実体がParentなので実行時にClassCastExceptionです。パターン変数cはif本体に限定されます。",
+      "C": "誤り。ParentからChildへのダウンキャストはコンパイル可能ですが、実体がParentなので実行時にClassCastExceptionです。パターン変数cはif本体に限定されます。",
+      "D": "誤り。ParentからChildへのダウンキャストはコンパイル可能ですが、実体がParentなので実行時にClassCastExceptionです。パターン変数cはif本体に限定されます。",
+      "E": "誤り。ParentからChildへのダウンキャストはコンパイル可能ですが、実体がParentなので実行時にClassCastExceptionです。パターン変数cはif本体に限定されます。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "downcast",
+      "ClassCastException",
+      "instanceof",
+      "scope"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0110",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "interface I {\n}\nclass A implements I {\n}\nfinal class B {\n}\npublic class Main {\n    public static void main(String[] args) {\n        A a = new A();\n        if (a instanceof B b) {\n            System.out.println(b);\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "正常にコンパイルされ何も表示されない"
+      },
+      {
+        "id": "B",
+        "text": "falseなので実行時にだけ判定される"
+      },
+      {
+        "id": "C",
+        "text": "Aとfinal Bに変換可能性がないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "ClassCastExceptionが発生する"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "instanceofは型変換可能性が必要です。AとfinalなBは継承関係がなく、AのサブクラスがBになる可能性もないためinconvertible typesとしてコンパイルエラーです。",
+    "choiceExplanations": {
+      "A": "誤り。instanceofは型変換可能性が必要です。AとfinalなBは継承関係がなく、AのサブクラスがBになる可能性もないためinconvertible typesとしてコンパイルエラーです。",
+      "B": "誤り。instanceofは型変換可能性が必要です。AとfinalなBは継承関係がなく、AのサブクラスがBになる可能性もないためinconvertible typesとしてコンパイルエラーです。",
+      "C": "正しい。instanceofは型変換可能性が必要です。AとfinalなBは継承関係がなく、AのサブクラスがBになる可能性もないためinconvertible typesとしてコンパイルエラーです。",
+      "D": "誤り。instanceofは型変換可能性が必要です。AとfinalなBは継承関係がなく、AのサブクラスがBになる可能性もないためinconvertible typesとしてコンパイルエラーです。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "instanceof",
+      "final",
+      "inconvertible-types",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0111",
+    "question": "Main.java をコンパイルして `java Main A B` と実行したときの結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static void main(int x) {\n        System.out.println(\"int:\" + x);\n    }\n    public static void main(String... args) {\n        System.out.println(\"len:\" + args.length);\n        if (args.length > 0) {\n            System.out.println(args[0]);\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "len:2 のみ"
+      },
+      {
+        "id": "B",
+        "text": "len:2 の後に A"
+      },
+      {
+        "id": "C",
+        "text": "int:2"
+      },
+      {
+        "id": "D",
+        "text": "main(String...)は起動メソッドとして無効"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "String...はString[]と同等のmainシグネチャです。オーバーロードされたmain(int)はjavaランチャーから選ばれません。",
+    "choiceExplanations": {
+      "A": "誤り。String...はString[]と同等のmainシグネチャです。オーバーロードされたmain(int)はjavaランチャーから選ばれません。",
+      "B": "正しい。String...はString[]と同等のmainシグネチャです。オーバーロードされたmain(int)はjavaランチャーから選ばれません。",
+      "C": "誤り。String...はString[]と同等のmainシグネチャです。オーバーロードされたmain(int)はjavaランチャーから選ばれません。",
+      "D": "誤り。String...はString[]と同等のmainシグネチャです。オーバーロードされたmain(int)はjavaランチャーから選ばれません。",
+      "E": "誤り。String...はString[]と同等のmainシグネチャです。オーバーロードされたmain(int)はjavaランチャーから選ばれません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "main",
+      "varargs",
+      "command-line",
+      "overload"
+    ],
+    "difficulty": 3,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0112",
+    "question": "次のソースを `javac Main.java` でコンパイルした場合について正しいものを2つ選びなさい。",
+    "code": "class Helper {\n    static String value() {\n        return \"H\";\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(Helper.value());\n    }\n}\nclass Extra {\n    static void run() {\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Main.class が生成される"
+      },
+      {
+        "id": "B",
+        "text": "Helper.class が生成される"
+      },
+      {
+        "id": "C",
+        "text": "publicでないExtraは同じファイルに書けない"
+      },
+      {
+        "id": "D",
+        "text": "ファイル名はHelper.javaでなければならない"
+      },
+      {
+        "id": "E",
+        "text": "`java Helper` を実行するとmainがなくても自動的にHelper.value()が呼ばれる"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "1つのソースファイルにpublicでないトップレベルクラスを複数置けます。public class Mainに合わせてMain.javaとし、各クラスのclassファイルが生成されます。選択肢は2つ指定なので代表2つを正解とします。",
+    "choiceExplanations": {
+      "A": "正しい。1つのソースファイルにpublicでないトップレベルクラスを複数置けます。public class Mainに合わせてMain.javaとし、各クラスのclassファイルが生成されます。選択肢は2つ指定なので代表2つを正解とします。",
+      "B": "正しい。1つのソースファイルにpublicでないトップレベルクラスを複数置けます。public class Mainに合わせてMain.javaとし、各クラスのclassファイルが生成されます。選択肢は2つ指定なので代表2つを正解とします。",
+      "C": "誤り。1つのソースファイルにpublicでないトップレベルクラスを複数置けます。public class Mainに合わせてMain.javaとし、各クラスのclassファイルが生成されます。選択肢は2つ指定なので代表2つを正解とします。",
+      "D": "誤り。1つのソースファイルにpublicでないトップレベルクラスを複数置けます。public class Mainに合わせてMain.javaとし、各クラスのclassファイルが生成されます。選択肢は2つ指定なので代表2つを正解とします。",
+      "E": "誤り。1つのソースファイルにpublicでないトップレベルクラスを複数置けます。public class Mainに合わせてMain.javaとし、各クラスのclassファイルが生成されます。選択肢は2つ指定なので代表2つを正解とします。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "javac",
+      "source-file",
+      "public-class",
+      "class-file"
+    ],
+    "difficulty": 3,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0113",
+    "question": "次のコードを Main.java としてコンパイルした場合について正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public void main(String[] args) {\n        System.out.println(\"instance\");\n    }\n    static void main(Object[] args) {\n        System.out.println(\"object\");\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "B",
+        "text": "コンパイルは成功し `java Main` でinstanceと表示"
+      },
+      {
+        "id": "C",
+        "text": "コンパイルは成功するがjavaランチャーが要求するmainがなく実行開始できない"
+      },
+      {
+        "id": "D",
+        "text": "java Main でobjectと表示"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "どちらもJava文法上のメソッドとしては有効ですが、起動点はpublic static void main(String[]/String...)です。該当メソッドがありません。",
+    "choiceExplanations": {
+      "A": "誤り。どちらもJava文法上のメソッドとしては有効ですが、起動点はpublic static void main(String[]/String...)です。該当メソッドがありません。",
+      "B": "誤り。どちらもJava文法上のメソッドとしては有効ですが、起動点はpublic static void main(String[]/String...)です。該当メソッドがありません。",
+      "C": "正しい。どちらもJava文法上のメソッドとしては有効ですが、起動点はpublic static void main(String[]/String...)です。該当メソッドがありません。",
+      "D": "誤り。どちらもJava文法上のメソッドとしては有効ですが、起動点はpublic static void main(String[]/String...)です。該当メソッドがありません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "main",
+      "launcher",
+      "signature"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0114",
+    "question": "コマンドライン引数に関して、次のコードを `java Main 10 20` と実行した結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static int parse(String s) {\n        return Integer.parseInt(s);\n    }\n    public static void main(String[] args) {\n        int total = 0;\n        for (String s : args) {\n            total += parse(s);\n        }\n        System.out.println(args[0] + args[1]);\n        System.out.println(total);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "30\n30"
+      },
+      {
+        "id": "B",
+        "text": "1020\n30"
+      },
+      {
+        "id": "C",
+        "text": "1020\n1020"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "NumberFormatException"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "args要素はStringなので+は文字列連結で1020。parse後のintを合計すると30です。",
+    "choiceExplanations": {
+      "A": "誤り。args要素はStringなので+は文字列連結で1020。parse後のintを合計すると30です。",
+      "B": "正しい。args要素はStringなので+は文字列連結で1020。parse後のintを合計すると30です。",
+      "C": "誤り。args要素はStringなので+は文字列連結で1020。parse後のintを合計すると30です。",
+      "D": "誤り。args要素はStringなので+は文字列連結で1020。parse後のintを合計すると30です。",
+      "E": "誤り。args要素はStringなので+は文字列連結で1020。parse後のintを合計すると30です。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "command-line",
+      "String",
+      "parseInt",
+      "enhanced-for"
+    ],
+    "difficulty": 3,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0115",
+    "question": "次の2ファイルがある。正しいコンパイル・実行方法を1つ選びなさい。",
+    "code": "// src/p/App.java\npackage p;\npublic class App {\n    public static void main(String[] args) {\n        System.out.println(Util.text());\n    }\n}\n// src/p/Util.java\npackage p;\nclass Util {\n    static String text() {\n        return \"OK\";\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "srcで `javac p/App.java` の後 `java p.App`"
+      },
+      {
+        "id": "B",
+        "text": "srcで `javac p/App.java p/Util.java` の後 `java p.App`"
+      },
+      {
+        "id": "C",
+        "text": "srcで `javac p/App.java p/Util.java` の後 `java App`"
+      },
+      {
+        "id": "D",
+        "text": "pで `javac App.java Util.java` の後 `java p.App`"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "パッケージ階層の基点srcから両ファイルをコンパイルし、完全修飾クラス名p.Appで実行します。",
+    "choiceExplanations": {
+      "A": "誤り。パッケージ階層の基点srcから両ファイルをコンパイルし、完全修飾クラス名p.Appで実行します。",
+      "B": "正しい。パッケージ階層の基点srcから両ファイルをコンパイルし、完全修飾クラス名p.Appで実行します。",
+      "C": "誤り。パッケージ階層の基点srcから両ファイルをコンパイルし、完全修飾クラス名p.Appで実行します。",
+      "D": "誤り。パッケージ階層の基点srcから両ファイルをコンパイルし、完全修飾クラス名p.Appで実行します。"
+    },
+    "category": "34. package / import",
+    "tags": [
+      "package",
+      "javac",
+      "java",
+      "classpath"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0116",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class A {\n    static String who() {\n        return \"A\";\n    }\n    String name() {\n        return \"a\";\n    }\n}\nclass B extends A {\n    static String who() {\n        return \"B\";\n    }\n    @Override String name() {\n        return \"b\";\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A x = new B();\n        System.out.println(x.who() + \":\" + x.name());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A:a"
+      },
+      {
+        "id": "B",
+        "text": "A:b"
+      },
+      {
+        "id": "C",
+        "text": "B:a"
+      },
+      {
+        "id": "D",
+        "text": "B:b"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "staticメソッドは参照型A基準で隠蔽解決されA.who()、インスタンスメソッドは実体Bのoverrideが呼ばれます。",
+    "choiceExplanations": {
+      "A": "誤り。staticメソッドは参照型A基準で隠蔽解決されA.who()、インスタンスメソッドは実体Bのoverrideが呼ばれます。",
+      "B": "正しい。staticメソッドは参照型A基準で隠蔽解決されA.who()、インスタンスメソッドは実体Bのoverrideが呼ばれます。",
+      "C": "誤り。staticメソッドは参照型A基準で隠蔽解決されA.who()、インスタンスメソッドは実体Bのoverrideが呼ばれます。",
+      "D": "誤り。staticメソッドは参照型A基準で隠蔽解決されA.who()、インスタンスメソッドは実体Bのoverrideが呼ばれます。"
+    },
+    "category": "17. static",
+    "tags": [
+      "static-hiding",
+      "override",
+      "polymorphism"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0117",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class C {\n    static int s = 1;\n    int i = 2;\n    static void m() {\n        System.out.println(s);\n        // line X\n    }\n    void n() {\n        System.out.println(s + i);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        C c = new C();\n        c.n();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "line X に `System.out.println(i);` を書くとコンパイルエラー"
+      },
+      {
+        "id": "B",
+        "text": "staticメソッドからstatic変数sは直接参照できる"
+      },
+      {
+        "id": "C",
+        "text": "n()からsを参照するとコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "c.n()は2を出力する"
+      },
+      {
+        "id": "E",
+        "text": "staticメソッドはインスタンスを生成できない"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "staticコンテキストからインスタンス変数iをインスタンスなしで参照できません。sは直接利用できます。",
+    "choiceExplanations": {
+      "A": "正しい。staticコンテキストからインスタンス変数iをインスタンスなしで参照できません。sは直接利用できます。",
+      "B": "正しい。staticコンテキストからインスタンス変数iをインスタンスなしで参照できません。sは直接利用できます。",
+      "C": "誤り。staticコンテキストからインスタンス変数iをインスタンスなしで参照できません。sは直接利用できます。",
+      "D": "誤り。staticコンテキストからインスタンス変数iをインスタンスなしで参照できません。sは直接利用できます。",
+      "E": "誤り。staticコンテキストからインスタンス変数iをインスタンスなしで参照できません。sは直接利用できます。"
+    },
+    "category": "17. static",
+    "tags": [
+      "static-context",
+      "instance-field",
+      "scope"
+    ],
+    "difficulty": 3,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0118",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Cache {\n    static int x = init();\n    static int y = 5;\n    static int init() {\n        System.out.print(y + \" \");\n        return 10;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(Cache.x + Cache.y);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "0 15"
+      },
+      {
+        "id": "B",
+        "text": "5 15"
+      },
+      {
+        "id": "C",
+        "text": "0 10"
+      },
+      {
+        "id": "D",
+        "text": "5 10"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "staticフィールドはテキスト順に初期化されます。x初期化時点でyはデフォルト値0、その後y=5となり、最終的に10+5=15です。",
+    "choiceExplanations": {
+      "A": "正しい。staticフィールドはテキスト順に初期化されます。x初期化時点でyはデフォルト値0、その後y=5となり、最終的に10+5=15です。",
+      "B": "誤り。staticフィールドはテキスト順に初期化されます。x初期化時点でyはデフォルト値0、その後y=5となり、最終的に10+5=15です。",
+      "C": "誤り。staticフィールドはテキスト順に初期化されます。x初期化時点でyはデフォルト値0、その後y=5となり、最終的に10+5=15です。",
+      "D": "誤り。staticフィールドはテキスト順に初期化されます。x初期化時点でyはデフォルト値0、その後y=5となり、最終的に10+5=15です。",
+      "E": "誤り。staticフィールドはテキスト順に初期化されます。x初期化時点でyはデフォルト値0、その後y=5となり、最終的に10+5=15です。"
+    },
+    "category": "17. static",
+    "tags": [
+      "static-initialization",
+      "default-value",
+      "order"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0119",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class Parent {\n    static void test() {\n        System.out.print(\"P\");\n    }\n}\nclass Child extends Parent {\n    @Override\n    static void test() {\n        System.out.print(\"C\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Child.test();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "P"
+      },
+      {
+        "id": "B",
+        "text": "C"
+      },
+      {
+        "id": "C",
+        "text": "staticメソッドに@Overrideを付けているためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "実行時に例外"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "staticメソッドはoverrideではなくhideされます。したがって@Overrideアノテーションの条件を満たさずコンパイルエラーです。",
+    "choiceExplanations": {
+      "A": "誤り。staticメソッドはoverrideではなくhideされます。したがって@Overrideアノテーションの条件を満たさずコンパイルエラーです。",
+      "B": "誤り。staticメソッドはoverrideではなくhideされます。したがって@Overrideアノテーションの条件を満たさずコンパイルエラーです。",
+      "C": "正しい。staticメソッドはoverrideではなくhideされます。したがって@Overrideアノテーションの条件を満たさずコンパイルエラーです。",
+      "D": "誤り。staticメソッドはoverrideではなくhideされます。したがって@Overrideアノテーションの条件を満たさずコンパイルエラーです。"
+    },
+    "category": "23. override",
+    "tags": [
+      "static",
+      "Override-annotation",
+      "method-hiding",
+      "compile-error"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0120",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class Config {\n    static final int A = 10;\n    static final Integer B = 20;\n    static final int C;\n    static {\n        C = 30;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        switch (args.length) {\n            case Config.A: System.out.println(\"A\");\n            break;\n            // case Config.B: System.out.println(\"B\");\n            case Config.C: System.out.println(\"C\");\n            break;\n            default: System.out.println(\"D\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "case Config.A は定数式として利用できる"
+      },
+      {
+        "id": "B",
+        "text": "コメントを外した case Config.B も定数式として利用できる"
+      },
+      {
+        "id": "C",
+        "text": "case Config.C はblank finalでもstatic finalなので定数式になる"
+      },
+      {
+        "id": "D",
+        "text": "現状のコードはコンパイルできる"
+      },
+      {
+        "id": "E",
+        "text": "Aはコンパイル時定数になる"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "E"
+    ],
+    "explanation": "定数式に使えるのはプリミティブ/Stringのfinal変数で定数式により宣言時初期化されたものです。Aは該当しますが、ラッパーBやstaticブロックで初期化するCは該当しません。現状C caseがあるので実際にはコンパイルエラーですが設問は性質2つを選ぶ形式です。",
+    "choiceExplanations": {
+      "A": "正しい。定数式に使えるのはプリミティブ/Stringのfinal変数で定数式により宣言時初期化されたものです。Aは該当しますが、ラッパーBやstaticブロックで初期化するCは該当しません。現状C caseがあるので実際にはコンパイルエラーですが設問は性質2つを選ぶ形式です。",
+      "B": "誤り。定数式に使えるのはプリミティブ/Stringのfinal変数で定数式により宣言時初期化されたものです。Aは該当しますが、ラッパーBやstaticブロックで初期化するCは該当しません。現状C caseがあるので実際にはコンパイルエラーですが設問は性質2つを選ぶ形式です。",
+      "C": "誤り。定数式に使えるのはプリミティブ/Stringのfinal変数で定数式により宣言時初期化されたものです。Aは該当しますが、ラッパーBやstaticブロックで初期化するCは該当しません。現状C caseがあるので実際にはコンパイルエラーですが設問は性質2つを選ぶ形式です。",
+      "D": "誤り。定数式に使えるのはプリミティブ/Stringのfinal変数で定数式により宣言時初期化されたものです。Aは該当しますが、ラッパーBやstaticブロックで初期化するCは該当しません。現状C caseがあるので実際にはコンパイルエラーですが設問は性質2つを選ぶ形式です。",
+      "E": "正しい。定数式に使えるのはプリミティブ/Stringのfinal変数で定数式により宣言時初期化されたものです。Aは該当しますが、ラッパーBやstaticブロックで初期化するCは該当しません。現状C caseがあるので実際にはコンパイルエラーですが設問は性質2つを選ぶ形式です。"
+    },
+    "category": "17. static",
+    "tags": [
+      "constant-expression",
+      "static-final",
+      "switch",
+      "blank-final"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true,
+    "original": true
+  }
+]

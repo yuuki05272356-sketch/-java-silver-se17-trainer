@@ -1,0 +1,909 @@
+[
+  {
+    "id": "JS17-0141",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Printer {\n    static void print(long x) {\n        System.out.print(\"L\");\n    }\n    static void print(Integer x) {\n        System.out.print(\"I\");\n    }\n    static void print(int... x) {\n        System.out.print(\"V\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        int n = 5;\n        Printer.print(n);\n        Printer.print(Integer.valueOf(6));\n        Printer.print();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "LIV"
+      },
+      {
+        "id": "B",
+        "text": "IIV"
+      },
+      {
+        "id": "C",
+        "text": "LLV"
+      },
+      {
+        "id": "D",
+        "text": "IVV"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "int引数ではboxingよりprimitive wideningが優先されlong版。Integer実引数では完全一致のInteger版。引数なしではvarargs版です。",
+    "choiceExplanations": {
+      "A": "正しい。int引数ではboxingよりprimitive wideningが優先されlong版。Integer実引数では完全一致のInteger版。引数なしではvarargs版です。",
+      "B": "誤り。int引数ではboxingよりprimitive wideningが優先されlong版。Integer実引数では完全一致のInteger版。引数なしではvarargs版です。",
+      "C": "誤り。int引数ではboxingよりprimitive wideningが優先されlong版。Integer実引数では完全一致のInteger版。引数なしではvarargs版です。",
+      "D": "誤り。int引数ではboxingよりprimitive wideningが優先されlong版。Integer実引数では完全一致のInteger版。引数なしではvarargs版です。",
+      "E": "誤り。int引数ではboxingよりprimitive wideningが優先されlong版。Integer実引数では完全一致のInteger版。引数なしではvarargs版です。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "overload",
+      "widening",
+      "boxing",
+      "varargs"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0142",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class A {\n}\nclass B extends A {\n}\nclass C extends A {\n}\npublic class Main {\n    static void m(B b) {\n        System.out.println(\"B\");\n    }\n    static void m(C c) {\n        System.out.println(\"C\");\n    }\n    static void m(A a) {\n        System.out.println(\"A\");\n    }\n    public static void main(String[] args) {\n        m(null);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A"
+      },
+      {
+        "id": "B",
+        "text": "B"
+      },
+      {
+        "id": "C",
+        "text": "C"
+      },
+      {
+        "id": "D",
+        "text": "BとCのどちらがより具体的か決められずコンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "NullPointerException"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "nullはすべての参照型に適用できます。BとCは兄弟型でどちらもAより具体的ですが互いの優先順位がないため曖昧です。",
+    "choiceExplanations": {
+      "A": "誤り。nullはすべての参照型に適用できます。BとCは兄弟型でどちらもAより具体的ですが互いの優先順位がないため曖昧です。",
+      "B": "誤り。nullはすべての参照型に適用できます。BとCは兄弟型でどちらもAより具体的ですが互いの優先順位がないため曖昧です。",
+      "C": "誤り。nullはすべての参照型に適用できます。BとCは兄弟型でどちらもAより具体的ですが互いの優先順位がないため曖昧です。",
+      "D": "正しい。nullはすべての参照型に適用できます。BとCは兄弟型でどちらもAより具体的ですが互いの優先順位がないため曖昧です。",
+      "E": "誤り。nullはすべての参照型に適用できます。BとCは兄弟型でどちらもAより具体的ですが互いの優先順位がないため曖昧です。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "overload",
+      "null",
+      "ambiguity",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0143",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class Base {\n    Base() {\n        this(1);\n    }\n    Base(int x) {\n        System.out.print(\"B\" + x + \" \");\n    }\n}\nclass Sub extends Base {\n    Sub() {\n        super();\n        System.out.print(\"S0 \");\n    }\n    Sub(int x) {\n        this();\n        System.out.print(\"S\" + x + \" \");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Sub(5);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "コンストラクタ呼び出しは Base(int) → Base() → Sub() → Sub(int) の順である"
+      },
+      {
+        "id": "B",
+        "text": "出力は B1 S0 S5"
+      },
+      {
+        "id": "C",
+        "text": "Sub(int) の this() は同じクラスのSub()を呼ぶ"
+      },
+      {
+        "id": "D",
+        "text": "Sub() の super() は省略できない"
+      },
+      {
+        "id": "E",
+        "text": "Base()内のthis(1)は無限再帰になる"
+      }
+    ],
+    "correctAnswers": [
+      "B",
+      "C"
+    ],
+    "explanation": "Sub(int)→this()→Sub()→super()→Base()→this(1)→Base(int)の順に入りますが、出力は戻りながらB1 S0 S5です。",
+    "choiceExplanations": {
+      "A": "誤り。Sub(int)→this()→Sub()→super()→Base()→this(1)→Base(int)の順に入りますが、出力は戻りながらB1 S0 S5です。",
+      "B": "正しい。Sub(int)→this()→Sub()→super()→Base()→this(1)→Base(int)の順に入りますが、出力は戻りながらB1 S0 S5です。",
+      "C": "正しい。Sub(int)→this()→Sub()→super()→Base()→this(1)→Base(int)の順に入りますが、出力は戻りながらB1 S0 S5です。",
+      "D": "誤り。Sub(int)→this()→Sub()→super()→Base()→this(1)→Base(int)の順に入りますが、出力は戻りながらB1 S0 S5です。",
+      "E": "誤り。Sub(int)→this()→Sub()→super()→Base()→this(1)→Base(int)の順に入りますが、出力は戻りながらB1 S0 S5です。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "constructor-chain",
+      "this",
+      "super",
+      "execution-order"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0144",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class X {\n    X(Object o) {\n        System.out.print(\"O\");\n    }\n    X(String s) {\n        System.out.print(\"S\");\n    }\n    X(StringBuilder b) {\n        System.out.print(\"B\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new X(null);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "O"
+      },
+      {
+        "id": "B",
+        "text": "S"
+      },
+      {
+        "id": "C",
+        "text": "B"
+      },
+      {
+        "id": "D",
+        "text": "StringとStringBuilderが曖昧でコンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "NullPointerException"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "StringとStringBuilderは互いに無関係で、どちらもObjectより具体的です。nullでは一意に最具体を決められません。",
+    "choiceExplanations": {
+      "A": "誤り。StringとStringBuilderは互いに無関係で、どちらもObjectより具体的です。nullでは一意に最具体を決められません。",
+      "B": "誤り。StringとStringBuilderは互いに無関係で、どちらもObjectより具体的です。nullでは一意に最具体を決められません。",
+      "C": "誤り。StringとStringBuilderは互いに無関係で、どちらもObjectより具体的です。nullでは一意に最具体を決められません。",
+      "D": "正しい。StringとStringBuilderは互いに無関係で、どちらもObjectより具体的です。nullでは一意に最具体を決められません。",
+      "E": "誤り。StringとStringBuilderは互いに無関係で、どちらもObjectより具体的です。nullでは一意に最具体を決められません。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "constructor-overload",
+      "null",
+      "ambiguity"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0145",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Calc {\n    int sum(int a, int b) {\n        return a + b;\n    }\n    long sum(long a, long b) {\n        return a + b + 100;\n    }\n    int sum(int... a) {\n        int s = 0;\n        for (int x : a) s += x;\n        return s + 1000;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Calc c = new Calc();\n        System.out.println(c.sum(1, 2));\n        System.out.println(c.sum(1L, 2));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "3\n103"
+      },
+      {
+        "id": "B",
+        "text": "1003\n103"
+      },
+      {
+        "id": "C",
+        "text": "3\n1003"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "最初はint,int完全一致。2つ目はlong,intでintがlongへwideningされlong,long版が選ばれ103です。varargsは固定長候補より後順位です。",
+    "choiceExplanations": {
+      "A": "正しい。最初はint,int完全一致。2つ目はlong,intでintがlongへwideningされlong,long版が選ばれ103です。varargsは固定長候補より後順位です。",
+      "B": "誤り。最初はint,int完全一致。2つ目はlong,intでintがlongへwideningされlong,long版が選ばれ103です。varargsは固定長候補より後順位です。",
+      "C": "誤り。最初はint,int完全一致。2つ目はlong,intでintがlongへwideningされlong,long版が選ばれ103です。varargsは固定長候補より後順位です。",
+      "D": "誤り。最初はint,int完全一致。2つ目はlong,intでintがlongへwideningされlong,long版が選ばれ103です。varargsは固定長候補より後順位です。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "overload",
+      "widening",
+      "varargs"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0146",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class A {\n    String value = \"A\";\n    String get() {\n        return value;\n    }\n    static String kind() {\n        return \"SA\";\n    }\n}\nclass B extends A {\n    String value = \"B\";\n    @Override String get() {\n        return value;\n    }\n    static String kind() {\n        return \"SB\";\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A x = new B();\n        System.out.println(x.value + \":\" + x.get() + \":\" + x.kind());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A:A:SA"
+      },
+      {
+        "id": "B",
+        "text": "A:B:SA"
+      },
+      {
+        "id": "C",
+        "text": "B:B:SB"
+      },
+      {
+        "id": "D",
+        "text": "A:B:SB"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "フィールドとstaticメソッドは参照型A基準、overrideされたinstanceメソッドは実体B基準です。",
+    "choiceExplanations": {
+      "A": "誤り。フィールドとstaticメソッドは参照型A基準、overrideされたinstanceメソッドは実体B基準です。",
+      "B": "正しい。フィールドとstaticメソッドは参照型A基準、overrideされたinstanceメソッドは実体B基準です。",
+      "C": "誤り。フィールドとstaticメソッドは参照型A基準、overrideされたinstanceメソッドは実体B基準です。",
+      "D": "誤り。フィールドとstaticメソッドは参照型A基準、overrideされたinstanceメソッドは実体B基準です。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "field-hiding",
+      "override",
+      "static-hiding",
+      "reference-type"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0147",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class Parent {\n    protected Number value() {\n        return 1;\n    }\n}\nclass Child extends Parent {\n    @Override\n    public Integer value() {\n        return 2;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        Number n = p.value();\n        System.out.println(n);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "コードはコンパイルできる"
+      },
+      {
+        "id": "B",
+        "text": "2 と出力される"
+      },
+      {
+        "id": "C",
+        "text": "overrideで可視性をprotectedからpublicへ広げることはできない"
+      },
+      {
+        "id": "D",
+        "text": "戻り値をNumberからIntegerへ変えると必ずoverloadになる"
+      },
+      {
+        "id": "E",
+        "text": "呼び出されるメソッドは参照型Parentだけで決まる"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "可視性を広げるoverrideは可能で、IntegerはNumberのサブタイプなので共変戻り値も有効です。実体Childのvalue()が呼ばれます。",
+    "choiceExplanations": {
+      "A": "正しい。可視性を広げるoverrideは可能で、IntegerはNumberのサブタイプなので共変戻り値も有効です。実体Childのvalue()が呼ばれます。",
+      "B": "正しい。可視性を広げるoverrideは可能で、IntegerはNumberのサブタイプなので共変戻り値も有効です。実体Childのvalue()が呼ばれます。",
+      "C": "誤り。可視性を広げるoverrideは可能で、IntegerはNumberのサブタイプなので共変戻り値も有効です。実体Childのvalue()が呼ばれます。",
+      "D": "誤り。可視性を広げるoverrideは可能で、IntegerはNumberのサブタイプなので共変戻り値も有効です。実体Childのvalue()が呼ばれます。",
+      "E": "誤り。可視性を広げるoverrideは可能で、IntegerはNumberのサブタイプなので共変戻り値も有効です。実体Childのvalue()が呼ばれます。"
+    },
+    "category": "23. override",
+    "tags": [
+      "override",
+      "covariant-return",
+      "access-modifier",
+      "polymorphism"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0148",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class A {\n    private void m() {\n        System.out.print(\"A\");\n    }\n    void call() {\n        m();\n    }\n}\nclass B extends A {\n    void m() {\n        System.out.print(\"B\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A x = new B();\n        x.call();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A"
+      },
+      {
+        "id": "B",
+        "text": "B"
+      },
+      {
+        "id": "C",
+        "text": "privateメソッドをoverrideしているためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "AbstractMethodError"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "A.m()はprivateなので継承・override対象ではありません。A.call()内のm()はA自身のprivateメソッドに静的に結び付きます。",
+    "choiceExplanations": {
+      "A": "正しい。A.m()はprivateなので継承・override対象ではありません。A.call()内のm()はA自身のprivateメソッドに静的に結び付きます。",
+      "B": "誤り。A.m()はprivateなので継承・override対象ではありません。A.call()内のm()はA自身のprivateメソッドに静的に結び付きます。",
+      "C": "誤り。A.m()はprivateなので継承・override対象ではありません。A.call()内のm()はA自身のprivateメソッドに静的に結び付きます。",
+      "D": "誤り。A.m()はprivateなので継承・override対象ではありません。A.call()内のm()はA自身のprivateメソッドに静的に結び付きます。"
+    },
+    "category": "23. override",
+    "tags": [
+      "private-method",
+      "override",
+      "inheritance"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0149",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "class P {\n    static void s() {\n        System.out.print(\"P\");\n    }\n    void i() {\n        System.out.print(\"p\");\n    }\n}\nclass C extends P {\n    static void s() {\n        System.out.print(\"C\");\n    }\n    @Override void i() {\n        System.out.print(\"c\");\n    }\n}\npublic class Main {\n    static void run(P p) {\n        p.s();\n        p.i();\n    }\n    public static void main(String[] args) {\n        run(new C());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Pp"
+      },
+      {
+        "id": "B",
+        "text": "Pc"
+      },
+      {
+        "id": "C",
+        "text": "Cp"
+      },
+      {
+        "id": "D",
+        "text": "Cc"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "run内でpのコンパイル時型はPなのでstatic s()はP版。instance i()は動的ディスパッチでC版です。",
+    "choiceExplanations": {
+      "A": "誤り。run内でpのコンパイル時型はPなのでstatic s()はP版。instance i()は動的ディスパッチでC版です。",
+      "B": "正しい。run内でpのコンパイル時型はPなのでstatic s()はP版。instance i()は動的ディスパッチでC版です。",
+      "C": "誤り。run内でpのコンパイル時型はPなのでstatic s()はP版。instance i()は動的ディスパッチでC版です。",
+      "D": "誤り。run内でpのコンパイル時型はPなのでstatic s()はP版。instance i()は動的ディスパッチでC版です。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "static-hiding",
+      "dynamic-dispatch",
+      "polymorphism"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0150",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class Animal {\n    Animal move() {\n        return this;\n    }\n}\nclass Dog extends Animal {\n    @Override Dog move() {\n        return this;\n    }\n    void bark() {\n        System.out.println(\"woof\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Dog();\n        Animal b = a.move();\n        ((Dog) b).bark();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Dog.move()は共変戻り値による正しいoverride"
+      },
+      {
+        "id": "B",
+        "text": "bの実体はDogなのでキャスト後bark()を呼べる"
+      },
+      {
+        "id": "C",
+        "text": "a.move()のコンパイル時戻り値型はDog"
+      },
+      {
+        "id": "D",
+        "text": "明示キャストなしで `b.bark()` と書ける"
+      },
+      {
+        "id": "E",
+        "text": "move()の戻り値型が違うためコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "実行時にはDog.move()が呼ばれDogを返しますが、式a.move()のコンパイル時型はParent宣言のAnimalです。",
+    "choiceExplanations": {
+      "A": "正しい。実行時にはDog.move()が呼ばれDogを返しますが、式a.move()のコンパイル時型はParent宣言のAnimalです。",
+      "B": "正しい。実行時にはDog.move()が呼ばれDogを返しますが、式a.move()のコンパイル時型はParent宣言のAnimalです。",
+      "C": "誤り。実行時にはDog.move()が呼ばれDogを返しますが、式a.move()のコンパイル時型はParent宣言のAnimalです。",
+      "D": "誤り。実行時にはDog.move()が呼ばれDogを返しますが、式a.move()のコンパイル時型はParent宣言のAnimalです。",
+      "E": "誤り。実行時にはDog.move()が呼ばれDogを返しますが、式a.move()のコンパイル時型はParent宣言のAnimalです。"
+    },
+    "category": "23. override",
+    "tags": [
+      "covariant-return",
+      "override",
+      "cast",
+      "polymorphism"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0151",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "record User(String name, int age) {\n    User {\n        name = name.trim();\n        if (age < 0) age = 0;\n    }\n    String label() {\n        return name + \":\" + age;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        var u = new User(\" Ada \", -1);\n        System.out.println(u.name());\n        System.out.println(u.label());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": " Ada \n Ada :-1"
+      },
+      {
+        "id": "B",
+        "text": "Ada\nAda:0"
+      },
+      {
+        "id": "C",
+        "text": "compact constructorでは引数へ代入できずコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "recordにinstanceメソッドを追加できずコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "compact constructor内ではコンポーネントパラメータを検証・正規化でき、終了時に対応フィールドへ代入されます。",
+    "choiceExplanations": {
+      "A": "誤り。compact constructor内ではコンポーネントパラメータを検証・正規化でき、終了時に対応フィールドへ代入されます。",
+      "B": "正しい。compact constructor内ではコンポーネントパラメータを検証・正規化でき、終了時に対応フィールドへ代入されます。",
+      "C": "誤り。compact constructor内ではコンポーネントパラメータを検証・正規化でき、終了時に対応フィールドへ代入されます。",
+      "D": "誤り。compact constructor内ではコンポーネントパラメータを検証・正規化でき、終了時に対応フィールドへ代入されます。"
+    },
+    "category": "20. record",
+    "tags": [
+      "record",
+      "compact-constructor",
+      "accessor",
+      "var"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0152",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "interface Named {\n    String name();\n}\nrecord Person(String name) implements Named {\n}\npublic class Main {\n    public static void main(String[] args) {\n        Named n = new Person(\"Ken\");\n        System.out.println(n.name());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "recordはinterfaceをimplementsできる"
+      },
+      {
+        "id": "B",
+        "text": "Ken と出力される"
+      },
+      {
+        "id": "C",
+        "text": "recordは暗黙にabstractなのでnewできない"
+      },
+      {
+        "id": "D",
+        "text": "Personは別クラスからextendsできる"
+      },
+      {
+        "id": "E",
+        "text": "name()アクセサはprivateで生成される"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "recordは暗黙的にfinalなクラスですがinterface実装は可能です。コンポーネントアクセサはpublicです。",
+    "choiceExplanations": {
+      "A": "正しい。recordは暗黙的にfinalなクラスですがinterface実装は可能です。コンポーネントアクセサはpublicです。",
+      "B": "正しい。recordは暗黙的にfinalなクラスですがinterface実装は可能です。コンポーネントアクセサはpublicです。",
+      "C": "誤り。recordは暗黙的にfinalなクラスですがinterface実装は可能です。コンポーネントアクセサはpublicです。",
+      "D": "誤り。recordは暗黙的にfinalなクラスですがinterface実装は可能です。コンポーネントアクセサはpublicです。",
+      "E": "誤り。recordは暗黙的にfinalなクラスですがinterface実装は可能です。コンポーネントアクセサはpublicです。"
+    },
+    "category": "20. record",
+    "tags": [
+      "record",
+      "interface",
+      "accessor",
+      "final"
+    ],
+    "difficulty": 3,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0153",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "record Point(int x, int y) {\n    Point(int x) {\n        this(x, 0);\n    }\n}\nclass P3 extends Point {\n    P3() {\n        super(1);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(new P3());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Point[x=1, y=0]"
+      },
+      {
+        "id": "B",
+        "text": "P3をrecordから継承できないためコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "Point(int)からcanonical constructorを呼べないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "recordに追加コンストラクタは宣言できない"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "recordは暗黙的にfinalなので継承できません。追加コンストラクタがcanonical constructorへ委譲すること自体は有効です。",
+    "choiceExplanations": {
+      "A": "誤り。recordは暗黙的にfinalなので継承できません。追加コンストラクタがcanonical constructorへ委譲すること自体は有効です。",
+      "B": "正しい。recordは暗黙的にfinalなので継承できません。追加コンストラクタがcanonical constructorへ委譲すること自体は有効です。",
+      "C": "誤り。recordは暗黙的にfinalなので継承できません。追加コンストラクタがcanonical constructorへ委譲すること自体は有効です。",
+      "D": "誤り。recordは暗黙的にfinalなので継承できません。追加コンストラクタがcanonical constructorへ委譲すること自体は有効です。"
+    },
+    "category": "20. record",
+    "tags": [
+      "record",
+      "final",
+      "constructor",
+      "inheritance"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0154",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    var field = 10;\n    static void run(var x) {\n        var y = x + 1;\n        System.out.println(y);\n    }\n    public static void main(String[] args) {\n        run(5);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "6"
+      },
+      {
+        "id": "B",
+        "text": "fieldだけがコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "引数xだけがコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "varはフィールドにもメソッド引数にも使えないためコンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "Java 17ではすべて有効"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "varはローカル変数の型推論にのみ使えます。フィールドや通常のメソッド引数型には使えません。",
+    "choiceExplanations": {
+      "A": "誤り。varはローカル変数の型推論にのみ使えます。フィールドや通常のメソッド引数型には使えません。",
+      "B": "誤り。varはローカル変数の型推論にのみ使えます。フィールドや通常のメソッド引数型には使えません。",
+      "C": "誤り。varはローカル変数の型推論にのみ使えます。フィールドや通常のメソッド引数型には使えません。",
+      "D": "正しい。varはローカル変数の型推論にのみ使えます。フィールドや通常のメソッド引数型には使えません。",
+      "E": "誤り。varはローカル変数の型推論にのみ使えます。フィールドや通常のメソッド引数型には使えません。"
+    },
+    "category": "3. var",
+    "tags": [
+      "var",
+      "field",
+      "parameter",
+      "compile-error"
+    ],
+    "difficulty": 3,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0155",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        var a = new ArrayList<String>();\n        a.add(\"x\");\n        var b = new int[] {\n            1, 2, 3\n        }\n        ;\n        for (var n : b) {\n            System.out.print(n);\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "aの推論型はArrayList<String>"
+      },
+      {
+        "id": "B",
+        "text": "bの推論型はint[]"
+      },
+      {
+        "id": "C",
+        "text": "`var c = null;` も同じように有効"
+      },
+      {
+        "id": "D",
+        "text": "拡張forのループ変数にvarは使えない"
+      },
+      {
+        "id": "E",
+        "text": "`var d = {1,2,3};` はint[]として推論される"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "初期化式から型が一意に決まるローカル変数や拡張for変数にはvarが使えます。null単独や配列初期化子単独は不可です。",
+    "choiceExplanations": {
+      "A": "正しい。初期化式から型が一意に決まるローカル変数や拡張for変数にはvarが使えます。null単独や配列初期化子単独は不可です。",
+      "B": "正しい。初期化式から型が一意に決まるローカル変数や拡張for変数にはvarが使えます。null単独や配列初期化子単独は不可です。",
+      "C": "誤り。初期化式から型が一意に決まるローカル変数や拡張for変数にはvarが使えます。null単独や配列初期化子単独は不可です。",
+      "D": "誤り。初期化式から型が一意に決まるローカル変数や拡張for変数にはvarが使えます。null単独や配列初期化子単独は不可です。",
+      "E": "誤り。初期化式から型が一意に決まるローカル変数や拡張for変数にはvarが使えます。null単独や配列初期化子単独は不可です。"
+    },
+    "category": "3. var",
+    "tags": [
+      "var",
+      "generic",
+      "array",
+      "enhanced-for"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0156",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static int field;\n    public static void main(String[] args) {\n        int local;\n        if (args.length > 0) {\n            local = 10;\n        }\n        System.out.println(field);\n        System.out.println(local);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "0\n10"
+      },
+      {
+        "id": "B",
+        "text": "0だけ出力される"
+      },
+      {
+        "id": "C",
+        "text": "localが確実に初期化済みでないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "fieldも初期化されていないためコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "フィールドにはデフォルト値0がありますが、ローカル変数にはデフォルト値がなく、すべての経路で代入済みでなければ読み出せません。",
+    "choiceExplanations": {
+      "A": "誤り。フィールドにはデフォルト値0がありますが、ローカル変数にはデフォルト値がなく、すべての経路で代入済みでなければ読み出せません。",
+      "B": "誤り。フィールドにはデフォルト値0がありますが、ローカル変数にはデフォルト値がなく、すべての経路で代入済みでなければ読み出せません。",
+      "C": "正しい。フィールドにはデフォルト値0がありますが、ローカル変数にはデフォルト値がなく、すべての経路で代入済みでなければ読み出せません。",
+      "D": "誤り。フィールドにはデフォルト値0がありますが、ローカル変数にはデフォルト値がなく、すべての経路で代入済みでなければ読み出せません。"
+    },
+    "category": "2. 基本データ型・変数・スコープ",
+    "tags": [
+      "definite-assignment",
+      "local-variable",
+      "default-value"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0157",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Box {\n    int x = 1;\n    void run() {\n        int x = 2;\n        {\n            int y = x + this.x;\n            System.out.print(y + \" \");\n        }\n        System.out.println(x);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Box().run();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "2 2"
+      },
+      {
+        "id": "B",
+        "text": "3 2"
+      },
+      {
+        "id": "C",
+        "text": "3 1"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "ローカルxがフィールドxをシャドーイングします。this.xでフィールドを明示でき、y=2+1=3です。",
+    "choiceExplanations": {
+      "A": "誤り。ローカルxがフィールドxをシャドーイングします。this.xでフィールドを明示でき、y=2+1=3です。",
+      "B": "正しい。ローカルxがフィールドxをシャドーイングします。this.xでフィールドを明示でき、y=2+1=3です。",
+      "C": "誤り。ローカルxがフィールドxをシャドーイングします。this.xでフィールドを明示でき、y=2+1=3です。",
+      "D": "誤り。ローカルxがフィールドxをシャドーイングします。this.xでフィールドを明示でき、y=2+1=3です。"
+    },
+    "category": "2. 基本データ型・変数・スコープ",
+    "tags": [
+      "shadowing",
+      "scope",
+      "this"
+    ],
+    "difficulty": 3,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0158",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class Config {\n    final int a;\n    final int b = 2;\n    Config(boolean flag) {\n        if (flag) a = 1;\n        else a = 3;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        var c = new Config(false);\n        System.out.println(c.a + c.b);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "blank final aは各コンストラクタ経路で1回代入されている"
+      },
+      {
+        "id": "B",
+        "text": "5 と出力される"
+      },
+      {
+        "id": "C",
+        "text": "aはfinalなのでコンストラクタでも代入できない"
+      },
+      {
+        "id": "D",
+        "text": "bはインスタンスごとに変更可能"
+      },
+      {
+        "id": "E",
+        "text": "flag=falseではaが未初期化になる"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "blank finalインスタンスフィールドは各コンストラクタの正常終了までに一度代入すればよく、false側ではa=3です。",
+    "choiceExplanations": {
+      "A": "正しい。blank finalインスタンスフィールドは各コンストラクタの正常終了までに一度代入すればよく、false側ではa=3です。",
+      "B": "正しい。blank finalインスタンスフィールドは各コンストラクタの正常終了までに一度代入すればよく、false側ではa=3です。",
+      "C": "誤り。blank finalインスタンスフィールドは各コンストラクタの正常終了までに一度代入すればよく、false側ではa=3です。",
+      "D": "誤り。blank finalインスタンスフィールドは各コンストラクタの正常終了までに一度代入すればよく、false側ではa=3です。",
+      "E": "誤り。blank finalインスタンスフィールドは各コンストラクタの正常終了までに一度代入すればよく、false側ではa=3です。"
+    },
+    "category": "25. final",
+    "tags": [
+      "blank-final",
+      "constructor",
+      "definite-assignment"
+    ],
+    "difficulty": 3,
+    "multipleChoice": true,
+    "original": true
+  },
+  {
+    "id": "JS17-0159",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 1;\n        {\n            int y = 2;\n            System.out.print(x + y);\n        }\n        int y = 3;\n        System.out.println(y);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "33"
+      },
+      {
+        "id": "B",
+        "text": "34"
+      },
+      {
+        "id": "C",
+        "text": "3の後に3で33"
+      },
+      {
+        "id": "D",
+        "text": "内側ブロックのyと外側のyが重複するためコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "内側ブロックのyのスコープはブロック終了で終わるため、その後同名yを宣言できます。最初に3、その後3で連続して33です。",
+    "choiceExplanations": {
+      "A": "正しい。内側ブロックのyのスコープはブロック終了で終わるため、その後同名yを宣言できます。最初に3、その後3で連続して33です。",
+      "B": "誤り。内側ブロックのyのスコープはブロック終了で終わるため、その後同名yを宣言できます。最初に3、その後3で連続して33です。",
+      "C": "誤り。内側ブロックのyのスコープはブロック終了で終わるため、その後同名yを宣言できます。最初に3、その後3で連続して33です。",
+      "D": "誤り。内側ブロックのyのスコープはブロック終了で終わるため、その後同名yを宣言できます。最初に3、その後3で連続して33です。"
+    },
+    "category": "2. 基本データ型・変数・スコープ",
+    "tags": [
+      "scope",
+      "block",
+      "local-variable"
+    ],
+    "difficulty": 3,
+    "multipleChoice": false,
+    "original": true
+  },
+  {
+    "id": "JS17-0160",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        final int x;\n        if (args.length == 0) {\n            x = 1;\n        }\n        else {\n            x = 2;\n        }\n        System.out.println(x);\n        // x++;\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "xは宣言時に初期化していないためコンパイルエラー"
+      },
+      {
+        "id": "B",
+        "text": "条件分岐の各経路で1回だけ代入されるのでコンパイルできる"
+      },
+      {
+        "id": "C",
+        "text": "コメントのx++を有効にしてもfinalなので1回目の代入として扱われる"
+      },
+      {
+        "id": "D",
+        "text": "finalローカル変数にはif文内で代入できない"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "blank finalローカル変数も確実に一度だけ代入されれば利用できます。x++を有効にすれば再代入なのでエラーです。",
+    "choiceExplanations": {
+      "A": "誤り。blank finalローカル変数も確実に一度だけ代入されれば利用できます。x++を有効にすれば再代入なのでエラーです。",
+      "B": "正しい。blank finalローカル変数も確実に一度だけ代入されれば利用できます。x++を有効にすれば再代入なのでエラーです。",
+      "C": "誤り。blank finalローカル変数も確実に一度だけ代入されれば利用できます。x++を有効にすれば再代入なのでエラーです。",
+      "D": "誤り。blank finalローカル変数も確実に一度だけ代入されれば利用できます。x++を有効にすれば再代入なのでエラーです。"
+    },
+    "category": "25. final",
+    "tags": [
+      "final-local",
+      "definite-assignment",
+      "scope"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false,
+    "original": true
+  }
+]

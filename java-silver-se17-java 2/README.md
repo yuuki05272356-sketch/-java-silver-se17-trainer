@@ -32,7 +32,7 @@ Java SE 17 / 1Z0-825-JPN 対策用の学習Webアプリを **Java 17 + Spring Bo
 - localStorageでページ再読み込み後も履歴維持
 - iPhone / iPad / PCレスポンシブ
 - PWA用manifest / Service Worker
-- 現在の問題バンク: 本番不正解21分野に特化したオリジナル70問（既存20問 + 新規50問）
+- 現在の問題バンク: オリジナル200問（V7 / JS17-0001〜JS17-0200）
 
 ## 必要環境
 
