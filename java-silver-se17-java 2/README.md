@@ -32,7 +32,7 @@ Java SE 17 / 1Z0-825-JPN 対策用の学習Webアプリを **Java 17 + Spring Bo
 - localStorageでページ再読み込み後も履歴維持
 - iPhone / iPad / PCレスポンシブ
 - PWA用manifest / Service Worker
-- 現在の問題バンク: オリジナル300問（V8 / JS17-0001〜JS17-0300）
+- 現在の問題バンク: オリジナル500問（V9 / JS17-0001〜JS17-0500）
 
 ## 必要環境
 
@@ -70,7 +70,7 @@ mvn test
 
 ## 問題追加
 
-現在は `questions-001.json`〜`questions-015.json` に合計300問を収録しています。問題数は固定ではなく、追加ファイルを登録すれば増やせます。
+現在は `questions-001.json`〜`questions-025.json` に合計500問を収録しています。問題数は固定ではなく、追加ファイルを登録すれば増やせます。
 
 
 問題JSONはここです。
@@ -81,8 +81,8 @@ src/main/resources/question-bank/
 
 追加手順:
 
-1. 次回は `questions-016.json` を作る（現在の最大IDは `JS17-0300`）
-2. `question-files.json` の `files` に `questions-016.json` を追加
+1. 次回は `questions-026.json` を作る（現在の最大IDは `JS17-0500`）
+2. `question-files.json` の `files` に `questions-026.json` を追加
 3. `mvn test`
 4. 起動
 
