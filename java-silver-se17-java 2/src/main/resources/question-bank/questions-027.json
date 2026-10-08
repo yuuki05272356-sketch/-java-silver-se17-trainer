@@ -1,0 +1,934 @@
+[
+  {
+    "id": "JS17-0521",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class Config {\n    final int value;\n    Config(boolean flag) {\n        if (flag) {\n            value = 10;\n        }\n    }\n    int get() {\n        return value;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(new Config(true).get());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "このコードはコンパイルエラーになる"
+      },
+      {
+        "id": "B",
+        "text": "else節でvalueへ値を代入すればblank finalの初期化要件を満たせる"
+      },
+      {
+        "id": "C",
+        "text": "finalインスタンス変数には自動的に0が入り、それで初期化済みになる"
+      },
+      {
+        "id": "D",
+        "text": "new Config(true)しか呼んでいないためflag=falseの経路は検査されない"
+      },
+      {
+        "id": "E",
+        "text": "valueをfinalからstaticへ変えるだけで必ず正しくなる"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "blank finalのインスタンス変数は各コンストラクタの正常終了経路すべてで確実に初期化される必要があります。else側でも代入すれば両経路を満たせます。",
+    "choiceExplanations": {
+      "A": "正しい。flag=falseの正常終了経路でvalueが未初期化です。",
+      "B": "正しい。両分岐で一度ずつ代入されれば確実に初期化されます。",
+      "C": "誤り。blank finalには通常フィールドのデフォルト値だけで初期化完了とはみなされません。",
+      "D": "誤り。コンパイラは呼び出し実績ではなくコンストラクタの全経路を解析します。",
+      "E": "誤り。static finalには別の初期化規則があり、単なるstatic化は解決ではありません。"
+    },
+    "category": "25. final",
+    "tags": [
+      "blank-final",
+      "definite-assignment",
+      "constructor"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0522",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static int calc(boolean flag) {\n        int x;\n        if (flag) {\n            x = 3;\n        } else {\n            x = 4;\n        }\n        return x * 2;\n    }\n    public static void main(String[] args) {\n        System.out.print(calc(true) + \":\");\n        System.out.print(calc(false));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "6:0"
+      },
+      {
+        "id": "B",
+        "text": "6:8"
+      },
+      {
+        "id": "C",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "3:4"
+      },
+      {
+        "id": "E",
+        "text": "8:6"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "ローカル変数xはif/elseの両方の経路で必ず初期化されるためreturnで使用できます。trueは6、falseは8です。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "ローカル変数xはif/elseの両方の経路で必ず初期化されるためreturnで使用できます。trueは6、falseは8です。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "2. 基本データ型・変数・スコープ",
+    "tags": [
+      "local-variable",
+      "definite-assignment",
+      "if-else"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0523",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Sample {\n    static int value = 1;\n    int n = 2;\n    void print(int n) {\n        int value = 3;\n        System.out.print(value + \":\");\n        System.out.print(this.n + \":\");\n        System.out.print(n + \":\");\n        System.out.print(Sample.value);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Sample().print(4);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1:2:4:3"
+      },
+      {
+        "id": "B",
+        "text": "3:4:2:1"
+      },
+      {
+        "id": "C",
+        "text": "3:2:4:1"
+      },
+      {
+        "id": "D",
+        "text": "3:2:2:1"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "ローカルvalueはstaticフィールドをシャドーイングし、引数nはインスタンスフィールドnをシャドーイングします。this.nは2、Sample.valueは1です。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "ローカルvalueはstaticフィールドをシャドーイングし、引数nはインスタンスフィールドnをシャドーイングします。this.nは2、Sample.valueは1です。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "2. 基本データ型・変数・スコープ",
+    "tags": [
+      "scope",
+      "shadowing",
+      "this",
+      "static"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0524",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "interface Named {\n    default String name() {\n        return \"I\";\n    }\n}\nclass Parent {\n    public String name() {\n        return \"P\";\n    }\n}\nclass Child extends Parent implements Named { }\npublic class Main {\n    public static void main(String[] args) {\n        Named n = new Child();\n        System.out.print(n.name());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "正常にコンパイルされ、Pと表示される"
+      },
+      {
+        "id": "B",
+        "text": "クラスから継承したname()はinterfaceのdefault name()より優先される"
+      },
+      {
+        "id": "C",
+        "text": "Named型参照なので必ずdefaultメソッドのIが表示される"
+      },
+      {
+        "id": "D",
+        "text": "Childはdefaultメソッド競合を解決するためname()を必ずoverrideしなければならない"
+      },
+      {
+        "id": "E",
+        "text": "Parent.name()がstaticでないためChildへ継承されない"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "クラス階層の具象インスタンスメソッドはinterfaceのdefaultメソッドより優先されます。参照型がNamedでも実体Childが継承したParent.name()が呼ばれます。",
+    "choiceExplanations": {
+      "A": "正しい。実行結果はPです。",
+      "B": "正しい。いわゆるclass winsの規則です。",
+      "C": "誤り。参照型だけでdefaultメソッドに固定されません。",
+      "D": "誤り。単一defaultとクラスメソッドの組合せでは競合解決overrideは不要です。",
+      "E": "誤り。通常のインスタンスメソッドとして継承されます。"
+    },
+    "category": "27. default / private interface method",
+    "tags": [
+      "default-method",
+      "class-wins",
+      "polymorphism"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0525",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "interface A {\n    default String id() {\n        return \"A\";\n    }\n}\ninterface B {\n    default String id() {\n        return \"B\";\n    }\n}\nclass C implements A, B { }\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(new C().id());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "このままではdefaultメソッドが競合するためコンパイルエラーになる"
+      },
+      {
+        "id": "B",
+        "text": "Cでid()をoverrideし、その中からA.super.id()を呼ぶことはできる"
+      },
+      {
+        "id": "C",
+        "text": "Aの方が先にimplementsへ書かれているのでA.id()が自動で優先される"
+      },
+      {
+        "id": "D",
+        "text": "B.id()が自動で優先される"
+      },
+      {
+        "id": "E",
+        "text": "defaultメソッド同士の競合は実行時まで決まらない"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "無関係なinterfaceの同一defaultメソッドは実装クラスで解決する必要があります。Cでoverrideし、必要ならA.super.id()やB.super.id()を明示できます。",
+    "choiceExplanations": {
+      "A": "正しい。Cがid()を解決していないためコンパイルエラーです。",
+      "B": "正しい。実装クラスのoverride内から特定interfaceのdefaultを明示呼び出しできます。",
+      "C": "誤り。implementsの記述順に優先順位はありません。",
+      "D": "誤り。Bにも自動優先はありません。",
+      "E": "誤り。競合はコンパイル時に検出されます。"
+    },
+    "category": "27. default / private interface method",
+    "tags": [
+      "default-method",
+      "conflict",
+      "interface"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0526",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "interface Label {\n    private String decorate(String s) {\n        return \"[\" + s + \"]\";\n    }\n    default String label(String s) {\n        return decorate(s.toUpperCase());\n    }\n}\nclass Item implements Label { }\npublic class Main {\n    public static void main(String[] args) {\n        Label x = new Item();\n        System.out.print(x.label(\"java\"));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "[JAVA]"
+      },
+      {
+        "id": "B",
+        "text": "JAVA"
+      },
+      {
+        "id": "C",
+        "text": "[java]"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "実行時例外"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "interfaceのprivateメソッドはそのinterface内部のdefaultメソッドから呼び出せます。label()がdecorate()を使うため[JAVA]です。",
+    "choiceExplanations": {
+      "A": "interfaceのprivateメソッドはそのinterface内部のdefaultメソッドから呼び出せます。label()がdecorate()を使うため[JAVA]です。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "27. default / private interface method",
+    "tags": [
+      "interface",
+      "private-method",
+      "default-method"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0527",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "interface Util {\n    static String text() {\n        return \"U\";\n    }\n}\nclass Impl implements Util {\n    void print() {\n        System.out.print(text());\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Impl().print();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "U"
+      },
+      {
+        "id": "B",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "何も表示されない"
+      },
+      {
+        "id": "D",
+        "text": "実行時にNoSuchMethodError"
+      },
+      {
+        "id": "E",
+        "text": "Util"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "interfaceのstaticメソッドは実装クラスへ継承されません。呼び出す場合はUtil.text()のようにinterface名で修飾します。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "interfaceのstaticメソッドは実装クラスへ継承されません。呼び出す場合はUtil.text()のようにinterface名で修飾します。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "26. interface",
+    "tags": [
+      "interface",
+      "static-method",
+      "inheritance"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0528",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "record User(String name, int age) {\n    User {\n        name = name.trim();\n        if (age < 0) {\n            age = 0;\n        }\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        var u = new User(\"  Ana  \", -2);\n        System.out.print(u.name() + \":\" + u.age());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "正常にコンパイルされ、Ana:0と表示される"
+      },
+      {
+        "id": "B",
+        "text": "生成されたアクセサはname()とage()である"
+      },
+      {
+        "id": "C",
+        "text": "compact constructorではコンポーネントと同名のパラメータを変更できない"
+      },
+      {
+        "id": "D",
+        "text": "recordのアクセサはgetName()とgetAge()である"
+      },
+      {
+        "id": "E",
+        "text": "recordは暗黙的にabstractである"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "compact constructorではパラメータを検証・正規化でき、本体後にフィールドへ代入されます。recordアクセサはコンポーネント名そのものです。",
+    "choiceExplanations": {
+      "A": "正しい。trimと負数補正後の値が格納されます。",
+      "B": "正しい。recordコンポーネントのアクセサはname()/age()です。",
+      "C": "誤り。compact constructor内でパラメータを再代入できます。",
+      "D": "誤り。JavaBeans形式のgetXxxは自動生成されません。",
+      "E": "誤り。recordは暗黙的にfinalです。"
+    },
+    "category": "20. record",
+    "tags": [
+      "record",
+      "compact-constructor",
+      "accessor"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0529",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "record Point(int x, int y) { }\n\nclass ColoredPoint extends Point {\n    private final String color;\n    ColoredPoint(int x, int y, String color) {\n        super(x, y);\n        this.color = color;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(new ColoredPoint(1, 2, \"red\"));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Point[x=1, y=2]"
+      },
+      {
+        "id": "B",
+        "text": "ColoredPoint@..."
+      },
+      {
+        "id": "C",
+        "text": "実行時にClassCastException"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "red"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "recordクラスは暗黙的にfinalなので、通常クラスからextendsすることはできません。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "recordクラスは暗黙的にfinalなので、通常クラスからextendsすることはできません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "20. record",
+    "tags": [
+      "record",
+      "final",
+      "inheritance"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0530",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "record Data(int[] values) { }\npublic class Main {\n    public static void main(String[] args) {\n        int[] a = {1, 2};\n        Data d = new Data(a);\n        a[0] = 9;\n        System.out.print(d.values()[0] + \":\");\n        d.values()[1] = 8;\n        System.out.print(a[1]);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1:2"
+      },
+      {
+        "id": "B",
+        "text": "9:2"
+      },
+      {
+        "id": "C",
+        "text": "1:8"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "9:8"
+      }
+    ],
+    "correctAnswers": [
+      "E"
+    ],
+    "explanation": "recordはコンポーネント参照を自動で防御コピーしません。配列aとrecordのvaluesは同じ配列オブジェクトを参照するため相互の変更が見えます。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "recordはコンポーネント参照を自動で防御コピーしません。配列aとrecordのvaluesは同じ配列オブジェクトを参照するため相互の変更が見えます。"
+    },
+    "category": "20. record",
+    "tags": [
+      "record",
+      "array",
+      "reference",
+      "mutability"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0531",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "import java.io.IOException;\nimport java.io.FileNotFoundException;\n\nclass Parent {\n    void read() throws IOException {\n        System.out.print(\"P\");\n    }\n}\nclass Child extends Parent {\n    @Override\n    void read() throws FileNotFoundException {\n        System.out.print(\"C\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        Parent p = new Child();\n        p.read();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "正常にコンパイルされ、Cと表示される"
+      },
+      {
+        "id": "B",
+        "text": "override側でIOExceptionより狭いFileNotFoundExceptionをthrows宣言できる"
+      },
+      {
+        "id": "C",
+        "text": "override側は親と完全に同じthrows節でなければならない"
+      },
+      {
+        "id": "D",
+        "text": "Parent型参照なのでParent.read()が実行される"
+      },
+      {
+        "id": "E",
+        "text": "FileNotFoundExceptionはIOExceptionのスーパータイプである"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "overrideでは親が宣言するチェック例外と同じ型またはサブタイプへ狭められます。実行時はSub実体のChild.read()が呼ばれます。",
+    "choiceExplanations": {
+      "A": "正しい。実行結果はCです。",      "B": "正しい。FileNotFoundExceptionはIOExceptionのサブクラスです。",
+      "C": "誤り。チェック例外は狭めたり省略できます。",
+      "D": "誤り。instanceメソッドのoverrideは実体型で選ばれます。",
+      "E": "誤り。継承関係が逆です。"
+    },
+    "category": "23. override",
+    "tags": [
+      "override",
+      "checked-exception",
+      "throws",
+      "polymorphism"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0532",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "import java.io.IOException;\n\nclass Parent {\n    void work() throws IOException {\n        System.out.print(\"P\");\n    }\n}\nclass Child extends Parent {\n    @Override\n    void work() throws Exception {\n        System.out.print(\"C\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        new Child().work();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "C"
+      },
+      {
+        "id": "B",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "P"
+      },
+      {
+        "id": "D",
+        "text": "実行時にException"
+      },
+      {
+        "id": "E",
+        "text": "何も表示されない"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "overrideメソッドは親より広いチェック例外を新たに宣言できません。ExceptionはIOExceptionのスーパータイプなので不正です。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "overrideメソッドは親より広いチェック例外を新たに宣言できません。ExceptionはIOExceptionのスーパータイプなので不正です。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "23. override",
+    "tags": [
+      "override",
+      "throws",
+      "checked-exception",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0533",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class AppException extends Exception {\n    AppException(String message) {\n        super(message);\n    }\n}\npublic class Main {\n    static void work(int n) throws AppException {\n        if (n < 0) throw new AppException(\"bad\");\n        System.out.print(\"W\");\n    }\n    public static void main(String[] args) {\n        try {\n            work(-1);\n            System.out.print(\"A\");\n        } catch (AppException e) {\n            System.out.print(e.getMessage());\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "WA"
+      },
+      {
+        "id": "B",
+        "text": "Wbad"
+      },
+      {
+        "id": "C",
+        "text": "bad"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "AppException"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "AppExceptionはException直系なのでチェック例外です。work()はthrows宣言し、mainはcatchしているためコンパイルでき、throw後はAへ進まずbadを出力します。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "AppExceptionはException直系なのでチェック例外です。work()はthrows宣言し、mainはcatchしているためコンパイルでき、throw後はAへ進まずbadを出力します。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "32. カスタム例外",
+    "tags": [
+      "custom-exception",
+      "checked-exception",
+      "throws",
+      "catch"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0534",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class MyRuntimeException extends RuntimeException { }\npublic class Main {\n    static void work(boolean fail) {\n        if (fail) throw new MyRuntimeException();\n        System.out.print(\"W\");\n    }\n    public static void main(String[] args) {\n        try {\n            work(true);\n            System.out.print(\"A\");\n        } catch (RuntimeException e) {\n            System.out.print(\"R\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "WA"
+      },
+      {
+        "id": "B",
+        "text": "コンパイルエラー（throwsが必要）"
+      },
+      {
+        "id": "C",
+        "text": "W"
+      },
+      {
+        "id": "D",
+        "text": "R"
+      },
+      {
+        "id": "E",
+        "text": "何も表示されない"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "RuntimeExceptionのサブクラスは非チェック例外なのでthrows宣言は必須ではありません。throw後にcatch(RuntimeException)で捕捉されRです。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "RuntimeExceptionのサブクラスは非チェック例外なのでthrows宣言は必須ではありません。throw後にcatch(RuntimeException)で捕捉されRです。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "29. 例外",
+    "tags": [
+      "RuntimeException",
+      "unchecked-exception",
+      "catch"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0535",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static void work() {\n        throw new AssertionError(\"x\");\n    }\n    public static void main(String[] args) {\n        try {\n            work();\n            System.out.print(\"A\");\n        } catch (Exception e) {\n            System.out.print(\"E\");\n        } catch (Error e) {\n            System.out.print(\"R\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "E"
+      },
+      {
+        "id": "B",
+        "text": "A"
+      },
+      {
+        "id": "C",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "何も表示されず終了"
+      },
+      {
+        "id": "E",
+        "text": "R"
+      }
+    ],
+    "correctAnswers": [
+      "E"
+    ],
+    "explanation": "AssertionErrorはErrorのサブクラスでありExceptionではありません。最初のcatchでは捕捉されず、catch(Error)で捕捉されRです。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "AssertionErrorはErrorのサブクラスでありExceptionではありません。最初のcatchでは捕捉されず、catch(Error)で捕捉されRです。"
+    },
+    "category": "29. 例外",
+    "tags": [
+      "Error",
+      "Exception",
+      "catch",
+      "AssertionError"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0536",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static int value() {\n        try {\n            System.out.print(\"T\");\n            return 1;\n        } finally {\n            System.out.print(\"F\");\n            return 2;\n        }\n    }\n    public static void main(String[] args) {\n        System.out.print(\":\" + value());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "TF:2"
+      },
+      {
+        "id": "B",
+        "text": ":TF2"
+      },
+      {
+        "id": "C",
+        "text": "T:1F"
+      },
+      {
+        "id": "D",
+        "text": "T:F:2"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "mainの文字列連結ではvalue()が先に評価され、その途中でT→Fが出力されます。tryのreturn 1よりfinallyのreturn 2が優先され、value()終了後にmainが:2を出力するためTF:2です。",
+    "choiceExplanations": {
+      "A": "mainの文字列連結ではvalue()が先に評価され、その途中でT→Fが出力されます。tryのreturn 1よりfinallyのreturn 2が優先され、value()終了後にmainが:2を出力するためTF:2です。",
+      "B": "誤り。value()の内部でTとFが先に出力され、その後mainが:2を出力します。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "30. try-catch",
+    "tags": [
+      "finally",
+      "return",
+      "execution-order"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0537",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class R implements AutoCloseable {\n    public void close() throws Exception {\n        throw new Exception(\"close\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R r = new R()) {\n            throw new IllegalStateException(\"body\");\n        } catch (Exception e) {\n            System.out.print(e.getMessage() + \":\");\n            System.out.print(e.getSuppressed().length + \":\");\n            System.out.print(e.getSuppressed()[0].getMessage());\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "主例外のmessageはbodyである"
+      },
+      {
+        "id": "B",
+        "text": "close()のExceptionは抑制例外として1件格納される"
+      },
+      {
+        "id": "C",
+        "text": "close()の例外が主例外になりbody例外は失われる"
+      },
+      {
+        "id": "D",
+        "text": "getSuppressed().lengthは0である"
+      },
+      {
+        "id": "E",
+        "text": "try-with-resourcesではclose()は本体より前に実行される"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "try本体で先に発生したIllegalStateExceptionが主例外となり、リソースclose時のExceptionは抑制例外として保持されます。",
+    "choiceExplanations": {
+      "A": "正しい。先に発生したbody例外が主例外です。",
+      "B": "正しい。close例外はsuppressedとして追加されます。",
+      "C": "誤り。主例外はbody側です。",
+      "D": "誤り。抑制例外が1件あります。",
+      "E": "誤り。close()はtry本体を抜ける際に実行されます。"
+    },
+    "category": "31. try-with-resources",
+    "tags": [
+      "try-with-resources",
+      "suppressed-exception",
+      "AutoCloseable"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0538",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class R implements AutoCloseable {\n    private final String name;\n    R(String name) {\n        this.name = name;\n        System.out.print(\"+\" + name);\n    }\n    public void close() {\n        System.out.print(\"-\" + name);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R a = new R(\"A\"); R b = new R(\"B\")) {\n            System.out.print(\"T\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "+A+B T-A-B"
+      },
+      {
+        "id": "B",
+        "text": "+A-B+BT"
+      },
+      {
+        "id": "C",
+        "text": "+A+BT-B-A"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "+A+BT-A-B"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "resourceは宣言順に生成され、closeは逆順に行われます。A生成→B生成→T→B close→A closeです。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "resourceは宣言順に生成され、closeは逆順に行われます。A生成→B生成→T→B close→A closeです。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "31. try-with-resources",
+    "tags": [
+      "try-with-resources",
+      "close-order",
+      "AutoCloseable"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0539",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class R implements AutoCloseable {\n    public void close() {\n        System.out.print(\"C\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        R r = new R();\n        r = new R();\n        try (r) {\n            System.out.print(\"T\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "このコードはコンパイルエラーになる"
+      },
+      {
+        "id": "B",
+        "text": "rへの2回目の代入を削除すれば、`try (r)` の形式で利用できる"
+      },
+      {
+        "id": "C",
+        "text": "既存変数をtry-with-resourcesで使う場合は必ずfinalキーワードを明記しなければならない"
+      },
+      {
+        "id": "D",
+        "text": "再代入されていても型が同じRなら実質的finalとみなされる"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルでき、TCと表示される"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "Java 9以降はfinalまたは実質的finalな既存ローカル変数をtry(resource)で利用できますが、このrは再代入されているため条件を満たしません。",
+    "choiceExplanations": {
+      "A": "正しい。rは実質的finalではありません。",
+      "B": "正しい。初期化後に再代入がなければ実質的finalとして利用できます。",
+      "C": "誤り。finalキーワードの明記は必須ではなく、実質的finalでも構いません。",
+      "D": "誤り。同じ型への再代入でも実質的finalではなくなります。",
+      "E": "誤り。コンパイルできません。"
+    },
+    "category": "31. try-with-resources",
+    "tags": [
+      "try-with-resources",
+      "effectively-final",
+      "resource-variable"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0540",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "import java.io.IOException;\n\npublic class Main {\n    static void work(int n) throws IOException {\n        if (n == 0) throw new IOException();\n        throw new IllegalArgumentException();\n    }\n    public static void main(String[] args) {\n        try {\n            work(0);\n        } catch (IOException | IllegalArgumentException e) {\n            e = new IOException();\n            System.out.print(\"X\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "X"
+      },
+      {
+        "id": "B",
+        "text": "何も表示されない"
+      },
+      {
+        "id": "C",
+        "text": "実行時にIOException"
+      },
+      {
+        "id": "D",
+        "text": "実行時にIllegalArgumentException"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "E"
+    ],
+    "explanation": "multi-catchのcatchパラメータは暗黙的にfinalとして扱われるため、eへ再代入できません。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "multi-catchのcatchパラメータは暗黙的にfinalとして扱われるため、eへ再代入できません。"
+    },
+    "category": "33. multi-catch",
+    "tags": [
+      "multi-catch",
+      "effectively-final",
+      "catch-parameter"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  }
+]

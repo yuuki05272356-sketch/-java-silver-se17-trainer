@@ -1,0 +1,934 @@
+[
+  {
+    "id": "JS17-0501",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class A {\n    static { System.out.print(\"AS \"); }\n    int x = mark(\"AF \");\n    { System.out.print(\"AI \"); }\n    A() { System.out.print(\"AC \"); }\n    static int mark(String s) { System.out.print(s); return 1; }\n}\nclass B extends A {\n    static { System.out.print(\"BS \"); }\n    int y = mark(\"BF \");\n    { System.out.print(\"BI \"); }\n    B() { System.out.print(\"BC \"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new B();\n        System.out.print(\"| \");\n        new B();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "AS BS AF AI AC BF BI BC | AF AI AC BF BI BC "
+      },
+      {
+        "id": "B",
+        "text": "AS AF AI AC BS BF BI BC | AF AI AC BF BI BC "
+      },
+      {
+        "id": "C",
+        "text": "AS BS AF BF AI BI AC BC | AF BF AI BI AC BC "
+      },
+      {
+        "id": "D",
+        "text": "AS BS AF AI AC BF BI BC | AS BS AF AI AC BF BI BC "
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "クラス初期化は親A→子Bの順で最初の1回だけ行われ、その後各インスタンスで親のフィールド/初期化子/コンストラクタ→子のフィールド/初期化子/コンストラクタの順です。",
+    "choiceExplanations": {
+      "A": "クラス初期化は親A→子Bの順で最初の1回だけ行われ、その後各インスタンスで親のフィールド/初期化子/コンストラクタ→子のフィールド/初期化子/コンストラクタの順です。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "initialization-order",
+      "static",
+      "constructor",
+      "inheritance"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0502",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class BuildException extends Exception { }\nclass Base {\n    Base() throws BuildException {\n        if (System.nanoTime() < 0) throw new BuildException();\n    }\n}\nclass Child extends Base {\n    Child() {\n        System.out.print(\"C\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Child();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "このままではコンパイルエラーになる"
+      },
+      {
+        "id": "B",
+        "text": "Child() に throws BuildException を付ければ、この点は解消できる"
+      },
+      {
+        "id": "C",
+        "text": "System.nanoTime() < 0 が通常falseなのでチェック例外の処理は不要"
+      },
+      {
+        "id": "D",
+        "text": "暗黙のsuper()はChild()本体の最後に実行される"
+      },
+      {
+        "id": "E",
+        "text": "BuildExceptionはRuntimeExceptionのサブクラスである"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "Base()がチェック例外BuildExceptionを宣言しているため、暗黙のsuper()を含むChild()はその例外を処理する必要があります。Child()にthrows BuildExceptionを宣言するのは有効な修正です。",
+    "choiceExplanations": {
+      "A": "正しい。暗黙のsuper()が投げ得るチェック例外を未処理です。",
+      "B": "正しい。子コンストラクタで同じチェック例外をthrows宣言できます。",
+      "C": "誤り。到達可能なthrow文がある以上、実行時に起きにくいことはチェック例外規則を変えません。",
+      "D": "誤り。super()はコンストラクタチェーンの先頭で実行されます。",
+      "E": "誤り。BuildExceptionはException直系のチェック例外です。"
+    },
+    "category": "29. 例外",
+    "tags": [
+      "checked-exception",
+      "constructor",
+      "super",
+      "throws"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0503",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Box {\n    final int size;\n    Box() {\n        this(3);\n        System.out.print(\"A \");\n    }\n    Box(int size) {\n        this.size = size;\n        System.out.print(\"B\" + size + \" \");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Box x = new Box();\n        System.out.print(x.size);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A B3 3"
+      },
+      {
+        "id": "B",
+        "text": "B3 3 A"
+      },
+      {
+        "id": "C",
+        "text": "B3 A 3"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "0"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "this(3)が先に別コンストラクタを呼び、そこでblank finalのsizeが初期化されます。その後Box()本体のAが出力され、最後に3です。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "this(3)が先に別コンストラクタを呼び、そこでblank finalのsizeが初期化されます。その後Box()本体のAが出力され、最後に3です。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "this",
+      "blank-final",
+      "constructor-chain"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0504",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Parent {\n    int value = 1;\n    static String type() { return \"P\"; }\n    String name() { return \"parent:\" + value; }\n}\nclass Child extends Parent {\n    int value = 2;\n    static String type() { return \"C\"; }\n    @Override String name() { return \"child:\" + value; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        System.out.print(p.value + \":\");\n        System.out.print(p.type() + \":\");\n        System.out.print(p.name() + \":\");\n        System.out.print(((Child)p).value);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "2:C:child:2:2"
+      },
+      {
+        "id": "B",
+        "text": "1:P:parent:1:2"
+      },
+      {
+        "id": "C",
+        "text": "1:C:child:2:2"
+      },
+      {
+        "id": "D",
+        "text": "1:P:child:2:2"
+      },
+      {
+        "id": "E",
+        "text": "ClassCastException"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "フィールドvalueとstaticメソッドtype()は参照型Parent基準、instanceメソッドname()は実体型Childのoverrideが呼ばれます。Childへのダウンキャストは実体がChildなので成功します。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "フィールドvalueとstaticメソッドtype()は参照型Parent基準、instanceメソッドname()は実体型Childのoverrideが呼ばれます。Childへのダウンキャストは実体がChildなので成功します。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "static-hiding",
+      "override",
+      "field-hiding",
+      "cast"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0505",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class Printer {\n    static void print(String s) {\n        System.out.print(\"S\");\n    }\n    static void print(StringBuilder s) {\n        System.out.print(\"B\");\n    }\n    static void print(Object o) {\n        System.out.print(\"O\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Printer.print(null);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Printer.print(null) は呼び出しが曖昧でコンパイルエラーになる"
+      },
+      {
+        "id": "B",
+        "text": "Printer.print((String) null) とすれば print(String) が選ばれる"
+      },
+      {
+        "id": "C",
+        "text": "Objectが最上位型なので print(Object) が必ず選ばれる"
+      },
+      {
+        "id": "D",
+        "text": "nullを渡すこと自体がJavaでは禁止されている"
+      },
+      {
+        "id": "E",
+        "text": "実行時にStringとStringBuilderのどちらかがランダムに選ばれる"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "nullは複数の参照型へ適用できます。StringとStringBuilderのどちらもObjectより具体的で互いに無関係なため元の呼び出しは曖昧ですが、明示キャストすれば対象を限定できます。",
+    "choiceExplanations": {
+      "A": "正しい。StringとStringBuilderの最具体候補を一意に決められません。",
+      "B": "正しい。キャストにより引数のコンパイル時型がStringに決まります。",
+      "C": "誤り。overloadではより具体的な適用可能メソッドが優先されます。",
+      "D": "誤り。nullは参照型へ渡せます。",
+      "E": "誤り。overload解決はコンパイル時に行われます。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "overload",
+      "null",
+      "ambiguity"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0506",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Calc {\n    static void use(long x) {\n        System.out.print(\"L\");\n    }\n    static void use(Integer x) {\n        System.out.print(\"I\");\n    }\n    static void use(int... x) {\n        System.out.print(\"V\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        short s = 3;\n        Calc.use(s);\n        Calc.use(4);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "LL"
+      },
+      {
+        "id": "B",
+        "text": "LI"
+      },
+      {
+        "id": "C",
+        "text": "II"
+      },
+      {
+        "id": "D",
+        "text": "LV"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "short→long、int→longというプリミティブ拡大変換は、boxingや可変長引数より優先されます。そのため2回ともuse(long)です。",
+    "choiceExplanations": {
+      "A": "short→long、int→longというプリミティブ拡大変換は、boxingや可変長引数より優先されます。そのため2回ともuse(long)です。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "overload",
+      "widening",
+      "boxing",
+      "varargs"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0507",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Animal { }\nclass Dog extends Animal { }\nclass Base {\n    String pick(Animal a) { return \"BA\"; }\n    String pick(Dog d) { return \"BD\"; }\n}\nclass Sub extends Base {\n    @Override String pick(Animal a) { return \"SA\"; }\n    @Override String pick(Dog d) { return \"SD\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Base b = new Sub();\n        Animal a = new Dog();\n        System.out.print(b.pick(a));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "BA"
+      },
+      {
+        "id": "B",
+        "text": "SA"
+      },
+      {
+        "id": "C",
+        "text": "BD"
+      },
+      {
+        "id": "D",
+        "text": "SD"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "overloadはコンパイル時の引数型Animalからpick(Animal)に決まります。そのシグネチャに対するoverrideは実行時の実体Subで解決されるためSAです。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "overloadはコンパイル時の引数型Animalからpick(Animal)に決まります。そのシグネチャに対するoverrideは実行時の実体Subで解決されるためSAです。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "23. override",
+    "tags": [
+      "overload",
+      "override",
+      "polymorphism",
+      "reference-type"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0508",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static int size(Object value) {\n        if (value instanceof String s && s.length() > 3) {\n            return s.length();\n        }\n        return -1;\n    }\n    public static void main(String[] args) {\n        Object a = \"silver\";\n        Object b = \"java\";\n        Object c = 10;\n        System.out.print(size(a) + \":\");\n        System.out.print(size(b) + \":\");\n        System.out.print(size(c));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "6:-1:-1"
+      },
+      {
+        "id": "B",
+        "text": "6:4:0"
+      },
+      {
+        "id": "C",
+        "text": "6:4:-1"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "ClassCastException"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "&&の右辺ではパターン変数sが使用できます。silverは6、javaは4で条件>3を満たし、IntegerはStringではないため-1です。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "&&の右辺ではパターン変数sが使用できます。silverは6、javaは4で条件>3を満たし、IntegerはStringではないため-1です。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "instanceof",
+      "pattern-matching",
+      "scope",
+      "and"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0509",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "public class Main {\n    static boolean ok(Object value) {\n        if (value instanceof String s || s.length() > 3) {\n            return true;\n        }\n        return false;\n    }\n    public static void main(String[] args) {\n        System.out.println(ok(\"java\"));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "このコードはコンパイルエラーになる"
+      },
+      {
+        "id": "B",
+        "text": "`value instanceof String s && s.length() > 3` なら右辺でsを使用できる"
+      },
+      {
+        "id": "C",
+        "text": "|| の右辺では必ず左辺がtrueなのでsを使用できる"
+      },
+      {
+        "id": "D",
+        "text": "sはif文の外側でも常に使用できる"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルでき、\"java\"ではtrueを返す"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "||の右辺が評価されるのは左辺がfalseのときで、その場合パターン変数sは成立していません。一方&&の右辺は左辺trueの場合だけ評価されるためsを利用できます。",
+    "choiceExplanations": {
+      "A": "正しい。||右辺のsがスコープ外です。",
+      "B": "正しい。&&右辺はinstanceof成功時だけ評価されます。",
+      "C": "誤り。||右辺は左辺falseのときに評価されます。",
+      "D": "誤り。パターン変数にはフローに基づくスコープがあります。",
+      "E": "誤り。コンパイルできません。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "instanceof",
+      "pattern-variable",
+      "scope",
+      "or"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0510",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static String first(Object value) {\n        if (!(value instanceof String s)) {\n            return \"X\";\n        }\n        return s.substring(0, 1);\n    }\n    public static void main(String[] args) {\n        System.out.print(first(\"Java\") + \":\");\n        System.out.print(first(123));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "X:X"
+      },
+      {
+        "id": "B",
+        "text": "J:1"
+      },
+      {
+        "id": "C",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "ClassCastException"
+      },
+      {
+        "id": "E",
+        "text": "J:X"
+      }
+    ],
+    "correctAnswers": [
+      "E"
+    ],
+    "explanation": "if条件がfalseで先へ進めるのはinstanceof String sがtrueだった場合だけなので、ifの後ではsが確実に成立しており使用できます。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "if条件がfalseで先へ進めるのはinstanceof String sがtrueだった場合だけなので、ifの後ではsが確実に成立しており使用できます。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "instanceof",
+      "flow-scoping",
+      "negation"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0511",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Animal { }\nclass Dog extends Animal {\n    void bark() { System.out.print(\"D\"); }\n}\nclass Cat extends Animal { }\npublic class Main {\n    public static void main(String[] args) {\n        Animal a = new Cat();\n        System.out.print(\"A\");\n        Dog d = (Dog) a;\n        d.bark();\n        System.out.print(\"B\");\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A を表示した後、ClassCastException"
+      },
+      {
+        "id": "B",
+        "text": "ADB"
+      },
+      {
+        "id": "C",
+        "text": "AB"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "何も表示せずClassCastException"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],    "explanation": "Animal型参照aの実体はCatです。Dogへの明示キャストはコンパイル可能ですが実行時型がDogではないためClassCastExceptionが発生し、DやBは出力されません。",
+    "choiceExplanations": {
+      "A": "Animal型参照aの実体はCatです。Dogへの明示キャストはコンパイル可能ですが実行時型がDogではないためClassCastExceptionが発生し、DやBは出力されません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "downcast",
+      "ClassCastException",
+      "reference-type"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0512",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class Animal { }\nclass Dog extends Animal {\n    public String toString() { return \"D\"; }\n}\nclass Cat extends Animal {\n    public String toString() { return \"C\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Dog[] dogs = { new Dog(), new Dog() };\n        Animal[] animals = dogs;\n        System.out.print(animals[0] + \":\");\n        animals[1] = new Cat();\n        System.out.print(animals[1]);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "`Animal[] animals = dogs;` 自体はコンパイルできる"
+      },
+      {
+        "id": "B",
+        "text": "D: と表示した後、Cat格納時にArrayStoreExceptionが発生する"
+      },
+      {
+        "id": "C",
+        "text": "配列は不変なのでDog[]をAnimal[]へ代入できずコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "CatはAnimalなのでDog[]の実体配列にも安全に格納できる"
+      },
+      {
+        "id": "E",
+        "text": "例外はArrayIndexOutOfBoundsExceptionである"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "Javaの参照型配列は共変なのでDog[]をAnimal[]参照へ代入できます。ただし実体はDog[]のままなのでCatを格納するとArrayStoreExceptionです。",
+    "choiceExplanations": {
+      "A": "正しい。配列の共変性により代入できます。",
+      "B": "正しい。最初のDog出力後、実体Dog[]へのCat格納で例外です。",
+      "C": "誤り。Javaの配列は共変です。",
+      "D": "誤り。実体配列の要素型チェックは実行時に行われます。",
+      "E": "誤り。添字ではなく格納型の不一致です。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "array-covariance",
+      "ArrayStoreException",
+      "reference-array"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0513",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int[][] data = {\n            {1, 2},\n            null,\n            {3},\n            {4, 5, 6}\n        };\n        int total = 0;\n        for (int[] row : data) {\n            if (row == null) continue;\n            for (int v : row) {\n                if (v == 5) break;\n                total += v;\n            }\n        }\n        System.out.print(total);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "15"
+      },
+      {
+        "id": "B",
+        "text": "21"
+      },
+      {
+        "id": "C",
+        "text": "10"
+      },
+      {
+        "id": "D",
+        "text": "9"
+      },
+      {
+        "id": "E",
+        "text": "NullPointerException"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "null行はcontinueします。最後の行では5で内側ループだけbreakするため4まで加算され、合計は1+2+3+4=10です。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "null行はcontinueします。最後の行では5で内側ループだけbreakするため4まで加算され、合計は1+2+3+4=10です。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "multidimensional-array",
+      "enhanced-for",
+      "break",
+      "null"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0514",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int count = 0;\n        outer:\n        for (int i = 0; i < 3; i++) {\n            for (int j = 0; j < 4; j++) {\n                if (j == 2) {\n                    continue outer;\n                }\n                count += i + j;\n                System.out.print(i + \"\" + j + \" \");\n            }\n        }\n        System.out.print(\"|\" + count);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "00 01 03 10 11 13 20 21 23 |18"
+      },
+      {
+        "id": "B",
+        "text": "00 01 |1"
+      },
+      {
+        "id": "C",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "00 01 10 11 20 21 |9"
+      },
+      {
+        "id": "E",
+        "text": "00 01 10 11 20 21 |6"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "j==2でcontinue outerとなり外側forの次反復へ移るため、各iでj=0,1だけ実行されます。加算値は(0+0)+(0+1)+(1+0)+(1+1)+(2+0)+(2+1)=9です。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "j==2でcontinue outerとなり外側forの次反復へ移るため、各iでj=0,1だけ実行されます。加算値は(0+0)+(0+1)+(1+0)+(1+1)+(2+0)+(2+1)=9です。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "12. break / continue",
+    "tags": [
+      "label",
+      "continue",
+      "nested-loop"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0515",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 0;\n        int total = 0;\n        do {\n            total += ++x;\n            if (x == 2) {\n                continue;\n            }\n            total += 10;\n        } while (x < 3);\n        System.out.print(x + \":\" + total);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "3:16"
+      },
+      {
+        "id": "B",
+        "text": "2:13"
+      },
+      {
+        "id": "C",
+        "text": "3:36"
+      },
+      {
+        "id": "D",
+        "text": "無限ループ"
+      },
+      {
+        "id": "E",
+        "text": "3:26"
+      }
+    ],
+    "correctAnswers": [
+      "E"
+    ],
+    "explanation": "do/whileのcontinueは条件判定へ進みます。x=1で11、x=2で+2のみ、x=3で+3+10となりtotalは26です。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "do/whileのcontinueは条件判定へ進みます。x=1で11、x=2で+2のみ、x=3で+3+10となりtotalは26です。"
+    },
+    "category": "11. while / do-while / for / 拡張for",
+    "tags": [
+      "do-while",
+      "continue",
+      "pre-increment"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0516",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static int score(int n) {\n        return switch (n) {\n            case 1, 2 -> n * 10;\n            case 3 -> {\n                int x = n + 4;\n                yield x * 2;\n            }\n            default -> 0;\n        };\n    }\n    public static void main(String[] args) {\n        var a = score(2);\n        var b = score(3);\n        System.out.print(a + \":\" + b);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "20:14"
+      },
+      {
+        "id": "B",
+        "text": "20:7"
+      },
+      {
+        "id": "C",
+        "text": "2:14"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "20:0"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "switch式のcase 1,2は20を返し、case 3のブロックはyieldで(3+4)*2=14を返します。",
+    "choiceExplanations": {
+      "A": "switch式のcase 1,2は20を返し、case 3のブロックはyieldで(3+4)*2=14を返します。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "10. switch式 / yield",
+    "tags": [
+      "switch-expression",
+      "yield",
+      "var"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0517",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static void print(int n) {\n        switch (n) {\n            case 1:\n                System.out.print(\"A\");\n            case 2:\n                System.out.print(\"B\");\n                break;\n            default:\n                System.out.print(\"D\");\n        }\n    }\n    public static void main(String[] args) {\n        print(1);\n        System.out.print(\":\");\n        print(3);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A:D"
+      },
+      {
+        "id": "B",
+        "text": "AB:D"
+      },
+      {
+        "id": "C",
+        "text": "B:D"
+      },
+      {
+        "id": "D",
+        "text": "AB:BD"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "従来のswitch文ではcase 1にbreakがないためcase 2へフォールスルーしてAB、その後breakします。3はdefaultでDです。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "従来のswitch文ではcase 1にbreakがないためcase 2へフォールスルーしてAB、その後breakします。3はdefaultでDです。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "9. switch文",
+    "tags": [
+      "switch",
+      "fall-through",
+      "break"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0518",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "enum Level { LOW, HIGH }\npublic class Main {\n    static String text(Level level) {\n        return switch (level) {\n            case LOW -> \"L\";\n            case HIGH -> \"H\";\n        };\n    }\n    public static void main(String[] args) {\n        Level x = Level.HIGH;\n        System.out.print(text(x));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "L"
+      },
+      {
+        "id": "B",
+        "text": "コンパイルエラー（defaultが必要）"
+      },
+      {
+        "id": "C",
+        "text": "H"
+      },
+      {
+        "id": "D",
+        "text": "null"
+      },
+      {
+        "id": "E",
+        "text": "実行時例外"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "enumのすべての定数LOWとHIGHをswitch式が網羅しているためdefaultは不要です。HIGHなのでHです。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "enumのすべての定数LOWとHIGHをswitch式が網羅しているためdefaultは不要です。HIGHなのでHです。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "10. switch式 / yield",
+    "tags": [
+      "switch-expression",
+      "enum",
+      "exhaustive"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0519",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        var values = {1, 2, 3};\n        int total = 0;\n        for (var v : values) {\n            total += v;\n        }\n        System.out.print(total);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "このコードはコンパイルエラーになる"
+      },
+      {
+        "id": "B",
+        "text": "`var values = new int[]{1, 2, 3};` に変更すればvarで配列型を推論できる"
+      },
+      {
+        "id": "C",
+        "text": "varは配列型を表現できない"
+      },
+      {
+        "id": "D",
+        "text": "拡張forでvarを使うことは禁止されている"
+      },
+      {
+        "id": "E",
+        "text": "このまま6と表示される"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "var自体は配列型を推論できますが、単独の配列初期化子 `{...}` にはターゲット型が必要です。new int[]{...}を使えば型推論できます。",
+    "choiceExplanations": {
+      "A": "正しい。右辺の配列初期化子だけでは型推論できません。",
+      "B": "正しい。new int[]式には明確な型があります。",
+      "C": "誤り。varからint[]を推論できます。",
+      "D": "誤り。拡張forのローカル変数にvarを使用できます。",
+      "E": "誤り。宣言時点でコンパイルエラーです。"
+    },
+    "category": "3. var",
+    "tags": [
+      "var",
+      "array-initializer",
+      "compile-error"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0520",
+    "question": "次のコードについて正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static void show(Object o) {\n        System.out.print(o);\n    }\n    public static void main(String[] args) {\n        var value = null;\n        if (value == null) {\n            show(\"N\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "N"
+      },
+      {
+        "id": "B",
+        "text": "null"
+      },
+      {
+        "id": "C",
+        "text": "何も表示されない"
+      },
+      {
+        "id": "D",
+        "text": "実行時にNullPointerException"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "E"
+    ],
+    "explanation": "varは初期化式から型を推論する必要がありますが、null単独からは型を推論できないためコンパイルエラーです。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "varは初期化式から型を推論する必要がありますが、null単独からは型を推論できないためコンパイルエラーです。"
+    },
+    "category": "3. var",
+    "tags": [
+      "var",
+      "null",
+      "type-inference"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  }
+]

@@ -1,0 +1,469 @@
+[
+  {
+    "id": "JS17-0541",
+    "question": "Main.javaをコンパイル後、`java Main a b c` と実行した結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String... args) {\n        System.out.print(args.length + \":\");\n        for (String arg : args) {\n            System.out.print(arg.substring(0, 1));\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "3:abc"
+      },
+      {
+        "id": "B",
+        "text": "1:a b c"
+      },
+      {
+        "id": "C",
+        "text": "3:a b c"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルは成功するが起動できない"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "String...はmainメソッドのString[]と同じ配列型として扱われる有効なシグネチャです。3つの引数が別々の要素として渡されます。",
+    "choiceExplanations": {
+      "A": "String...はmainメソッドのString[]と同じ配列型として扱われる有効なシグネチャです。3つの引数が別々の要素として渡されます。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "main",
+      "varargs",
+      "command-line"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0542",
+    "question": "Main.javaを`javac Main.java`でコンパイル後、`java Main`と実行した場合として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static int main(String[] args) {\n        System.out.print(\"A\");\n        return 0;\n    }\n\n    public static void main(int value) {\n        System.out.print(\"B\");\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A"
+      },
+      {
+        "id": "B",
+        "text": "コンパイルは成功するが、javaコマンドで起動時にmainメソッドが見つからない"
+      },
+      {
+        "id": "C",
+        "text": "B"
+      },
+      {
+        "id": "D",
+        "text": "AB"
+      },
+      {
+        "id": "E",
+        "text": "javac時にコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "どちらもJavaメソッドとしては有効ですが、起動エントリポイントに必要なpublic static void main(String[]/String...)がありません。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "どちらもJavaメソッドとしては有効ですが、起動エントリポイントに必要なpublic static void main(String[]/String...)がありません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "main",
+      "overload",
+      "launcher"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0543",
+    "question": "次の内容を`App.java`というファイルに保存し、`javac App.java`を実行した場合として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        Helper.run();\n    }\n}\nclass Helper {\n    static void run() {\n        System.out.print(\"OK\");\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "OK"
+      },
+      {
+        "id": "B",
+        "text": "何も表示されない"
+      },
+      {
+        "id": "C",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "コンパイル成功するがjava Appでは起動できない"
+      },
+      {
+        "id": "E",
+        "text": "Main.classだけ生成される"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "publicなトップレベルクラスMainはMain.javaというファイル名で宣言する必要があります。App.javaではjavac時にエラーです。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "publicなトップレベルクラスMainはMain.javaというファイル名で宣言する必要があります。App.javaではjavac時にエラーです。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "javac",
+      "public-class",
+      "file-name"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0544",
+    "question": "`src/p/Main.java`として保存し、カレントディレクトリで`javac -d out src/p/Main.java`が成功した。実行コマンドとして正しいものを1つ選びなさい。",
+    "code": "package p;\n\npublic class Main {\n    static String message(String[] args) {\n        return args.length == 0 ? \"EMPTY\" : args[0];\n    }\n\n    public static void main(String[] args) {\n        System.out.print(message(args));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "java -cp out Main hello"
+      },
+      {
+        "id": "B",
+        "text": "java out/p/Main.class hello"
+      },
+      {
+        "id": "C",
+        "text": "java -cp src p.Main hello"
+      },
+      {
+        "id": "D",
+        "text": "java -cp out p.Main hello"
+      },
+      {
+        "id": "E",
+        "text": "javac -cp out p.Main hello"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "`-d out`によりp/Main.classがout配下へ生成されます。実行時はクラスパスのルートoutを指定し、完全修飾クラス名p.Mainを使います。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "`-d out`によりp/Main.classがout配下へ生成されます。実行時はクラスパスのルートoutを指定し、完全修飾クラス名p.Mainを使います。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "javac",
+      "java",
+      "classpath",
+      "package"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0545",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static String[] args = {\"field\"};\n\n    static void show(String[] args) {\n        System.out.print(args[0] + \":\");\n        System.out.print(Main.args[0]);\n    }\n\n    public static void main(String[] args) {\n        String[] local = {\"local\"};\n        show(local);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "field:field"
+      },
+      {
+        "id": "B",
+        "text": "local:local"
+      },
+      {
+        "id": "C",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "ArrayIndexOutOfBoundsException"
+      },
+      {
+        "id": "E",
+        "text": "local:field"
+      }
+    ],
+    "correctAnswers": [
+      "E"
+    ],
+    "explanation": "showの引数argsがstaticフィールドargsをシャドーイングします。args[0]はlocal、Main.args[0]はfieldです。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "showの引数argsがstaticフィールドargsをシャドーイングします。args[0]はlocal、Main.args[0]はfieldです。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "main",
+      "scope",
+      "shadowing",
+      "static"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0546",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int[][] data = new int[2][];\n        data[0] = new int[] {1, 2};\n        data[1] = new int[] {3};\n\n        int total = 0;\n        for (int i = 0; i < data.length; i++) {\n            for (int j = 0; j <= data[i].length; j++) {\n                total += data[i][j];\n            }\n        }\n        System.out.print(total);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "実行時にArrayIndexOutOfBoundsException"
+      },
+      {
+        "id": "B",
+        "text": "6"
+      },
+      {
+        "id": "C",
+        "text": "3"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "0"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "内側ループ条件がj <= data[i].lengthなので、最初の行でj==2になったときdata[0][2]へアクセスしArrayIndexOutOfBoundsExceptionです。",
+    "choiceExplanations": {
+      "A": "内側ループ条件がj <= data[i].lengthなので、最初の行でj==2になったときdata[0][2]へアクセスしArrayIndexOutOfBoundsExceptionです。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "array",
+      "ArrayIndexOutOfBoundsException",
+      "loop"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0547",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Box {\n    int value;\n    Box(int value) {\n        this.value = value;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Box[] boxes = { new Box(1), new Box(2) };\n        for (Box b : boxes) {\n            b.value += 10;\n            b = new Box(99);\n        }\n        System.out.print(boxes[0].value + \":\" + boxes[1].value);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "99:99"
+      },
+      {
+        "id": "B",
+        "text": "11:12"
+      },
+      {
+        "id": "C",
+        "text": "1:2"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "11:99"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "拡張forの変数bは配列要素の参照値のコピーです。b.valueの変更は元オブジェクトへ反映されますが、b自体をnew Box(99)へ再代入しても配列要素の参照は変わりません。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "拡張forの変数bは配列要素の参照値のコピーです。b.valueの変更は元オブジェクトへ反映されますが、b自体をnew Box(99)へ再代入しても配列要素の参照は変わりません。",
+      "C": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "enhanced-for",
+      "reference",
+      "array"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0548",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Parent {\n    Parent() {\n        print();\n    }\n    void print() {\n        System.out.print(\"P\");\n    }\n}\nclass Child extends Parent {\n    int value = 7;\n    @Override void print() {\n        System.out.print(\"C\" + value + \":\");\n    }\n    Child() {\n        System.out.print(value);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Child();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "C7:7"
+      },
+      {
+        "id": "B",
+        "text": "P7"
+      },
+      {
+        "id": "C",
+        "text": "C0:7"
+      },
+      {
+        "id": "D",
+        "text": "P0:7"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "Parentコンストラクタからのinstanceメソッド呼び出しにも動的ディスパッチが働きChild.print()が呼ばれます。その時点ではChildのフィールド初期化前なのでvalueはデフォルト値0です。その後7へ初期化されChildコンストラクタで7を出力します。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "C": "Parentコンストラクタからのinstanceメソッド呼び出しにも動的ディスパッチが働きChild.print()が呼ばれます。その時点ではChildのフィールド初期化前なのでvalueはデフォルト値0です。その後7へ初期化されChildコンストラクタで7を出力します。",
+      "D": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "constructor",
+      "override",
+      "dynamic-dispatch",
+      "default-value"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0549",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "interface A {\n    default String name() { return \"A\"; }\n    static String kind() { return \"K\"; }\n}\nabstract class B implements A {\n    public abstract String name();\n}\nclass C extends B {\n    @Override public String name() { return \"C\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A x = new C();\n        System.out.print(x.name() + \":\" + A.kind());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "正常にコンパイルされ、C:Kと表示される"
+      },
+      {
+        "id": "B",
+        "text": "BはAのdefault name()をabstractとして再宣言できる"
+      },
+      {
+        "id": "C",
+        "text": "Cはname()を実装しなくても具象クラスになれる"
+      },
+      {
+        "id": "D",
+        "text": "x.kind()と書いても同じKが得られる"
+      },
+      {
+        "id": "E",
+        "text": "A.kind()はCへ継承される"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "Bは継承したdefaultメソッドをabstractで再宣言して実装を強制できます。Cはそのabstractメソッドを実装する必要があり、interfaceのstaticメソッドはA.kind()で呼びます。",
+    "choiceExplanations": {
+      "A": "正しい。x.name()はCのoverride、A.kind()はinterfaceのstaticメソッドです。",
+      "B": "正しい。abstract classはdefaultメソッドをabstractとして再宣言できます。",
+      "C": "誤り。Cは具象クラスなのでBのabstract name()を実装する必要があります。",
+      "D": "誤り。interfaceのstaticメソッドはインスタンス経由で呼べません。",
+      "E": "誤り。interfaceのstaticメソッドは実装クラスへ継承されません。"
+    },
+    "category": "26. interface",
+    "tags": [
+      "interface",
+      "default-method",
+      "abstract",
+      "static"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0550",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "class Base {\n    protected Number value() throws RuntimeException {\n        return 1;\n    }\n}\nclass Sub extends Base {\n    @Override\n    public Integer value() {\n        return 2;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Base b = new Sub();\n        Number n = b.value();\n        System.out.print(n);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "正常にコンパイルされ、2と表示される"
+      },
+      {
+        "id": "B",
+        "text": "Sub.value()は戻り値をIntegerへ共変に変更できる"
+      },
+      {
+        "id": "C",
+        "text": "protectedからpublicへ可視性を広げるoverrideはできない"
+      },
+      {
+        "id": "D",
+        "text": "親がRuntimeExceptionを宣言しているので子も必ずthrows RuntimeExceptionが必要"
+      },
+      {
+        "id": "E",
+        "text": "Base型参照なのでBase.value()が呼ばれ1と表示される"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "overrideではアクセス範囲を広げられ、共変戻り値も利用できます。RuntimeExceptionは非チェック例外なので子でthrowsを省略可能です。実行時にはSub.value()が呼ばれます。",
+    "choiceExplanations": {
+      "A": "正しい。動的ディスパッチによりSub.value()が呼ばれます。",
+      "B": "正しい。IntegerはNumberのサブクラスなので共変戻り値として有効です。",
+      "C": "誤り。overrideで可視性を広げることはできます。",
+      "D": "誤り。非チェック例外のthrows宣言は継承側で必須ではありません。",
+      "E": "誤り。instanceメソッドは実体型Subのoverrideが呼ばれます。"
+    },
+    "category": "23. override",
+    "tags": [
+      "override",
+      "covariant-return",
+      "access-modifier",
+      "unchecked-exception"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  }
+]
