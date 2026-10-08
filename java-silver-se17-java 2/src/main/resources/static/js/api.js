@@ -37,10 +37,10 @@ export const api = {
     });
   },
 
-  startExam(questionCount, durationMinutes) {
+  startExam(questionCount, durationMinutes, excludedQuestionIds = []) {
     return request('/api/exams/start', {
       method: 'POST',
-      body: JSON.stringify({ questionCount, durationMinutes })
+      body: JSON.stringify({ questionCount, durationMinutes, excludedQuestionIds })
     });
   },
 

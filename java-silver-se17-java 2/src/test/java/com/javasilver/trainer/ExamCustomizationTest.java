@@ -2,6 +2,7 @@ package com.javasilver.trainer;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javasilver.trainer.repository.QuestionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,6 +12,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -28,6 +33,9 @@ class ExamCustomizationTest {
 
     @Autowired
     ObjectMapper objectMapper;
+
+    @Autowired
+    QuestionRepository repository;
 
     @Test
     void metaPublishesSelectableQuestionCountsAndDurations() throws Exception {
@@ -58,6 +66,55 @@ class ExamCustomizationTest {
         long seconds = Duration.between(startedAt, expiresAt).getSeconds();
 
         assertEquals(600, seconds);
+    }
+
+    @Test
+    void startExamAvoidsExcludedQuestionsWhenEnoughFreshQuestionsRemain() throws Exception {
+        var allIds = repository.findAll().stream().map(q -> q.id()).toList();
+        var excluded = allIds.subList(0, allIds.size() - 5);
+        var payload = new LinkedHashMap<String, Object>();
+        payload.put("questionCount", 5);
+        payload.put("durationMinutes", 10);
+        payload.put("excludedQuestionIds", excluded);
+
+        var result = mockMvc.perform(post("/api/exams/start")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(payload)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.questions.length()").value(5))
+                .andReturn();
+
+        JsonNode body = objectMapper.readTree(result.getResponse().getContentAsString());
+        var excludedSet = new HashSet<>(excluded);
+        for (JsonNode question : body.get("questions")) {
+            assertTrue(!excludedSet.contains(question.get("id").asText()));
+        }
+    }
+
+    @Test
+    void startExamUsesAllRemainingFreshQuestionsBeforeFillingFromSeenQuestions() throws Exception {
+        var allIds = repository.findAll().stream().map(q -> q.id()).toList();
+        var fresh = allIds.subList(allIds.size() - 2, allIds.size());
+        var excluded = allIds.subList(0, allIds.size() - 2);
+        var payload = Map.<String, Object>of(
+                "questionCount", 5,
+                "durationMinutes", 10,
+                "excludedQuestionIds", excluded
+        );
+
+        var result = mockMvc.perform(post("/api/exams/start")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(payload)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.questions.length()").value(5))
+                .andReturn();
+
+        JsonNode body = objectMapper.readTree(result.getResponse().getContentAsString());
+        var selected = new HashSet<String>();
+        body.get("questions").forEach(question -> selected.add(question.get("id").asText()));
+
+        assertEquals(5, selected.size());
+        assertTrue(selected.containsAll(fresh));
     }
 
     @Test

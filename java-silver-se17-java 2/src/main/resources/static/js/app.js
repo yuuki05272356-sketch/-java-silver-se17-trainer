@@ -1,5 +1,6 @@
 import { api } from './api.js';
 import { storage } from './storage.js';
+import { advanceExamCycle, normalizeExamCycleIds } from './exam-cycle.js';
 import { renderWrongAnswerDetail } from './result-review.js';
 
 const app = document.querySelector('#app');
@@ -213,12 +214,19 @@ async function startExam() {
   try {
     const questionCount = Number(document.querySelector('#examQuestionCount')?.value || meta.examConfig.questionCount);
     const durationMinutes = Number(document.querySelector('#examDurationMinutes')?.value || meta.examConfig.durationMinutes);
-    const started = await api.startExam(questionCount, durationMinutes);
+    const excludedQuestionIds = normalizeExamCycleIds(
+      userState.examCycleIds ?? [],
+      questions.map(q => q.id)
+    );
+    const started = await api.startExam(questionCount, durationMinutes, excludedQuestionIds);
     started.questions.forEach(q => questionById.set(q.id, q));
+    const selectedIds = started.questions.map(q => q.id);
+    userState.examCycleIds = advanceExamCycle(excludedQuestionIds, selectedIds, questions.length);
+    saveUserState();
     session = {
       id: started.examId,
       mode: 'exam',
-      questionIds: started.questions.map(q => q.id),
+      questionIds: selectedIds,
       index: 0,
       answers: {},
       flags: {},
@@ -683,6 +691,7 @@ async function init() {
     questionById = new Map(questions.map(q => [q.id, q]));
     userState.reviewIds = (userState.reviewIds ?? []).filter(id => questionById.has(id));
     userState.unknownIds = (userState.unknownIds ?? []).filter(id => questionById.has(id));
+    userState.examCycleIds = normalizeExamCycleIds(userState.examCycleIds ?? [], questions.map(q => q.id));
     if (session?.questionIds) session.questionIds = session.questionIds.filter(id => questionById.has(id));
     if (session?.mode === 'exam' && new Date(session.expiresAt).getTime() <= Date.now()) finishExam(true);
     else homeView();

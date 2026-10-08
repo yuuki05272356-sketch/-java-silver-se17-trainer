@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,10 +48,18 @@ public class ExamService {
                 ? config.durationMinutes()
                 : request.durationMinutes();
 
-        return start(questionCount, durationMinutes);
+        var excludedQuestionIds = request == null || request.excludedQuestionIds() == null
+                ? List.<String>of()
+                : request.excludedQuestionIds();
+
+        return start(questionCount, durationMinutes, excludedQuestionIds);
     }
 
     public ExamStartResponse start(int questionCount, int durationMinutes) {
+        return start(questionCount, durationMinutes, List.of());
+    }
+
+    public ExamStartResponse start(int questionCount, int durationMinutes, List<String> excludedQuestionIds) {
         var config = catalogService.examConfig();
 
         if (!config.questionCountOptions().contains(questionCount)) {
@@ -71,8 +78,12 @@ public class ExamService {
             throw new IllegalArgumentException("模擬試験に必要な問題数が不足しています。");
         }
 
-        Collections.shuffle(pool);
-        var selected = pool.subList(0, questionCount).stream()
+        var selected = ExamQuestionSelector.select(
+                        pool,
+                        questionCount,
+                        excludedQuestionIds,
+                        question -> question.id()
+                ).stream()
                 .map(QuestionView::from)
                 .toList();
 

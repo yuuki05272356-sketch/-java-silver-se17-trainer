@@ -7,6 +7,7 @@ const defaultState = () => ({
   reviewIds: [],
   unknownIds: [],
   examHistory: [],
+  examCycleIds: [],
   lastUpdatedAt: null
 });
 
