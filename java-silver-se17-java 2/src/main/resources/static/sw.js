@@ -1,4 +1,4 @@
-const CACHE = 'java-silver-java-shell-v10';
+const CACHE = 'java-silver-java-shell-v11';
 const SHELL = ['/', '/index.html', '/css/styles.css', '/js/app.js', '/js/api.js', '/js/storage.js', '/js/exam-cycle.js', '/js/result-review.js', '/js/result-correct-review.js', '/manifest.webmanifest'];
 
 self.addEventListener('install', event => {
@@ -18,5 +18,15 @@ self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   if (url.pathname.startsWith('/api/')) return; // APIは常にJavaサーバーへ。
   if (event.request.method !== 'GET') return;
-  event.respondWith(caches.match(event.request).then(hit => hit || fetch(event.request)));
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        if (response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE).then(cache => cache.put(event.request, copy));
+        }
+        return response;
+      })
+      .catch(() => caches.match(event.request))
+  );
 });

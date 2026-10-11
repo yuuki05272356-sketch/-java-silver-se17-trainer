@@ -1,24 +1,41 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { advanceExamCycle, normalizeExamCycleIds } from '../../main/resources/static/js/exam-cycle.js';
+import { answeredQuestionIds } from '../../main/resources/static/js/exam-cycle.js';
 
-test('normalizes cycle ids to unique ids that still exist', () => {
+test('returns only questions that have actually been answered', () => {
+  const stats = {
+    Q1: { attempts: 2, correct: 1, incorrect: 1 },
+    Q2: { attempts: 0, correct: 0, incorrect: 0 },
+    Q3: { attempts: 1, correct: 1, incorrect: 0 }
+  };
+
   assert.deepEqual(
-    normalizeExamCycleIds(['Q1', 'Q1', 'OLD'], ['Q1', 'Q2']),
+    answeredQuestionIds(stats, ['Q1', 'Q2', 'Q3']),
+    ['Q1', 'Q3']
+  );
+});
+
+test('ignores stale question ids that are no longer in the bank', () => {
+  const stats = {
+    Q1: { attempts: 1 },
+    OLD: { attempts: 5 }
+  };
+
+  assert.deepEqual(
+    answeredQuestionIds(stats, ['Q1', 'Q2']),
     ['Q1']
   );
 });
 
-test('keeps accumulating unseen questions before a full cycle', () => {
-  assert.deepEqual(
-    advanceExamCycle(['Q1', 'Q2'], ['Q3', 'Q4'], 5),
-    ['Q1', 'Q2', 'Q3', 'Q4']
-  );
-});
+test('treats missing or invalid attempts as unanswered', () => {
+  const stats = {
+    Q1: {},
+    Q2: { attempts: null },
+    Q3: { attempts: 1 }
+  };
 
-test('when a cycle completes, carry only filler repeats into the next cycle', () => {
   assert.deepEqual(
-    advanceExamCycle(['Q1', 'Q2', 'Q3', 'Q4'], ['Q5', 'Q2', 'Q3'], 5),
-    ['Q2', 'Q3']
+    answeredQuestionIds(stats, ['Q1', 'Q2', 'Q3']),
+    ['Q3']
   );
 });

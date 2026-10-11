@@ -1,6 +1,6 @@
 import { api } from './api.js';
 import { storage } from './storage.js';
-import { advanceExamCycle, normalizeExamCycleIds } from './exam-cycle.js';
+import { answeredQuestionIds } from './exam-cycle.js';
 import { renderWrongAnswerDetail } from './result-review.js';
 
 const app = document.querySelector('#app');
@@ -128,7 +128,7 @@ function homeView() {
     <div class="mode-grid">
       <section class="card mode-card">
         <h2>模擬試験モード</h2>
-        <p>JavaのExamServiceが問題バンクから選択した問題数だけランダム出題し、制限時間と採点もJava側で管理します。</p>
+        <p>一度も回答していない問題を最優先でランダム出題します。未回答の問題が足りない場合だけ、回答済みの問題から補充します。</p>
         <div class="exam-config-grid">
           <div class="field">
             <label for="examQuestionCount">問題数</label>
@@ -214,15 +214,13 @@ async function startExam() {
   try {
     const questionCount = Number(document.querySelector('#examQuestionCount')?.value || meta.examConfig.questionCount);
     const durationMinutes = Number(document.querySelector('#examDurationMinutes')?.value || meta.examConfig.durationMinutes);
-    const excludedQuestionIds = normalizeExamCycleIds(
-      userState.examCycleIds ?? [],
+    const answeredIds = answeredQuestionIds(
+      userState.questionStats ?? {},
       questions.map(q => q.id)
     );
-    const started = await api.startExam(questionCount, durationMinutes, excludedQuestionIds);
+    const started = await api.startExam(questionCount, durationMinutes, answeredIds);
     started.questions.forEach(q => questionById.set(q.id, q));
     const selectedIds = started.questions.map(q => q.id);
-    userState.examCycleIds = advanceExamCycle(excludedQuestionIds, selectedIds, questions.length);
-    saveUserState();
     session = {
       id: started.examId,
       mode: 'exam',
@@ -691,7 +689,6 @@ async function init() {
     questionById = new Map(questions.map(q => [q.id, q]));
     userState.reviewIds = (userState.reviewIds ?? []).filter(id => questionById.has(id));
     userState.unknownIds = (userState.unknownIds ?? []).filter(id => questionById.has(id));
-    userState.examCycleIds = normalizeExamCycleIds(userState.examCycleIds ?? [], questions.map(q => q.id));
     if (session?.questionIds) session.questionIds = session.questionIds.filter(id => questionById.has(id));
     if (session?.mode === 'exam' && new Date(session.expiresAt).getTime() <= Date.now()) finishExam(true);
     else homeView();
