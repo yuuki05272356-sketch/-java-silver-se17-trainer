@@ -1,0 +1,935 @@
+[
+  {
+    "id": "JS17-0601",
+    "question": "switch式とyieldを含む次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static int score(int x) {\n        return switch (x) {\n            case 1 -> 10;\n            case 2 -> {\n                int y = x * 5;\n                yield y + 1;\n            }\n            default -> 0;\n        };\n    }\n    public static void main(String[] args) {\n        System.out.print(score(1) + \":\" + score(2) + \":\" + score(3));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "10:11:0"
+      },
+      {
+        "id": "B",
+        "text": "10:10:0"
+      },
+      {
+        "id": "C",
+        "text": "1:11:3"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "10:11:3"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "case 1は10、case 2はy=10からyield 11、defaultは0なので10:11:0です。",
+    "choiceExplanations": {
+      "A": "case 1は10、case 2はy=10からyield 11、defaultは0なので10:11:0です。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "10. switch式 / yield",
+    "tags": [
+      "switch-expression",
+      "yield",
+      "block",
+      "return"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0602",
+    "question": "従来のswitch文のfall-throughを含む次の出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static String mark(int x) {\n        String s = \"\";\n        switch (x) {\n            case 1:\n                s += \"A\";\n            case 2:\n                s += \"B\";\n                break;\n            default:\n                s += \"D\";\n        }\n        return s;\n    }\n    public static void main(String[] args) {\n        System.out.print(mark(1) + \":\" + mark(2) + \":\" + mark(3));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "AB:B:D"
+      },
+      {
+        "id": "B",
+        "text": "A:B:D"
+      },
+      {
+        "id": "C",
+        "text": "AB:BD:D"
+      },
+      {
+        "id": "D",
+        "text": "AB:B:"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "case 1はbreakがないのでAの後case 2へfall-throughしてAB。2はB、3はdefaultでDです。",
+    "choiceExplanations": {
+      "A": "case 1はbreakがないのでAの後case 2へfall-throughしてAB。2はB、3はdefaultでDです。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "10. switch式 / yield",
+    "tags": [
+      "switch-statement",
+      "fall-through",
+      "break"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0603",
+    "question": "ラベル付きcontinueを含む次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int count = 0;\n        outer:\n        for (int i = 0; i < 3; i++) {\n            for (int j = 0; j < 3; j++) {\n                if (i == j) {\n                    continue outer;\n                }\n                count++;\n            }\n        }\n        System.out.print(count);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "0"
+      },
+      {
+        "id": "B",
+        "text": "1"
+      },
+      {
+        "id": "C",
+        "text": "3"
+      },
+      {
+        "id": "D",
+        "text": "6"
+      },
+      {
+        "id": "E",
+        "text": "9"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "i=0は0回、i=1は1回、i=2は2回countを増やして各i==jで次のouter反復へ進むため合計3です。",
+    "choiceExplanations": {
+      "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "i=0は0回、i=1は1回、i=2は2回countを増やして各i==jで次のouter反復へ進むため合計3です。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "12. break / continue",
+    "tags": [
+      "labeled-continue",
+      "nested-loop",
+      "control-flow"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0604",
+    "question": "ラベル付きbreakを含む次のコードについて正しいものを2つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int sum = 0;\n        outer:\n        for (int i = 1; i <= 3; i++) {\n            for (int j = 1; j <= 3; j++) {\n                if (i * j >= 4) {\n                    break outer;\n                }\n                sum += i * j;\n            }\n        }\n        System.out.print(sum);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "`break outer`は内側ループだけを終了する"
+      },
+      {
+        "id": "B",
+        "text": "`break outer`はラベルouterが付いたfor文全体を終了する"
+      },
+      {
+        "id": "C",
+        "text": "出力は9"
+      },
+      {
+        "id": "D",
+        "text": "出力は8"
+      },
+      {
+        "id": "E",
+        "text": "i=2,j=2でbreakが実行される"
+      }
+    ],
+    "correctAnswers": [
+      "B",
+      "E"
+    ],
+    "explanation": "i=1で1+2+3=6、i=2,j=1で2を加え8、i=2,j=2で積4となりbreak outer。出力は8です。",
+    "choiceExplanations": {
+      "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "B": "i=1で1+2+3=6、i=2,j=1で2を加え8、i=2,j=2で積4となりbreak outer。出力は8です。",
+      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "i=1で1+2+3=6、i=2,j=1で2を加え8、i=2,j=2で積4となりbreak outer。出力は8です。"
+    },
+    "category": "12. break / continue",
+    "tags": [
+      "labeled-break",
+      "nested-loop",
+      "evaluation"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0605",
+    "question": "do-whileの評価順序を含む次の出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 0;\n        int sum = 0;\n        do {\n            x++;\n            if (x == 2) {\n                continue;\n            }\n            sum += x;\n        } while (x < 3);\n        System.out.print(x + \":\" + sum);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "3:4"
+      },
+      {
+        "id": "B",
+        "text": "2:1"
+      },
+      {
+        "id": "C",
+        "text": "3:6"
+      },
+      {
+        "id": "D",
+        "text": "2:3"
+      },
+      {
+        "id": "E",
+        "text": "無限ループ"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "x=1でsum=1、x=2はcontinueでもdo-while条件へ進み、x=3でsum=4となって終了。3:4です。",
+    "choiceExplanations": {
+      "A": "x=1でsum=1、x=2はcontinueでもdo-while条件へ進み、x=3でsum=4となって終了。3:4です。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "11. while / do-while / for / 拡張for",
+    "tags": [
+      "do-while",
+      "continue",
+      "evaluation-order"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0606",
+    "question": "for文の更新式とcontinueについて、実行結果として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int sum = 0;\n        for (int i = 0; i < 5; i++) {\n            if (i % 2 == 0) {\n                continue;\n            }\n            sum += i;\n        }\n        System.out.print(sum);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "4"
+      },
+      {
+        "id": "B",
+        "text": "6"
+      },
+      {
+        "id": "C",
+        "text": "10"
+      },
+      {
+        "id": "D",
+        "text": "無限ループ"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "continueしてもforの更新式i++は実行されます。加算されるのは1と3だけで合計4です。",
+    "choiceExplanations": {
+      "A": "continueしてもforの更新式i++は実行されます。加算されるのは1と3だけで合計4です。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "11. while / do-while / for / 拡張for",
+    "tags": [
+      "for",
+      "continue",
+      "update-expression"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0607",
+    "question": "while条件に後置インクリメントを含む次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 0;\n        int sum = 0;\n        while (x++ < 3) {\n            sum += x;\n        }\n        System.out.print(x + \":\" + sum);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "3:6"
+      },
+      {
+        "id": "B",
+        "text": "4:6"
+      },
+      {
+        "id": "C",
+        "text": "4:10"
+      },
+      {
+        "id": "D",
+        "text": "3:3"
+      },
+      {
+        "id": "E",
+        "text": "無限ループ"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "本体では1,2,3を加えて6。最後の条件で3<3がfalseでも後置++によりxは4になるため4:6です。",
+    "choiceExplanations": {
+      "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "B": "本体では1,2,3を加えて6。最後の条件で3<3がfalseでも後置++によりxは4になるため4:6です。",
+      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "11. while / do-while / for / 拡張for",
+    "tags": [
+      "while",
+      "post-increment",
+      "side-effect"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0608",
+    "question": "短絡評価と副作用について正しいものを2つ選びなさい.",
+    "code": "public class Main {\n    static int n = 0;\n    static boolean hit() {\n        n++;\n        return true;\n    }\n    public static void main(String[] args) {\n        boolean a = false && hit();\n        boolean b = true || hit();\n        boolean c = false | hit();\n        System.out.print(n + \":\" + a + \":\" + b + \":\" + c);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "hit()は1回だけ呼ばれる"
+      },
+      {
+        "id": "B",
+        "text": "`false && hit()`でもhit()は呼ばれる"
+      },
+      {
+        "id": "C",
+        "text": "`true || hit()`ではhit()は呼ばれない"
+      },
+      {
+        "id": "D",
+        "text": "`false | hit()`ではhit()は呼ばれない"
+      },
+      {
+        "id": "E",
+        "text": "出力の先頭は2になる"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "C"
+    ],
+    "explanation": "`&&`と`||`は短絡評価するので最初の2式ではhit()を呼びません。`|`は両辺を評価するため1回だけ呼ばれ、nは1です。",
+    "choiceExplanations": {
+      "A": "`&&`と`||`は短絡評価するので最初の2式ではhit()を呼びません。`|`は両辺を評価するため1回だけ呼ばれ、nは1です。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "`&&`と`||`は短絡評価するので最初の2式ではhit()を呼びません。`|`は両辺を評価するため1回だけ呼ばれ、nは1です。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "7. 演算子",
+    "tags": [
+      "short-circuit",
+      "boolean-operator",
+      "side-effect"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0609",
+    "question": "if-elseの結び付きについて、出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 1;\n        int y = 0;\n        if (x > 0)\n            if (y > 0)\n                System.out.print(\"A\");\n            else\n                System.out.print(\"B\");\n        System.out.print(\"C\");\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "AC"
+      },
+      {
+        "id": "B",
+        "text": "BC"
+      },
+      {
+        "id": "C",
+        "text": "C"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "何も表示されない"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "elseは最も近い未対応のif(y>0)に結び付きます。x>0はtrue、y>0はfalseなのでB、その後CでBCです。",
+    "choiceExplanations": {
+      "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "B": "elseは最も近い未対応のif(y>0)に結び付きます。x>0はtrue、y>0はfalseなのでB、その後CでBCです。",
+      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "8. if / if-else",
+    "tags": [
+      "dangling-else",
+      "if",
+      "scope"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0610",
+    "question": "switch式の網羅性について正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static int f(int x) {\n        int y = switch (x) {\n            case 0 -> 10;\n            case 1 -> 20;\n        };\n        return y;\n    }\n    public static void main(String[] args) {\n        System.out.print(f(0));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "10と出力する"
+      },
+      {
+        "id": "B",
+        "text": "x=0しか実行しないためコンパイルできる"
+      },
+      {
+        "id": "C",
+        "text": "switch式がintの全値を網羅せずdefaultもないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "実行時にMatchException"
+      },
+      {
+        "id": "E",
+        "text": "case 1の後にbreakが必要なのでコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "switch式は必ず値を生成できる必要があり、intでcase 0と1だけでは網羅的ではないためdefaultが必要です。",
+    "choiceExplanations": {
+      "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "switch式は必ず値を生成できる必要があり、intでcase 0と1だけでは網羅的ではないためdefaultが必要です。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "10. switch式 / yield",
+    "tags": [
+      "switch-expression",
+      "exhaustiveness",
+      "default",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0611",
+    "question": "overload解決とoverrideの両方を含む次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "class Base {\n    String pick(Number n) { return \"BN\"; }\n    String pick(Integer n) { return \"BI\"; }\n}\nclass Child extends Base {\n    @Override String pick(Number n) { return \"CN\"; }\n    String pick(Double n) { return \"CD\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Base b = new Child();\n        Number n = Integer.valueOf(3);\n        System.out.print(b.pick(n) + \":\");\n        System.out.print(b.pick(4));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "CN:BI"
+      },
+      {
+        "id": "B",
+        "text": "BN:BI"
+      },
+      {
+        "id": "C",
+        "text": "CN:CN"
+      },
+      {
+        "id": "D",
+        "text": "CD:BI"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "1回目はコンパイル時にpick(Number)が選ばれ実行時にChild版CN。2回目はboxingでBase.pick(Integer)が選ばれ、overrideがないためBIです。",
+    "choiceExplanations": {
+      "A": "1回目はコンパイル時にpick(Number)が選ばれ実行時にChild版CN。2回目はboxingでBase.pick(Integer)が選ばれ、overrideがないためBIです。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "overload",
+      "override",
+      "compile-time-type",
+      "boxing"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0612",
+    "question": "次のオーバーロード呼び出しについて正しいものを2つ選びなさい.",
+    "code": "class Calc {\n    static String f(long x) { return \"L\"; }\n    static String f(Integer x) { return \"I\"; }\n    static String f(Object x) { return \"O\"; }\n    static String f(int... x) { return \"V\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        byte b = 1;\n        Integer i = 2;\n        System.out.print(Calc.f(b));\n        System.out.print(Calc.f(i));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "byte引数ではf(long)が選ばれる"
+      },
+      {
+        "id": "B",
+        "text": "byte引数ではboxingしてf(Integer)が選ばれる"
+      },
+      {
+        "id": "C",
+        "text": "Integer引数ではf(Integer)が選ばれる"
+      },
+      {
+        "id": "D",
+        "text": "Integer引数ではunboxingしてf(long)が優先される"
+      },
+      {
+        "id": "E",
+        "text": "出力はLI"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "C"
+    ],
+    "explanation": "byte→longのプリミティブ拡大はboxingより優先されL。Integer引数は完全一致のf(Integer)が選ばれIです。",
+    "choiceExplanations": {
+      "A": "byte→longのプリミティブ拡大はboxingより優先されL。Integer引数は完全一致のf(Integer)が選ばれIです。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "byte→longのプリミティブ拡大はboxingより優先されL。Integer引数は完全一致のf(Integer)が選ばれIです。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "widening",
+      "boxing",
+      "varargs",
+      "overload"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0613",
+    "question": "次のコードはコンパイルできるか。正しいものを1つ選びなさい.",
+    "code": "class Show {\n    static void f(String x) { }\n    static void f(StringBuilder x) { }\n    static void f(CharSequence x) { }\n}\npublic class Main {\n    public static void main(String[] args) {\n        CharSequence x = null;\n        Show.f(x);\n        Show.f(null);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "CCと出力する"
+      },
+      {
+        "id": "B",
+        "text": "2つ目の`f(null)`がStringとStringBuilderの間で曖昧になりコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "1つ目の`f(x)`が曖昧でコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "nullは参照型引数に渡せない"
+      },
+      {
+        "id": "E",
+        "text": "CharSequence overloadがあるので常にそれが選ばれる"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "`f(x)`はCharSequenceで確定しますが、`f(null)`ではStringとStringBuilderが互いに無関係な最具体候補となり曖昧です。",
+    "choiceExplanations": {
+      "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "B": "`f(x)`はCharSequenceで確定しますが、`f(null)`ではStringとStringBuilderが互いに無関係な最具体候補となり曖昧です。",
+      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "null",
+      "ambiguity",
+      "CharSequence",
+      "overload"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0614",
+    "question": "キャストとinstanceofを含む次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "class A { String id() { return \"A\"; } }\nclass B extends A { @Override String id() { return \"B\"; } }\nclass C extends A { }\n\npublic class Main {\n    public static void main(String[] args) {\n        A x = new B();\n        if (x instanceof B) {\n            B b = (B) x;\n            System.out.print(b.id());\n        }\n        A y = new C();\n        System.out.print(\":\");\n        System.out.print(((A) y).id());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "B:A"
+      },
+      {
+        "id": "B",
+        "text": "A:A"
+      },
+      {
+        "id": "C",
+        "text": "B:C"
+      },
+      {
+        "id": "D",
+        "text": "ClassCastException"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "xの実体はBなのでキャスト成功しB.id()。yはCですがidをoverrideしていないためA.id()で、B:Aです。",
+    "choiceExplanations": {
+      "A": "xの実体はBなのでキャスト成功しB.id()。yはCですがidをoverrideしていないためA.id()で、B:Aです。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "instanceof",
+      "cast",
+      "override",
+      "runtime-type"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0615",
+    "question": "次のコードでClassCastExceptionが発生する位置として正しいものを1つ選びなさい.",
+    "code": "class A { }\nclass B extends A { }\nclass C extends A { }\n\npublic class Main {\n    public static void main(String[] args) {\n        A a = new B();\n        Object o = a;\n        A again = (A) o;\n        B b = (B) again;\n        C c = (C) again;\n        System.out.print(b + \":\" + c);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "`A again = (A) o;`"
+      },
+      {
+        "id": "B",
+        "text": "`B b = (B) again;`"
+      },
+      {
+        "id": "C",
+        "text": "`C c = (C) again;`"
+      },
+      {
+        "id": "D",
+        "text": "最後のprintln"
+      },
+      {
+        "id": "E",
+        "text": "コンパイル時点"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "実体はBなのでObject→A、A→Bは成功します。BオブジェクトをCへキャストする行でClassCastExceptionです。",
+    "choiceExplanations": {
+      "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "実体はBなのでObject→A、A→Bは成功します。BオブジェクトをCへキャストする行でClassCastExceptionです。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "ClassCastException",
+      "downcast",
+      "runtime-type"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0616",
+    "question": "staticメソッド隠蔽とinstanceメソッドoverrideを組み合わせた出力として正しいものを1つ選びなさい.",
+    "code": "class P {\n    static String s() { return \"PS\"; }\n    String i() { return \"PI\"; }\n}\nclass C extends P {\n    static String s() { return \"CS\"; }\n    @Override String i() { return \"CI\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        P x = new C();\n        C y = new C();\n        System.out.print(x.s() + \":\" + x.i() + \":\");\n        System.out.print(y.s() + \":\" + y.i());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "PS:CI:CS:CI"
+      },
+      {
+        "id": "B",
+        "text": "CS:CI:CS:CI"
+      },
+      {
+        "id": "C",
+        "text": "PS:PI:CS:CI"
+      },
+      {
+        "id": "D",
+        "text": "CS:PI:CS:PI"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "static s()は参照型で解決されxはP、yはC。instance i()は実体Cへ動的ディスパッチされ両方CIです。",
+    "choiceExplanations": {
+      "A": "static s()は参照型で解決されxはP、yはC。instance i()は実体Cへ動的ディスパッチされ両方CIです。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "17. static",
+    "tags": [
+      "static-hiding",
+      "override",
+      "reference-type",
+      "runtime-type"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0617",
+    "question": "共変戻り値を使うoverrideについて正しいものを2つ選びなさい.",
+    "code": "class Animal { }\nclass Dog extends Animal {\n    String bark() { return \"woof\"; }\n}\nclass Maker {\n    Animal make() { return new Animal(); }\n}\nclass DogMaker extends Maker {\n    @Override\n    Dog make() { return new Dog(); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Maker m = new DogMaker();\n        Animal a = m.make();\n        System.out.print(a instanceof Dog);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "DogMaker.makeの戻り値をDogへ狭めるoverrideは可能"
+      },
+      {
+        "id": "B",
+        "text": "overrideでは戻り値型を必ず完全一致させる必要がある"
+      },
+      {
+        "id": "C",
+        "text": "m.make()は実体DogMakerのメソッドが呼ばれる"
+      },
+      {
+        "id": "D",
+        "text": "変数aの型がAnimalなので戻り値は実体もAnimalになる"
+      },
+      {
+        "id": "E",
+        "text": "このコードはfalseを出力する"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "C"
+    ],
+    "explanation": "参照型の戻り値は共変戻り値としてサブタイプへ狭められます。実体DogMakerのmake()が呼ばれDogが返ります。",
+    "choiceExplanations": {
+      "A": "参照型の戻り値は共変戻り値としてサブタイプへ狭められます。実体DogMakerのmake()が呼ばれDogが返ります。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "参照型の戻り値は共変戻り値としてサブタイプへ狭められます。実体DogMakerのmake()が呼ばれDogが返ります。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "23. override",
+    "tags": [
+      "covariant-return",
+      "override",
+      "polymorphism",
+      "instanceof"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0618",
+    "question": "次の2つのメソッド宣言について正しいものを1つ選びなさい.",
+    "code": "class Test {\n    void run(int x, long y) { }\n    void run(long x, int y) { }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Test t = new Test();\n        t.run(1, 1);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1つ目が選ばれる"
+      },
+      {
+        "id": "B",
+        "text": "2つ目が選ばれる"
+      },
+      {
+        "id": "C",
+        "text": "両方とも適用可能で一方が他方より具体的ではないため呼び出しが曖昧"
+      },
+      {
+        "id": "D",
+        "text": "同じerasureなのでメソッド宣言自体が重複"
+      },
+      {
+        "id": "E",
+        "text": "実行時にどちらかが選ばれる"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "(int,long)と(long,int)の両方が1か所の拡大変換で適用可能ですが、どちらも他方より具体的でないため呼び出しは曖昧です。",
+    "choiceExplanations": {
+      "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "(int,long)と(long,int)の両方が1か所の拡大変換で適用可能ですが、どちらも他方より具体的でないため呼び出しは曖昧です。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "ambiguity",
+      "primitive-widening",
+      "overload"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0619",
+    "question": "overloadと可変長引数について正しいものを1つ選びなさい.",
+    "code": "class Printer {\n    static String p(int x, int y) { return \"F\"; }\n    static String p(int... x) { return \"V\" + x.length; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(Printer.p(1, 2) + \":\");\n        System.out.print(Printer.p(1, 2, 3));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "F:V3"
+      },
+      {
+        "id": "B",
+        "text": "V2:V3"
+      },
+      {
+        "id": "C",
+        "text": "F:F"
+      },
+      {
+        "id": "D",
+        "text": "V2:F"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "2引数では固定arity版がvarargsより優先されF。3引数ではvarargsだけが適用されV3です。",
+    "choiceExplanations": {
+      "A": "2引数では固定arity版がvarargsより優先されF。3引数ではvarargsだけが適用されV3です。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "varargs",
+      "fixed-arity",
+      "overload-resolution"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0620",
+    "question": "次のコードについて正しいものを2つ選びなさい.",
+    "code": "class Parent {\n    Number value() { return 1; }\n}\nclass Child extends Parent {\n    @Override\n    Integer value() { return 2; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        Number n = p.value();\n        System.out.print(n + \":\" + n.getClass().getSimpleName());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Child.valueは有効なoverride"
+      },
+      {
+        "id": "B",
+        "text": "p.value()のコンパイル時戻り値型はInteger"
+      },
+      {
+        "id": "C",
+        "text": "p.value()が返す実体はInteger"
+      },
+      {
+        "id": "D",
+        "text": "出力は1:Integer"
+      },
+      {
+        "id": "E",
+        "text": "NumberとIntegerは無関係なのでコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "C"
+    ],
+    "explanation": "共変戻り値でIntegerへ狭められます。呼び出し式のコンパイル時型はNumberですが、実行時にChild.value()がInteger 2を返します。",
+    "choiceExplanations": {
+      "A": "共変戻り値でIntegerへ狭められます。呼び出し式のコンパイル時型はNumberですが、実行時にChild.value()がInteger 2を返します。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "共変戻り値でIntegerへ狭められます。呼び出し式のコンパイル時型はNumberですが、実行時にChild.value()がInteger 2を返します。",
+      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "23. override",
+    "tags": [
+      "covariant-return",
+      "compile-time-type",
+      "runtime-type"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  }
+]
