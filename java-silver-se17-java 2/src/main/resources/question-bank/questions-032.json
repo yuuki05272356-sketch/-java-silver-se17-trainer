@@ -53,11 +53,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "AB:B:D"
+        "text": "A:B:D"
       },
       {
         "id": "B",
-        "text": "A:B:D"
+        "text": "AB:B:D"
       },
       {
         "id": "C",
@@ -73,12 +73,12 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "B"
     ],
     "explanation": "case 1はbreakがないのでAの後case 2へfall-throughしてAB。2はB、3はdefaultでDです。",
     "choiceExplanations": {
-      "A": "case 1はbreakがないのでAの後case 2へfall-throughしてAB。2はB、3はdefaultでDです。",
-      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "B": "case 1はbreakがないのでAの後case 2へfall-throughしてAB。2はB、3はdefaultでDです。",
       "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
       "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
       "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
@@ -99,15 +99,15 @@
     "choices": [
       {
         "id": "A",
-        "text": "4:10"
-      },
-      {
-        "id": "B",
         "text": "4:6"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "4:9"
+      },
+      {
+        "id": "C",
+        "text": "4:10"
       },
       {
         "id": "D",
@@ -119,13 +119,13 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "C"
     ],
     "explanation": "row=1ではcol0の1回、row=2ではcol0,1の2回、row=3では3回増えてcontinue。row=4ではcol==4にならないため4回すべて増え、合計10です。",
     "choiceExplanations": {
-      "A": "row=1ではcol0の1回、row=2ではcol0,1の2回、row=3では3回増えてcontinue。row=4ではcol==4にならないため4回すべて増え、合計10です。",
+      "A": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
       "B": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
-      "C": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
+      "C": "row=1ではcol0の1回、row=2ではcol0,1の2回、row=3では3回増えてcontinue。row=4ではcol==4にならないため4回すべて増え、合計10です。",
       "D": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
       "E": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。"
     },
@@ -193,35 +193,35 @@
     "choices": [
       {
         "id": "A",
-        "text": "3:4"
-      },
-      {
-        "id": "B",
         "text": "2:4"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "3:6"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "4:4"
       },
       {
-        "id": "E",
+        "id": "D",
         "text": "無限ループ"
+      },
+      {
+        "id": "E",
+        "text": "3:4"
       }
     ],
     "correctAnswers": [
-      "A"
+      "E"
     ],
     "explanation": "1回目はx=1,sum=1、条件で1<5後x=2。2回目は++xで3,sum=4となりbreakするため条件式は評価されずx=3のままです。",
     "choiceExplanations": {
-      "A": "1回目はx=1,sum=1、条件で1<5後x=2。2回目は++xで3,sum=4となりbreakするため条件式は評価されずx=3のままです。",
+      "A": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
       "B": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
       "C": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
       "D": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
-      "E": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。"
+      "E": "1回目はx=1,sum=1、条件で1<5後x=2。2回目は++xで3,sum=4となりbreakするため条件式は評価されずx=3のままです。"
     },
     "category": "11. while / do-while / for / 拡張for",
     "tags": [
@@ -383,15 +383,15 @@
       },
       {
         "id": "B",
-        "text": "BC"
-      },
-      {
-        "id": "C",
         "text": "C"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "コンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "BC"
       },
       {
         "id": "E",
@@ -399,14 +399,14 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "D"
     ],
     "explanation": "elseは最も近い未対応のif(y>0)に結び付きます。x>0はtrue、y>0はfalseなのでB、その後CでBCです。",
     "choiceExplanations": {
       "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
-      "B": "elseは最も近い未対応のif(y>0)に結び付きます。x>0はtrue、y>0はfalseなのでB、その後CでBCです。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
       "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
-      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "elseは最も近い未対応のif(y>0)に結び付きます。x>0はtrue、y>0はfalseなのでB、その後CでBCです。",
       "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
     },
     "category": "8. if / if-else",
@@ -433,27 +433,27 @@
       },
       {
         "id": "C",
-        "text": "switch式がintの全値を網羅せずdefaultもないためコンパイルエラー"
-      },
-      {
-        "id": "D",
         "text": "実行時にMatchException"
       },
       {
-        "id": "E",
+        "id": "D",
         "text": "case 1の後にbreakが必要なのでコンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "switch式がintの全値を網羅せずdefaultもないためコンパイルエラー"
       }
     ],
     "correctAnswers": [
-      "C"
+      "E"
     ],
     "explanation": "switch式は必ず値を生成できる必要があり、intでcase 0と1だけでは網羅的ではないためdefaultが必要です。",
     "choiceExplanations": {
       "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
       "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
-      "C": "switch式は必ず値を生成できる必要があり、intでcase 0と1だけでは網羅的ではないためdefaultが必要です。",
+      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
       "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
-      "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
+      "E": "switch式は必ず値を生成できる必要があり、intでcase 0と1だけでは網羅的ではないためdefaultが必要です。"
     },
     "category": "10. switch式 / yield",
     "tags": [
@@ -571,11 +571,11 @@
       },
       {
         "id": "B",
-        "text": "2つ目の`f(null)`がStringとStringBuilderの間で曖昧になりコンパイルエラー"
+        "text": "1つ目の`f(x)`が曖昧でコンパイルエラー"
       },
       {
         "id": "C",
-        "text": "1つ目の`f(x)`が曖昧でコンパイルエラー"
+        "text": "2つ目の`f(null)`がStringとStringBuilderの間で曖昧になりコンパイルエラー"
       },
       {
         "id": "D",
@@ -587,13 +587,13 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "C"
     ],
     "explanation": "`f(x)`はCharSequenceで確定しますが、`f(null)`ではStringとStringBuilderが互いに無関係な最具体候補となり曖昧です。",
     "choiceExplanations": {
       "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
-      "B": "`f(x)`はCharSequenceで確定しますが、`f(null)`ではStringとStringBuilderが互いに無関係な最具体候補となり曖昧です。",
-      "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "C": "`f(x)`はCharSequenceで確定しますが、`f(null)`ではStringとStringBuilderが互いに無関係な最具体候補となり曖昧です。",
       "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
       "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
     },
@@ -614,19 +614,19 @@
     "choices": [
       {
         "id": "A",
-        "text": "B:A"
-      },
-      {
-        "id": "B",
         "text": "A:A"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "B:C"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "ClassCastException"
+      },
+      {
+        "id": "D",
+        "text": "B:A"
       },
       {
         "id": "E",
@@ -634,14 +634,14 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "D"
     ],
     "explanation": "xの実体はBなのでキャスト成功しB.id()。yはCですがidをoverrideしていないためA.id()で、B:Aです。",
     "choiceExplanations": {
-      "A": "xの実体はBなのでキャスト成功しB.id()。yはCですがidをoverrideしていないためA.id()で、B:Aです。",
+      "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
       "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
       "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
-      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "xの実体はBなのでキャスト成功しB.id()。yはCですがidをoverrideしていないためA.id()で、B:Aです。",
       "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
     },
     "category": "24. キャスト・ポリモーフィズム",
@@ -661,35 +661,35 @@
     "choices": [
       {
         "id": "A",
-        "text": "BX:1"
-      },
-      {
-        "id": "B",
         "text": "BB:2"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "XX:0"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Bの後に未捕捉ClassCastException"
       },
       {
-        "id": "E",
+        "id": "D",
         "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "BX:1"
       }
     ],
     "correctAnswers": [
-      "A"
+      "E"
     ],
     "explanation": "BirdはFlyへキャストできB、StoneはできずClassCastExceptionをcatchしてX。成功回数は1なのでBX:1です。",
     "choiceExplanations": {
-      "A": "BirdはFlyへキャストできB、StoneはできずClassCastExceptionをcatchしてX。成功回数は1なのでBX:1です。",
+      "A": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
       "B": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
       "C": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
       "D": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
-      "E": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。"
+      "E": "BirdはFlyへキャストできB、StoneはできずClassCastExceptionをcatchしてX。成功回数は1なのでBX:1です。"
     },
     "category": "24. キャスト・ポリモーフィズム",
     "tags": [
@@ -849,19 +849,19 @@
     "choices": [
       {
         "id": "A",
-        "text": "F:V3"
-      },
-      {
-        "id": "B",
         "text": "V2:V3"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "F:F"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "V2:F"
+      },
+      {
+        "id": "D",
+        "text": "F:V3"
       },
       {
         "id": "E",
@@ -869,14 +869,14 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "D"
     ],
     "explanation": "2引数では固定arity版がvarargsより優先されF。3引数ではvarargsだけが適用されV3です。",
     "choiceExplanations": {
-      "A": "2引数では固定arity版がvarargsより優先されF。3引数ではvarargsだけが適用されV3です。",
+      "A": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
       "B": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
       "C": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
-      "D": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。",
+      "D": "2引数では固定arity版がvarargsより優先されF。3引数ではvarargsだけが適用されV3です。",
       "E": "誤り。制御フロー、overload/override、参照型と実体型を順に追うとこの選択肢にはなりません。"
     },
     "category": "16. オーバーロード",
@@ -895,35 +895,35 @@
     "choices": [
       {
         "id": "A",
-        "text": "T:W:Word"
-      },
-      {
-        "id": "B",
         "text": "W:W:Word"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "T:T:Token"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "W:T:Word"
       },
       {
-        "id": "E",
+        "id": "D",
         "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "T:W:Word"
       }
     ],
     "correctAnswers": [
-      "A"
+      "E"
     ],
     "explanation": "WordFactory.create()がWordを返します。フィールドt.textは参照型TokenによりT、show()は実体WordへdispatchされW、実体クラス名はWordです。",
     "choiceExplanations": {
-      "A": "WordFactory.create()がWordを返します。フィールドt.textは参照型TokenによりT、show()は実体WordへdispatchされW、実体クラス名はWordです。",
+      "A": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
       "B": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
       "C": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
       "D": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。",
-      "E": "誤り。各式のコンパイル時型、制御フロー、実行時型を順に追うとこの選択肢にはなりません。"
+      "E": "WordFactory.create()がWordを返します。フィールドt.textは参照型TokenによりT、show()は実体WordへdispatchされW、実体クラス名はWordです。"
     },
     "category": "23. override",
     "tags": [
