@@ -101,15 +101,15 @@
     "choices": [
       {
         "id": "A",
-        "text": "C:BXD:8"
-      },
-      {
-        "id": "B",
         "text": "C:BXD:53"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "X:BXD:8"
+      },
+      {
+        "id": "C",
+        "text": "C:BXD:8"
       },
       {
         "id": "D",
@@ -121,13 +121,13 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "C"
     ],
     "explanation": "substring(1,4)はBCD、replace後はBXD。baseは不変でcharAt(2)はC、長さは5+3=8です。",
     "choiceExplanations": {
-      "A": "substring(1,4)はBCD、replace後はBXD。baseは不変でcharAt(2)はC、長さは5+3=8です。",
+      "A": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
       "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
-      "C": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "C": "substring(1,4)はBCD、replace後はBXD。baseは不変でcharAt(2)はC、長さは5+3=8です。",
       "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
       "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
     },
@@ -156,11 +156,11 @@
       },
       {
         "id": "C",
-        "text": "aXd3:Z"
+        "text": "abcd:Z"
       },
       {
         "id": "D",
-        "text": "abcd:Z"
+        "text": "aXd3:Z"
       },
       {
         "id": "E",
@@ -168,14 +168,14 @@
       }
     ],
     "correctAnswers": [
-      "C"
+      "D"
     ],
     "explanation": "insert後aXbcd、delete(2,4)でaXd、append(3)でaXd3。bの再代入はaには影響しないためaXd3:Zです。",
     "choiceExplanations": {
       "A": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
       "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
-      "C": "insert後aXbcd、delete(2,4)でaXd、append(3)でaXd3。bの再代入はaには影響しないためaXd3:Zです。",
-      "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "D": "insert後aXbcd、delete(2,4)でaXd、append(3)でaXd3。bの再代入はaには影響しないためaXd3:Zです。",
       "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
     },
     "category": "4. String・テキストブロック",
@@ -195,35 +195,35 @@
     "choices": [
       {
         "id": "A",
-        "text": "A:A:B2:true"
-      },
-      {
-        "id": "B",
         "text": "A:A1:B2:true"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "A:A:B:false"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "A:A:B2:false"
       },
       {
-        "id": "E",
+        "id": "D",
         "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "A:A:B2:true"
       }
     ],
     "correctAnswers": [
-      "A"
+      "E"
     ],
     "explanation": "String.concatの戻り値を捨てているのでAのまま。StringBuilder.appendは同じオブジェクトを返すためyはB2でq==yはtrueです。",
     "choiceExplanations": {
-      "A": "String.concatの戻り値を捨てているのでAのまま。StringBuilder.appendは同じオブジェクトを返すためyはB2でq==yはtrueです。",
+      "A": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
       "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
       "C": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
       "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
-      "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
+      "E": "String.concatの戻り値を捨てているのでAのまま。StringBuilder.appendは同じオブジェクトを返すためyはB2でq==yはtrueです。"
     },
     "category": "4. String・テキストブロック",
     "tags": [
@@ -290,11 +290,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "E:AB:jaa"
+        "text": "E:AB:jav"
       },
       {
         "id": "B",
-        "text": "E:AB:jav"
+        "text": "E:AB:jaa"
       },
       {
         "id": "C",
@@ -310,12 +310,12 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "B"
     ],
     "explanation": "空文字はE、abはAB、javaはdefaultで先頭2文字jaと末尾aを連結してjaaです。",
     "choiceExplanations": {
-      "A": "空文字はE、abはAB、javaはdefaultで先頭2文字jaと末尾aを連結してjaaです。",
-      "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "A": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "B": "空文字はE、abはAB、javaはdefaultで先頭2文字jaと末尾aを連結してjaaです。",
       "C": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
       "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
       "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
@@ -337,15 +337,15 @@
     "choices": [
       {
         "id": "A",
-        "text": "X1:Y23"
-      },
-      {
-        "id": "B",
         "text": "X13:Y2"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "X123:Y23"
+      },
+      {
+        "id": "C",
+        "text": "X1:Y23"
       },
       {
         "id": "D",
@@ -357,13 +357,13 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "C"
     ],
     "explanation": "参照は値渡しです。元のxへ1、元のyへ2を追加後、ローカルaだけをbへ向けて3を追加するためX1:Y23です。",
     "choiceExplanations": {
-      "A": "参照は値渡しです。元のxへ1、元のyへ2を追加後、ローカルaだけをbへ向けて3を追加するためX1:Y23です。",
+      "A": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
       "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
-      "C": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "C": "参照は値渡しです。元のxへ1、元のyへ2を追加後、ローカルaだけをbへ向けて3を追加するためX1:Y23です。",
       "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
       "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
     },
@@ -444,23 +444,23 @@
       },
       {
         "id": "D",
-        "text": "StringとStringBuilderに共通の型があるためコンパイルし、ABと出力する"
+        "text": "実行時にClassCastException"
       },
       {
         "id": "E",
-        "text": "実行時にClassCastException"
+        "text": "StringとStringBuilderに共通の型があるためコンパイルし、ABと出力する"
       }
     ],
     "correctAnswers": [
-      "D"
+      "E"
     ],
     "explanation": "条件演算子はStringとStringBuilderに共通する参照型を推論でき、varはその型を受け取れます。toString()でAとBとなりABです。",
     "choiceExplanations": {
       "A": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
       "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
       "C": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
-      "D": "条件演算子はStringとStringBuilderに共通する参照型を推論でき、varはその型を受け取れます。toString()でAとBとなりABです。",
-      "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
+      "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "E": "条件演算子はStringとStringBuilderに共通する参照型を推論でき、varはその型を受け取れます。toString()でAとBとなりABです。"
     },
     "category": "3. var",
     "tags": [
