@@ -1,24 +1,24 @@
 [
   {
     "id": "JS17-0621",
-    "question": "static初期化とinstance初期化の順序を含む次の出力として正しいものを1つ選びなさい.",
-    "code": "class Base {\n    static int s = mark(\"BS\");\n    int x = mark(\"BI\");\n    Base() { mark(\"BC\"); }\n    static int mark(String s) {\n        System.out.print(s + \" \");\n        return 1;\n    }\n}\nclass Child extends Base {\n    static int s2 = mark(\"CS\");\n    int y = mark(\"CI\");\n    Child() { mark(\"CC\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Child();\n    }\n}",
+    "question": "コンパイル時定数へのアクセスとクラス初期化を含む次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "class Parent {\n    static {\n        System.out.print(\"P\");\n    }\n    static final int CONST = 7;\n}\nclass Child extends Parent {\n    static int value = init();\n    static int init() {\n        System.out.print(\"C\");\n        return 3;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(Child.CONST + \":\");\n        System.out.print(Child.value);\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "BS CS BI BC CI CC "
+        "text": "PC7:3"
       },
       {
         "id": "B",
-        "text": "BS BI BC CS CI CC "
+        "text": "7:PC3"
       },
       {
         "id": "C",
-        "text": "BS CS BI CI BC CC "
+        "text": "P7:C3"
       },
       {
         "id": "D",
-        "text": "CS BS BI BC CI CC "
+        "text": "7:C3"
       },
       {
         "id": "E",
@@ -26,21 +26,21 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "B"
     ],
-    "explanation": "初回利用でクラス初期化は親→子のBS CS。その後オブジェクト初期化は親BI→BC→子CI→CCです。",
+    "explanation": "`CONST`はコンパイル時定数なのでその参照だけではParent/Childの初期化を要求しません。まず`7:`が出て、`Child.value`の初回参照で親P→子のinit Cが実行され、最後に3が出ます。",
     "choiceExplanations": {
-      "A": "初回利用でクラス初期化は親→子のBS CS。その後オブジェクト初期化は親BI→BC→子CI→CCです。",
-      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+      "A": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "B": "`CONST`はコンパイル時定数なのでその参照だけではParent/Childの初期化を要求しません。まず`7:`が出て、`Child.value`の初回参照で親P→子のinit Cが実行され、最後に3が出ます。",
+      "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
     },
     "category": "17. static",
     "tags": [
-      "static-initializer",
-      "instance-initializer",
-      "constructor",
+      "compile-time-constant",
+      "class-initialization",
+      "static",
       "inheritance"
     ],
     "difficulty": 5,
@@ -48,50 +48,51 @@
   },
   {
     "id": "JS17-0622",
-    "question": "blank finalフィールドを含む次のコードはコンパイルできるか。正しいものを1つ選びなさい.",
-    "code": "class Config {\n    final int value;\n\n    Config(boolean flag) {\n        if (flag) {\n            value = 10;\n        }\n    }\n\n    int read() {\n        return value;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(new Config(true).read());\n    }\n}",
+    "question": "final参照と配列要素の変更について正しいものを2つ選びなさい.",
+    "code": "public class Main {\n    static void update(final int[] values) {\n        values[0] += 10;\n        values[1] = values[0] + values[1];\n    }\n\n    public static void main(String[] args) {\n        final int[] data = {1, 2};\n        update(data);\n        System.out.print(data[0] + \":\" + data[1]);\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "10と出力する"
+        "text": "finalな配列参照でも配列要素は変更できる"
       },
       {
         "id": "B",
-        "text": "false経路でvalueが初期化されない可能性があるためコンパイルエラー"
+        "text": "`values[0] += 10`がfinal違反でコンパイルエラー"
       },
       {
         "id": "C",
-        "text": "finalフィールドはコンストラクタで代入できないためコンパイルエラー"
+        "text": "出力は11:13"
       },
       {
         "id": "D",
-        "text": "valueは自動的に0で初期化されるのでコンパイルできる"
+        "text": "finalにすると配列要素もすべて定数になる"
       },
       {
         "id": "E",
-        "text": "実行時にだけエラーになる"
+        "text": "update内で`values = new int[2]`と再代入することはできる"
       }
     ],
     "correctAnswers": [
-      "B"
+      "A",
+      "C"
     ],
-    "explanation": "blank final instanceフィールドは各コンストラクタのすべての正常終了経路で必ず1回初期化される必要があり、flag=false経路が未初期化です。",
+    "explanation": "`final`が固定するのは参照変数が指す先であり、参照先配列の要素は変更できます。1→11、2→11+2=13なので11:13です。",
     "choiceExplanations": {
-      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "B": "blank final instanceフィールドは各コンストラクタのすべての正常終了経路で必ず1回初期化される必要があり、flag=false経路が未初期化です。",
-      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+      "A": "`final`が固定するのは参照変数が指す先であり、参照先配列の要素は変更できます。1→11、2→11+2=13なので11:13です。",
+      "B": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "C": "`final`が固定するのは参照変数が指す先であり、参照先配列の要素は変更できます。1→11、2→11+2=13なので11:13です。",
+      "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
     },
     "category": "25. final",
     "tags": [
-      "blank-final",
-      "definite-assignment",
-      "constructor",
-      "compile-error"
+      "final-reference",
+      "array",
+      "mutation",
+      "parameter"
     ],
     "difficulty": 5,
-    "multipleChoice": false
+    "multipleChoice": true
   },
   {
     "id": "JS17-0623",
@@ -467,20 +468,20 @@
   },
   {
     "id": "JS17-0631",
-    "question": "instanceofパターン変数と&&のスコープを含む次のコードの出力として正しいものを1つ選びなさい.",
-    "code": "public class Main {\n    static int length(Object obj) {\n        if (obj instanceof String s && s.length() > 2) {\n            return s.length();\n        }\n        return -1;\n    }\n    public static void main(String[] args) {\n        System.out.print(length(\"Java\") + \":\");\n        System.out.print(length(\"A\") + \":\");\n        System.out.print(length(10));\n    }\n}",
+    "question": "instanceofパターンを条件演算子内で使う次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static String describe(Object value) {\n        return value instanceof String s\n                ? s.substring(0, Math.min(2, s.length()))\n                : String.valueOf(value);\n    }\n\n    public static void main(String[] args) {\n        System.out.print(describe(\"Java\") + \":\");\n        System.out.print(describe(12));\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "4:-1:-1"
+        "text": "Ja:12"
       },
       {
         "id": "B",
-        "text": "4:1:-1"
+        "text": "Java:12"
       },
       {
         "id": "C",
-        "text": "-1:-1:-1"
+        "text": "Ja:N"
       },
       {
         "id": "D",
@@ -494,67 +495,67 @@
     "correctAnswers": [
       "A"
     ],
-    "explanation": "`&&`右辺はpattern match成立時だけ評価されsを安全に使えます。Java=4、AとIntegerは-1です。",
+    "explanation": "条件演算子のtrue式はStringパターンが成立した経路なので`s`を使用できます。`Java`は先頭2文字Ja、Integer 12はfalse側で`String.valueOf`されます。",
     "choiceExplanations": {
-      "A": "`&&`右辺はpattern match成立時だけ評価されsを安全に使えます。Java=4、AとIntegerは-1です。",
-      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+      "A": "条件演算子のtrue式はStringパターンが成立した経路なので`s`を使用できます。`Java`は先頭2文字Ja、Integer 12はfalse側で`String.valueOf`されます。",
+      "B": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
     },
     "category": "19. instanceof / パターンマッチング",
     "tags": [
       "pattern-matching",
+      "conditional-operator",
       "flow-scoping",
-      "short-circuit",
-      "instanceof"
+      "substring"
     ],
-    "difficulty": 4,
+    "difficulty": 5,
     "multipleChoice": false
   },
   {
     "id": "JS17-0632",
-    "question": "次のinstanceofパターンコードはJava 17でコンパイルできるか。正しいものを1つ選びなさい.",
-    "code": "public class Main {\n    static boolean ok(Object obj) {\n        return obj instanceof String s || s.length() > 0;\n    }\n    public static void main(String[] args) {\n        System.out.print(ok(\"A\"));\n    }\n}",
+    "question": "否定したinstanceofパターンと`||`のflow scopingについて、正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static String check(Object value) {\n        if (!(value instanceof String s) || s.isEmpty()) {\n            return \"N\";\n        }\n        return s.substring(0, 1);\n    }\n\n    public static void main(String[] args) {\n        System.out.print(check(\"Java\") + \":\");\n        System.out.print(check(\"\") + \":\");\n        System.out.print(check(10));\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "trueと出力する"
+        "text": "J:N:N"
       },
       {
         "id": "B",
-        "text": "falseと出力する"
+        "text": "コンパイルエラー。`||`右辺でsは使えない"
       },
       {
         "id": "C",
-        "text": "`||`右辺ではpattern variable sが必ず存在するとは限らないためコンパイルエラー"
+        "text": "J::N"
       },
       {
         "id": "D",
-        "text": "instanceofパターンはif文内でしか使えないためコンパイルエラー"
+        "text": "N:N:N"
       },
       {
         "id": "E",
-        "text": "実行時にNullPointerException"
+        "text": "ClassCastException"
       }
     ],
     "correctAnswers": [
-      "C"
+      "A"
     ],
-    "explanation": "`||`右辺が評価されるのは左辺がfalseのときで、その場合Stringパターンsは成立していないためsを参照できません。",
+    "explanation": "`||`右辺が評価されるのは左辺`!(value instanceof String s)`がfalse、つまりStringパターンが成立した場合だけなので`s`は右辺で有効です。結果はJ:N:Nです。",
     "choiceExplanations": {
-      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "C": "`||`右辺が評価されるのは左辺がfalseのときで、その場合Stringパターンsは成立していないためsを参照できません。",
-      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+      "A": "`||`右辺が評価されるのは左辺`!(value instanceof String s)`がfalse、つまりStringパターンが成立した場合だけなので`s`は右辺で有効です。結果はJ:N:Nです。",
+      "B": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
     },
     "category": "19. instanceof / パターンマッチング",
     "tags": [
-      "pattern-variable",
+      "negated-pattern",
       "or",
       "flow-scoping",
-      "compile-error"
+      "short-circuit"
     ],
     "difficulty": 5,
     "multipleChoice": false
@@ -797,48 +798,49 @@
   },
   {
     "id": "JS17-0638",
-    "question": "フィールドとローカル変数の同名宣言を含む次のコードの出力として正しいものを1つ選びなさい.",
-    "code": "class Box {\n    int value = 5;\n\n    void print() {\n        int value = 2;\n        System.out.print(value + \":\");\n        System.out.print(this.value);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Box().print();\n    }\n}",
+    "question": "引数・子フィールド・親フィールドが同名の次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "class Base {\n    int value = 1;\n}\nclass Child extends Base {\n    int value = 2;\n\n    void show(int value) {\n        System.out.print(value + \":\");\n        System.out.print(this.value + \":\");\n        System.out.print(super.value);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Child().show(3);\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "2:5"
+        "text": "3:2:1"
       },
       {
         "id": "B",
-        "text": "5:2"
+        "text": "3:1:2"
       },
       {
         "id": "C",
-        "text": "2:2"
+        "text": "2:2:1"
       },
       {
         "id": "D",
-        "text": "同名なのでコンパイルエラー"
+        "text": "3:3:1"
       },
       {
         "id": "E",
-        "text": "5:5"
+        "text": "同名変数が3つあるためコンパイルエラー"
       }
     ],
     "correctAnswers": [
       "A"
     ],
-    "explanation": "ローカルvalueがフィールドをshadowします。valueは2、this.valueはinstanceフィールド5なので2:5です。",
+    "explanation": "単純名`value`は引数3、`this.value`はChildのフィールド2、`super.value`はBaseのフィールド1を表すため3:2:1です。",
     "choiceExplanations": {
-      "A": "ローカルvalueがフィールドをshadowします。valueは2、this.valueはinstanceフィールド5なので2:5です。",
-      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+      "A": "単純名`value`は引数3、`this.value`はChildのフィールド2、`super.value`はBaseのフィールド1を表すため3:2:1です。",
+      "B": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
     },
     "category": "2. 基本データ型・変数・スコープ",
     "tags": [
-      "field-shadowing",
+      "parameter-shadowing",
+      "field-hiding",
       "this",
-      "local-variable"
+      "super"
     ],
-    "difficulty": 4,
+    "difficulty": 5,
     "multipleChoice": false
   },
   {
