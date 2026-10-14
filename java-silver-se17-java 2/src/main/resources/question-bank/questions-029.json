@@ -1,0 +1,475 @@
+[
+  {
+    "id": "JS17-0551",
+    "question": "次のプログラムを実行したときの出力として正しいものを1つ選びなさい.",
+    "code": "class Text {\n    static String change(String s) {\n        s += \"X\";\n        return s.substring(1);\n    }\n    static void change(StringBuilder b) {\n        b.append(\"Y\");\n        b.deleteCharAt(0);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        String s = \"ABC\";\n        String r = Text.change(s);\n        StringBuilder b = new StringBuilder(s);\n        Text.change(b);\n        System.out.print(s + \":\" + r + \":\" + b);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "ABC:BCX:BCY"
+      },
+      {
+        "id": "B",
+        "text": "ABC:ABCX:ABCY"
+      },
+      {
+        "id": "C",
+        "text": "BCX:BCX:BCY"
+      },
+      {
+        "id": "D",
+        "text": "ABC:BCX:ABCY"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "Stringは不変なのでchange(String)内の再代入は元のsを変えません。StringBuilderは同じオブジェクトを変更するためABC:BCX:BCYです。",
+    "choiceExplanations": {
+      "A": "Stringは不変なのでchange(String)内の再代入は元のsを変えません。StringBuilderは同じオブジェクトを変更するためABC:BCX:BCYです。",
+      "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "4. String・テキストブロック",
+    "tags": [
+      "String",
+      "StringBuilder",
+      "immutability",
+      "reference"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0552",
+    "question": "参照比較と内容比較について、正しいものを2つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        String a = \"java\";\n        String b = \"ja\" + \"va\";\n        String c = new String(\"java\");\n        String d = c;\n        System.out.println(a == b);\n        System.out.println(a == c);\n        System.out.println(c == d);\n        System.out.println(a.equals(c));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1行目はtrue"
+      },
+      {
+        "id": "B",
+        "text": "2行目はtrue"
+      },
+      {
+        "id": "C",
+        "text": "3行目はtrue"
+      },
+      {
+        "id": "D",
+        "text": "4行目はfalse"
+      },
+      {
+        "id": "E",
+        "text": "new String(\"java\")は文字列プールの同一参照を必ず返す"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "C"
+    ],
+    "explanation": "コンパイル時定数の連結は文字列プール上の同じ参照を使えるためa==bはtrue。new Stringは別参照なのでa==cはfalse、dはcと同一参照なのでc==dはtrue、equalsは内容比較でtrueです。",
+    "choiceExplanations": {
+      "A": "コンパイル時定数の連結は文字列プール上の同じ参照を使えるためa==bはtrue。new Stringは別参照なのでa==cはfalse、dはcと同一参照なのでc==dはtrue、equalsは内容比較でtrueです。",
+      "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "C": "コンパイル時定数の連結は文字列プール上の同じ参照を使えるためa==bはtrue。new Stringは別参照なのでa==cはfalse、dはcと同一参照なのでc==dはtrue、equalsは内容比較でtrueです。",
+      "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "4. String・テキストブロック",
+    "tags": [
+      "String",
+      "pool",
+      "equals",
+      "reference-comparison"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0553",
+    "question": "次のコードをコンパイル・実行した場合の結果として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static String pick(String s) {\n        return s.substring(1, 4);\n    }\n    public static void main(String[] args) {\n        String base = \"ABCDE\";\n        String part = pick(base);\n        part = part.replace('C', 'X');\n        System.out.print(base.charAt(2) + \":\");\n        System.out.print(part + \":\");\n        System.out.print(base.length() + part.length());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "C:BXD:8"
+      },
+      {
+        "id": "B",
+        "text": "C:BXD:53"
+      },
+      {
+        "id": "C",
+        "text": "X:BXD:8"
+      },
+      {
+        "id": "D",
+        "text": "C:BCD:8"
+      },
+      {
+        "id": "E",
+        "text": "StringIndexOutOfBoundsException"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "substring(1,4)はBCD、replace後はBXD。baseは不変でcharAt(2)はC、長さは5+3=8です。",
+    "choiceExplanations": {
+      "A": "substring(1,4)はBCD、replace後はBXD。baseは不変でcharAt(2)はC、長さは5+3=8です。",
+      "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "4. String・テキストブロック",
+    "tags": [
+      "substring",
+      "replace",
+      "charAt",
+      "immutability"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0554",
+    "question": "次のStringBuilder操作後の出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static void edit(StringBuilder x) {\n        x.insert(1, \"X\");\n        x.delete(2, 4);\n        x.append(x.length());\n    }\n    public static void main(String[] args) {\n        StringBuilder a = new StringBuilder(\"abcd\");\n        StringBuilder b = a;\n        edit(b);\n        b = new StringBuilder(\"Z\");\n        System.out.print(a + \":\" + b);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "aXd4:Z"
+      },
+      {
+        "id": "B",
+        "text": "aXcd4:Z"
+      },
+      {
+        "id": "C",
+        "text": "aXd3:Z"
+      },
+      {
+        "id": "D",
+        "text": "abcd:Z"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "insert後aXbcd、delete(2,4)でaXd、append(3)でaXd3。bの再代入はaには影響しないためaXd3:Zです。",
+    "choiceExplanations": {
+      "A": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "C": "insert後aXbcd、delete(2,4)でaXd、append(3)でaXd3。bの再代入はaには影響しないためaXd3:Zです。",
+      "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "4. String・テキストブロック",
+    "tags": [
+      "StringBuilder",
+      "insert",
+      "delete",
+      "alias"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0555",
+    "question": "次のコードの結果として正しいものを1つ選びなさい.",
+    "code": "class Joiner {\n    static String join(String left, String right) {\n        left.concat(right);\n        return left;\n    }\n    static StringBuilder join(StringBuilder left, String right) {\n        return left.append(right);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        String x = \"A\";\n        StringBuilder y = new StringBuilder(\"B\");\n        String p = Joiner.join(x, \"1\");\n        StringBuilder q = Joiner.join(y, \"2\");\n        System.out.print(x + \":\" + p + \":\" + y + \":\" + (y == q));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A:A:B2:true"
+      },
+      {
+        "id": "B",
+        "text": "A:A1:B2:true"
+      },
+      {
+        "id": "C",
+        "text": "A:A:B:false"
+      },
+      {
+        "id": "D",
+        "text": "A:A:B2:false"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "String.concatの戻り値を捨てているのでAのまま。StringBuilder.appendは同じオブジェクトを返すためyはB2でq==yはtrueです。",
+    "choiceExplanations": {
+      "A": "String.concatの戻り値を捨てているのでAのまま。StringBuilder.appendは同じオブジェクトを返すためyはB2でq==yはtrueです。",
+      "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "4. String・テキストブロック",
+    "tags": [
+      "concat",
+      "StringBuilder",
+      "return-value",
+      "identity"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0556",
+    "question": "オーバーロード解決を含む次のコードについて、正しいものを2つ選びなさい.",
+    "code": "class Show {\n    static String f(CharSequence x) { return \"C\"; }\n    static String f(String x) { return \"S\"; }\n    static String f(StringBuilder x) { return \"B\"; }\n    static void run(CharSequence x) {\n        System.out.print(f(x));\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        CharSequence a = \"hi\";\n        StringBuilder b = new StringBuilder(\"hi\");\n        System.out.print(Show.f(\"hi\"));\n        Show.run(a);\n        Show.run(b);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "最初の呼び出しはSを返す"
+      },
+      {
+        "id": "B",
+        "text": "run(a)内では実体がStringなのでf(String)が選ばれる"
+      },
+      {
+        "id": "C",
+        "text": "run(b)内では実体がStringBuilderなのでf(StringBuilder)が選ばれる"
+      },
+      {
+        "id": "D",
+        "text": "出力はSCC"
+      },
+      {
+        "id": "E",
+        "text": "出力はSSB"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "D"
+    ],
+    "explanation": "直接f(\"hi\")はStringでS。run内のxはコンパイル時型CharSequenceなので、実体に関係なくf(CharSequence)が選ばれ出力はSCCです。",
+    "choiceExplanations": {
+      "A": "直接f(\"hi\")はStringでS。run内のxはコンパイル時型CharSequenceなので、実体に関係なくf(CharSequence)が選ばれ出力はSCCです。",
+      "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "D": "直接f(\"hi\")はStringでS。run内のxはコンパイル時型CharSequenceなので、実体に関係なくf(CharSequence)が選ばれ出力はSCCです。",
+      "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "overload",
+      "CharSequence",
+      "compile-time-type",
+      "StringBuilder"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0557",
+    "question": "次のプログラムの出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static String label(String s) {\n        return switch (s.length()) {\n            case 0 -> \"E\";\n            case 1, 2 -> s.toUpperCase();\n            default -> {\n                String t = s.substring(0, 2);\n                yield t + s.charAt(s.length() - 1);\n            }\n        };\n    }\n    public static void main(String[] args) {\n        System.out.print(label(\"\") + \":\");\n        System.out.print(label(\"ab\") + \":\");\n        System.out.print(label(\"java\"));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "E:AB:jaa"
+      },
+      {
+        "id": "B",
+        "text": "E:AB:jav"
+      },
+      {
+        "id": "C",
+        "text": "E:ab:jaa"
+      },
+      {
+        "id": "D",
+        "text": "E:AB:java"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "空文字はE、abはAB、javaはdefaultで先頭2文字jaと末尾aを連結してjaaです。",
+    "choiceExplanations": {
+      "A": "空文字はE、abはAB、javaはdefaultで先頭2文字jaと末尾aを連結してjaaです。",
+      "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "10. switch式 / yield",
+    "tags": [
+      "switch-expression",
+      "String",
+      "yield",
+      "substring"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0558",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static void step(StringBuilder a, StringBuilder b) {\n        a.append(\"1\");\n        b.append(\"2\");\n        a = b;\n        a.append(\"3\");\n    }\n    public static void main(String[] args) {\n        var x = new StringBuilder(\"X\");\n        var y = new StringBuilder(\"Y\");\n        step(x, y);\n        System.out.print(x + \":\" + y);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "X1:Y23"
+      },
+      {
+        "id": "B",
+        "text": "X13:Y2"
+      },
+      {
+        "id": "C",
+        "text": "X123:Y23"
+      },
+      {
+        "id": "D",
+        "text": "X:Y"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "参照は値渡しです。元のxへ1、元のyへ2を追加後、ローカルaだけをbへ向けて3を追加するためX1:Y23です。",
+    "choiceExplanations": {
+      "A": "参照は値渡しです。元のxへ1、元のyへ2を追加後、ローカルaだけをbへ向けて3を追加するためX1:Y23です。",
+      "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "3. var",
+    "tags": [
+      "var",
+      "StringBuilder",
+      "pass-by-value",
+      "reference"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0559",
+    "question": "次のコードについて正しいものを2つ選びなさい.",
+    "code": "public class Main {\n    static String trimHead(String s) {\n        if (s == null || s.length() < 2) {\n            return s;\n        }\n        return s.substring(1);\n    }\n    public static void main(String[] args) {\n        String a = null;\n        String b = \"Z\";\n        String c = \"Java\";\n        System.out.print(trimHead(a) + \":\");\n        System.out.print(trimHead(b) + \":\");\n        System.out.print(trimHead(c));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "NullPointerExceptionが発生する"
+      },
+      {
+        "id": "B",
+        "text": "最初の出力部分はnull:になる"
+      },
+      {
+        "id": "C",
+        "text": "2番目の呼び出しはZを返す"
+      },
+      {
+        "id": "D",
+        "text": "3番目の呼び出しはJavaを返す"
+      },
+      {
+        "id": "E",
+        "text": "||の右辺は常に評価される"
+      }
+    ],
+    "correctAnswers": [
+      "B",
+      "C"
+    ],
+    "explanation": "`||`は短絡評価なのでnull時にlengthは呼ばれません。nullは連結で\"null\"、Zはそのまま、Javaはavaになります。",
+    "choiceExplanations": {
+      "A": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "B": "`||`は短絡評価なのでnull時にlengthは呼ばれません。nullは連結で\"null\"、Zはそのまま、Javaはavaになります。",
+      "C": "`||`は短絡評価なのでnull時にlengthは呼ばれません。nullは連結で\"null\"、Zはそのまま、Javaはavaになります。",
+      "D": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "8. if / if-else",
+    "tags": [
+      "short-circuit",
+      "null",
+      "String",
+      "substring"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0560",
+    "question": "次のコードはJava 17でコンパイルできるか。正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static String build(boolean flag) {\n        var text = flag ? \"A\" : new StringBuilder(\"B\");\n        return text.toString();\n    }\n    public static void main(String[] args) {\n        var x = build(true);\n        var y = build(false);\n        System.out.print(x + y);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "ABと出力する"
+      },
+      {
+        "id": "B",
+        "text": "A:Bと出力する"
+      },
+      {
+        "id": "C",
+        "text": "varの初期化式で型が異なるためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "StringとStringBuilderに共通の型があるためコンパイルし、ABと出力する"
+      },
+      {
+        "id": "E",
+        "text": "実行時にClassCastException"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "条件演算子はStringとStringBuilderに共通する参照型を推論でき、varはその型を受け取れます。toString()でAとBとなりABです。",
+    "choiceExplanations": {
+      "A": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。",
+      "D": "条件演算子はStringとStringBuilderに共通する参照型を推論でき、varはその型を受け取れます。toString()でAとBとなりABです。",
+      "E": "誤り。型・スコープ・評価順序・APIの動作を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "3. var",
+    "tags": [
+      "var",
+      "conditional-operator",
+      "StringBuilder",
+      "type-inference"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  }
+]
