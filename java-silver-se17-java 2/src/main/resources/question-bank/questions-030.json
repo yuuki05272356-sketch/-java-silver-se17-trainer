@@ -1,0 +1,941 @@
+[
+  {
+    "id": "JS17-0561",
+    "question": "配列の参照共有を含む次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static void modify(int[] a) {\n        a[0] += 5;\n        a = new int[] {9, 9};\n        a[1] = 0;\n    }\n    public static void main(String[] args) {\n        int[] x = {1, 2};\n        int[] y = x;\n        modify(y);\n        y[1] += x[0];\n        System.out.print(x[0] + \":\" + x[1] + \":\" + (x == y));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "6:8:true"
+      },
+      {
+        "id": "B",
+        "text": "1:3:true"
+      },
+      {
+        "id": "C",
+        "text": "6:2:false"
+      },
+      {
+        "id": "D",
+        "text": "9:9:false"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "modify内の最初の変更は共有配列に反映されx[0]=6。その後aの再代入は呼び出し元に影響せず、y[1]=2+6=8、x==yはtrueです。",
+    "choiceExplanations": {
+      "A": "modify内の最初の変更は共有配列に反映されx[0]=6。その後aの再代入は呼び出し元に影響せず、y[1]=2+6=8、x==yはtrueです。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "array",
+      "alias",
+      "pass-by-value",
+      "reference"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0562",
+    "question": "次の二次元配列のコードを実行した結果として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int[][] a = {\n            {1, 2, 3},\n            {4},\n            null\n        };\n        int total = 0;\n        for (int i = 0; i < a.length; i++) {\n            if (a[i] == null) continue;\n            for (int v : a[i]) {\n                total += v;\n            }\n        }\n        System.out.print(total + \":\" + a.length + \":\" + a[1].length);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "10:3:1"
+      },
+      {
+        "id": "B",
+        "text": "10:2:1"
+      },
+      {
+        "id": "C",
+        "text": "6:3:1"
+      },
+      {
+        "id": "D",
+        "text": "NullPointerException"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "null行はcontinueで飛ばされ、合計は10。外側配列長は3、a[1]の長さは1なので10:3:1です。",
+    "choiceExplanations": {
+      "A": "null行はcontinueで飛ばされ、合計は10。外側配列長は3、a[1]の長さは1なので10:3:1です。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "jagged-array",
+      "null",
+      "enhanced-for",
+      "continue"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0563",
+    "question": "配列の共変性について正しいものを2つ選びなさい.",
+    "code": "class Animal { }\nclass Dog extends Animal { }\nclass Cat extends Animal { }\n\npublic class Main {\n    static void put(Animal[] animals) {\n        animals[0] = new Cat();\n    }\n    public static void main(String[] args) {\n        Dog[] dogs = { new Dog() };\n        Animal[] animals = dogs;\n        put(animals);\n        System.out.print(dogs[0]);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "`Animal[] animals = dogs;`はコンパイル可能"
+      },
+      {
+        "id": "B",
+        "text": "`animals[0] = new Cat()`でArrayStoreExceptionが発生する"
+      },
+      {
+        "id": "C",
+        "text": "`Animal[] animals = dogs;`自体でClassCastExceptionが発生する"
+      },
+      {
+        "id": "D",
+        "text": "実行結果はCatオブジェクトの文字列表現になる"
+      },
+      {
+        "id": "E",
+        "text": "配列の要素型は実行時には保持されない"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "参照型配列は共変なので代入自体は可能ですが、実体の配列型Dog[]は実行時にも保持されるためCat格納時にArrayStoreExceptionです。",
+    "choiceExplanations": {
+      "A": "参照型配列は共変なので代入自体は可能ですが、実体の配列型Dog[]は実行時にも保持されるためCat格納時にArrayStoreExceptionです。",
+      "B": "参照型配列は共変なので代入自体は可能ですが、実体の配列型Dog[]は実行時にも保持されるためCat格納時にArrayStoreExceptionです。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "array-covariance",
+      "ArrayStoreException",
+      "polymorphism"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0564",
+    "question": "次のArrayList操作の出力として正しいものを1つ選びなさい.",
+    "code": "import java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        var list = new ArrayList<Integer>();\n        list.add(10);\n        list.add(20);\n        list.add(10);\n        list.remove(1);\n        list.remove(Integer.valueOf(10));\n        list.add(0, 5);\n        System.out.print(list);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "[5, 10]"
+      },
+      {
+        "id": "B",
+        "text": "[5, 20]"
+      },
+      {
+        "id": "C",
+        "text": "[10, 5]"
+      },
+      {
+        "id": "D",
+        "text": "[5, 10, 10]"
+      },
+      {
+        "id": "E",
+        "text": "IndexOutOfBoundsException"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "`remove(1)`はインデックス1の20を削除し、`remove(Integer.valueOf(10))`は最初の要素10を削除。先頭へ5を加えて[5, 10]です。",
+    "choiceExplanations": {
+      "A": "`remove(1)`はインデックス1の20を削除し、`remove(Integer.valueOf(10))`は最初の要素10を削除。先頭へ5を加えて[5, 10]です。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "6. ArrayList",
+    "tags": [
+      "ArrayList",
+      "remove",
+      "overload",
+      "boxing"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0565",
+    "question": "次のArrayList操作について正しいものを2つ選びなさい.",
+    "code": "import java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        var names = new ArrayList<String>();\n        names.add(\"A\");\n        names.add(\"B\");\n        names.add(\"C\");\n        String old = names.set(1, \"X\");\n        boolean removed = names.remove(\"Z\");\n        names.add(old);\n        System.out.print(names + \":\" + removed);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "setは置換前の\"B\"を返す"
+      },
+      {
+        "id": "B",
+        "text": "remove(\"Z\")は例外を投げる"
+      },
+      {
+        "id": "C",
+        "text": "最終的なリストは[A, X, C, B]"
+      },
+      {
+        "id": "D",
+        "text": "removedはtrue"
+      },
+      {
+        "id": "E",
+        "text": "最終的なsizeは3"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "C"
+    ],
+    "explanation": "setは置換前のBを返し、存在しないZのremove(Object)はfalse。最後にBを追加して[A, X, C, B]です。",
+    "choiceExplanations": {
+      "A": "setは置換前のBを返し、存在しないZのremove(Object)はfalse。最後にBを追加して[A, X, C, B]です。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "setは置換前のBを返し、存在しないZのremove(Object)はfalse。最後にBを追加して[A, X, C, B]です。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "6. ArrayList",
+    "tags": [
+      "ArrayList",
+      "set",
+      "remove",
+      "return-value"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0566",
+    "question": "配列と拡張forの関係として、実行結果に最も合うものを1つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int[] values = {1, 2, 3};\n        for (int v : values) {\n            v *= 10;\n        }\n        for (int i = 0; i < values.length; i++) {\n            values[i] += i;\n        }\n        for (int v : values) {\n            System.out.print(v);\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "123"
+      },
+      {
+        "id": "B",
+        "text": "135"
+      },
+      {
+        "id": "C",
+        "text": "102030"
+      },
+      {
+        "id": "D",
+        "text": "124"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "最初の拡張for変数vはint値のコピーなので元配列は変化しません。その後インデックスを加えて[1,3,5]となり135です。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "B": "最初の拡張for変数vはint値のコピーなので元配列は変化しません。その後インデックスを加えて[1,3,5]となり135です。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "11. while / do-while / for / 拡張for",
+    "tags": [
+      "enhanced-for",
+      "array",
+      "copy",
+      "index"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0567",
+    "question": "次のコードで発生することとして正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        Object value = new String[] {\"A\", \"B\"};\n        Object[] objects = (Object[]) value;\n        String[] strings = (String[]) objects;\n        System.out.print(strings[1] + \":\");\n\n        Object another = new Object[] {\"X\"};\n        String[] wrong = (String[]) another;\n        System.out.print(wrong[0]);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "B:X"
+      },
+      {
+        "id": "B",
+        "text": "B:の後にClassCastException"
+      },
+      {
+        "id": "C",
+        "text": "最初のキャストでClassCastException"
+      },
+      {
+        "id": "D",
+        "text": "ArrayStoreException"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "実体String[]の最初のキャスト群は成功します。anotherの実体はObject[]なのでString[]へのダウンキャストでClassCastExceptionとなりB:まで出力済みです。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "B": "実体String[]の最初のキャスト群は成功します。anotherの実体はObject[]なのでString[]へのダウンキャストでClassCastExceptionとなりB:まで出力済みです。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "array-cast",
+      "ClassCastException",
+      "runtime-type"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0568",
+    "question": "次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "import java.util.ArrayList;\n\nclass Box {\n    int n;\n    Box(int n) { this.n = n; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        var list = new ArrayList<Box>();\n        Box a = new Box(1);\n        list.add(a);\n        list.add(new Box(2));\n        a.n = 9;\n        list.get(1).n += list.get(0).n;\n        System.out.print(list.get(0).n + \":\" + list.get(1).n);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1:3"
+      },
+      {
+        "id": "B",
+        "text": "9:11"
+      },
+      {
+        "id": "C",
+        "text": "9:3"
+      },
+      {
+        "id": "D",
+        "text": "1:11"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "ArrayListにはBoxへの参照が入ります。a.n=9はlist.get(0)にも見え、2番目は2+9=11なので9:11です。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "B": "ArrayListにはBoxへの参照が入ります。a.n=9はlist.get(0)にも見え、2番目は2+9=11なので9:11です。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "6. ArrayList",
+    "tags": [
+      "ArrayList",
+      "object-reference",
+      "alias",
+      "mutation"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0569",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static int sum(int[]... groups) {\n        int total = 0;\n        for (int[] group : groups) {\n            for (int value : group) {\n                total += value;\n            }\n        }\n        return total;\n    }\n    public static void main(String[] args) {\n        int[] a = {1, 2};\n        int[] b = {3};\n        System.out.print(sum(a, b) + \":\");\n        System.out.print(sum(new int[] {4, 5}));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "6:9"
+      },
+      {
+        "id": "B",
+        "text": "3:9"
+      },
+      {
+        "id": "C",
+        "text": "6:4"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "ArrayIndexOutOfBoundsException"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "`int[]...`は複数のint[]を受け取ります。a,bの合計6、新しい{4,5}の合計9で6:9です。",
+    "choiceExplanations": {
+      "A": "`int[]...`は複数のint[]を受け取ります。a,bの合計6、新しい{4,5}の合計9で6:9です。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "14. メソッド",
+    "tags": [
+      "varargs",
+      "array",
+      "multidimensional-array",
+      "enhanced-for"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0570",
+    "question": "次のコードについて正しいものを2つ選びなさい.",
+    "code": "import java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        var list = new ArrayList<String>();\n        list.add(\"A\");\n        list.add(null);\n        list.add(\"B\");\n\n        System.out.print(list.contains(null) + \":\");\n        String removed = list.remove(1);\n        System.out.print(removed + \":\");\n        System.out.print(list.size());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "ArrayList<String>にはnullを追加できる"
+      },
+      {
+        "id": "B",
+        "text": "contains(null)はfalseになる"
+      },
+      {
+        "id": "C",
+        "text": "remove(1)の戻り値はnull"
+      },
+      {
+        "id": "D",
+        "text": "最終sizeは3"
+      },
+      {
+        "id": "E",
+        "text": "nullの追加時にNullPointerException"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "C"
+    ],
+    "explanation": "ArrayListはnullを許容しcontains(null)はtrue。index 1のnullをremoveすると戻り値もnull、残り2要素です。",
+    "choiceExplanations": {
+      "A": "ArrayListはnullを許容しcontains(null)はtrue。index 1のnullをremoveすると戻り値もnull、残り2要素です。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "ArrayListはnullを許容しcontains(null)はtrue。index 1のnullをremoveすると戻り値もnull、残り2要素です。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "6. ArrayList",
+    "tags": [
+      "ArrayList",
+      "null",
+      "contains",
+      "remove"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0571",
+    "question": "2つのパッケージに分けてコンパイルした場合、正しいものを1つ選びなさい.",
+    "code": "// p1/Base.java\npackage p1;\npublic class Base {\n    protected int value = 7;\n}\n\n// p2/Child.java\npackage p2;\nimport p1.Base;\npublic class Child extends Base {\n    void show(Base other) {\n        System.out.print(value);\n        System.out.print(other.value);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "コンパイルでき、77と出力できる"
+      },
+      {
+        "id": "B",
+        "text": "Child.javaのother.valueでコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "valueの参照もother.valueもコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "protectedは別パッケージでは完全にpublicなので問題ない"
+      },
+      {
+        "id": "E",
+        "text": "Base.javaがpublicなのでprotectedは無効になる"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "別パッケージのサブクラスからprotectedメンバへは継承経由でアクセスできますが、Base型の任意参照otherを通したアクセスはできません。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "B": "別パッケージのサブクラスからprotectedメンバへは継承経由でアクセスできますが、Base型の任意参照otherを通したアクセスはできません。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "18. アクセス修飾子",
+    "tags": [
+      "protected",
+      "package",
+      "inheritance",
+      "access-control"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0572",
+    "question": "次の3ファイルをコンパイルするとどうなるか。正しいものを1つ選びなさい.",
+    "code": "// a/Item.java\npackage a;\npublic class Item {\n    int code = 10;\n    public int publicCode = 20;\n}\n\n// a/Helper.java\npackage a;\npublic class Helper {\n    public static int read(Item x) {\n        return x.code;\n    }\n}\n\n// b/Main.java\npackage b;\nimport a.Item;\nimport a.Helper;\npublic class Main {\n    public static void main(String[] args) {\n        Item x = new Item();\n        System.out.print(Helper.read(x) + \":\" + x.publicCode);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "10:20と出力する"
+      },
+      {
+        "id": "B",
+        "text": "Item.codeがpackage-privateなのでHelperからも読めずコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "b.MainからItem.codeを直接読んでいないためコンパイルできる"
+      },
+      {
+        "id": "D",
+        "text": "importした時点でpackage-privateメンバもpublicになる"
+      },
+      {
+        "id": "E",
+        "text": "Itemのコンストラクタが宣言されていないのでnewできない"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "HelperはItemと同じpackage aなのでpackage-privateなcodeへアクセスできます。Mainはpublic APIだけを使うため10:20です。",
+    "choiceExplanations": {
+      "A": "HelperはItemと同じpackage aなのでpackage-privateなcodeへアクセスできます。Mainはpublic APIだけを使うため10:20です。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "34. package / import",
+    "tags": [
+      "package-private",
+      "import",
+      "default-constructor",
+      "access"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0573",
+    "question": "`src/demo/App.java`に次の内容を保存して`javac -d out src/demo/App.java`を実行する。正しいものを1つ選びなさい.",
+    "code": "package demo;\n\nclass Tool {\n    static String name() {\n        return \"T\";\n    }\n}\n\npublic class App {\n    public static void main(String[] args) {\n        System.out.print(Tool.name());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "コンパイル成功し、`java -cp out demo.App`でTを出力できる"
+      },
+      {
+        "id": "B",
+        "text": "ToolがpublicでないためAppから参照できずコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "1ファイルに複数のトップレベルクラスがあるためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "`java -cp out App`で実行する"
+      },
+      {
+        "id": "E",
+        "text": "Tool.javaが別途必須なのでコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "1ファイルに複数トップレベルクラスを置けます。publicはAppだけでファイル名も一致し、同packageのToolも参照可能です。",
+    "choiceExplanations": {
+      "A": "1ファイルに複数トップレベルクラスを置けます。publicはAppだけでファイル名も一致し、同packageのToolも参照可能です。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "34. package / import",
+    "tags": [
+      "top-level-class",
+      "package",
+      "javac",
+      "java"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0574",
+    "question": "次のimport宣言を含むコードについて正しいものを1つ選びなさい.",
+    "code": "import java.util.Date;\nimport java.sql.Date;\n\npublic class Main {\n    public static void main(String[] args) {\n        Date d = null;\n        System.out.print(d);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "java.util.Dateが優先される"
+      },
+      {
+        "id": "B",
+        "text": "java.sql.Dateが優先される"
+      },
+      {
+        "id": "C",
+        "text": "同じ単純名Dateを2つ単一型importしているためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "DateはObjectとして推論される"
+      },
+      {
+        "id": "E",
+        "text": "実行時にだけ曖昧性エラーになる"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "同一コンパイル単位で同じ単純名を持つ異なる型を単一型importできません。どちらかを完全修飾名で使う必要があります。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "同一コンパイル単位で同じ単純名を持つ異なる型を単一型importできません。どちらかを完全修飾名で使う必要があります。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "34. package / import",
+    "tags": [
+      "import",
+      "name-conflict",
+      "Date"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0575",
+    "question": "static importを使った次のコードの実行結果として正しいものを1つ選びなさい.",
+    "code": "import static java.lang.Math.max;\nimport static java.lang.Math.min;\n\npublic class Main {\n    static int choose(int a, int b) {\n        int high = max(a, b);\n        int low = min(a, b);\n        return high - low;\n    }\n\n    public static void main(String[] args) {\n        System.out.print(choose(8, 3));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "5"
+      },
+      {
+        "id": "B",
+        "text": "11"
+      },
+      {
+        "id": "C",
+        "text": "3"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "Mathクラスを通常importしていないため実行時エラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "static importでmax/minをクラス名なしに呼べます。8-3=5です。",
+    "choiceExplanations": {
+      "A": "static importでmax/minをクラス名なしに呼べます。8-3=5です。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "34. package / import",
+    "tags": [
+      "static-import",
+      "Math",
+      "method-call"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0576",
+    "question": "次のクラス定義について正しいものを2つ選びなさい.",
+    "code": "class Base {\n    protected void work() { }\n}\nclass Mid extends Base {\n    @Override\n    public void work() { }\n}\nclass Child extends Mid {\n    @Override\n    public void work() { }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Base x = new Child();\n        x.work();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Midでprotectedからpublicへ広げるoverrideは可能"
+      },
+      {
+        "id": "B",
+        "text": "Childでpublicからprotectedへ戻してもよい"
+      },
+      {
+        "id": "C",
+        "text": "x.work()は実行時にChild.work()へ動的ディスパッチされる"
+      },
+      {
+        "id": "D",
+        "text": "参照型BaseではChildのoverrideは使われない"
+      },
+      {
+        "id": "E",
+        "text": "アクセス修飾子を変えた時点でoverloadになる"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "C"
+    ],
+    "explanation": "overrideでは可視性を広げられ、狭められません。実体Childなのでx.work()はChild.work()へ動的ディスパッチされます。",
+    "choiceExplanations": {
+      "A": "overrideでは可視性を広げられ、狭められません。実体Childなのでx.work()はChild.work()へ動的ディスパッチされます。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "overrideでは可視性を広げられ、狭められません。実体Childなのでx.work()はChild.work()へ動的ディスパッチされます。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "23. override",
+    "tags": [
+      "override",
+      "access-modifier",
+      "dynamic-dispatch"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0577",
+    "question": "privateメソッドと同名メソッドを持つ次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "class Parent {\n    private String id() {\n        return \"P\";\n    }\n    String call() {\n        return id();\n    }\n}\nclass Child extends Parent {\n    String id() {\n        return \"C\";\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        System.out.print(p.call());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "P"
+      },
+      {
+        "id": "B",
+        "text": "C"
+      },
+      {
+        "id": "C",
+        "text": "PC"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "ClassCastException"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "Parent.id()はprivateなので継承・overrideされません。Parent.call()内のid()はParent自身のprivateメソッドでPです。",
+    "choiceExplanations": {
+      "A": "Parent.id()はprivateなので継承・overrideされません。Parent.call()内のid()はParent自身のprivateメソッドでPです。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "18. アクセス修飾子",
+    "tags": [
+      "private",
+      "override",
+      "inheritance",
+      "dispatch"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0578",
+    "question": "次のコードについて正しいものを2つ選びなさい.",
+    "code": "class Account {\n    public int number = 1;\n    protected int level = 2;\n    int local = 3;\n    private int secret = 4;\n\n    int sumInside() {\n        return number + level + local + secret;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Account a = new Account();\n        System.out.print(a.sumInside());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "sumInsideは4つすべてのフィールドへアクセスできる"
+      },
+      {
+        "id": "B",
+        "text": "Mainからa.secretを直接参照してもよい"
+      },
+      {
+        "id": "C",
+        "text": "このコードは10を出力する"
+      },
+      {
+        "id": "D",
+        "text": "privateフィールドは同じクラスの別メソッドからもアクセスできない"
+      },
+      {
+        "id": "E",
+        "text": "protectedフィールドは同一パッケージの非サブクラスから一切アクセスできない"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "C"
+    ],
+    "explanation": "privateは宣言クラス内からアクセス可能です。sumInsideは1+2+3+4=10を返します。",
+    "choiceExplanations": {
+      "A": "privateは宣言クラス内からアクセス可能です。sumInsideは1+2+3+4=10を返します。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "privateは宣言クラス内からアクセス可能です。sumInsideは1+2+3+4=10を返します。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "18. アクセス修飾子",
+    "tags": [
+      "private",
+      "protected",
+      "package-private",
+      "field"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0579",
+    "question": "次のコードはコンパイルできるか。正しいものを1つ選びなさい.",
+    "code": "class Parent {\n    public void run() { }\n}\nclass Child extends Parent {\n    @Override\n    void run() { }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Child().run();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "コンパイルできる"
+      },
+      {
+        "id": "B",
+        "text": "Child.runの可視性を狭くしているためコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "@Overrideだけを外せばコンパイルできる"
+      },
+      {
+        "id": "D",
+        "text": "Parent.runがpublicなのでChild.runはprivateにする必要がある"
+      },
+      {
+        "id": "E",
+        "text": "実行時にIllegalAccessError"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "overrideでは親よりアクセス範囲を狭められません。publicからpackage-privateへ狭めているためコンパイルエラーです。",
+    "choiceExplanations": {
+      "A": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "B": "overrideでは親よりアクセス範囲を狭められません。publicからpackage-privateへ狭めているためコンパイルエラーです。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "23. override",
+    "tags": [
+      "override",
+      "access-modifier",
+      "compile-error"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0580",
+    "question": "フィールド隠蔽とメソッドoverrideを組み合わせた次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "class Base {\n    public String name = \"B\";\n    public String get() {\n        return name;\n    }\n}\nclass Child extends Base {\n    public String name = \"C\";\n    @Override\n    public String get() {\n        return super.name + name;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Base x = new Child();\n        System.out.print(x.name + \":\" + x.get());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "B:BC"
+      },
+      {
+        "id": "B",
+        "text": "C:CC"
+      },
+      {
+        "id": "C",
+        "text": "B:BB"
+      },
+      {
+        "id": "D",
+        "text": "C:BC"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "フィールドx.nameは参照型BaseでB。get()はChildへ動的ディスパッチされ、super.name=BとChild.name=Cを連結してBCです。",
+    "choiceExplanations": {
+      "A": "フィールドx.nameは参照型BaseでB。get()はChildへ動的ディスパッチされ、super.name=BとChild.name=Cを連結してBCです。",
+      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "field-hiding",
+      "override",
+      "super",
+      "reference-type"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  }
+]
