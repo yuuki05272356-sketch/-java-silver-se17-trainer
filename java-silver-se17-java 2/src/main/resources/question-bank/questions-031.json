@@ -48,48 +48,48 @@
   },
   {
     "id": "JS17-0582",
-    "question": "次のコードについて正しいものを2つ選びなさい.",
-    "code": "interface Left {\n    default String name() { return \"L\"; }\n}\ninterface Right {\n    default String name() { return \"R\"; }\n}\nclass Both implements Left, Right {\n    @Override\n    public String name() {\n        return Left.super.name() + Right.super.name();\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(new Both().name());\n    }\n}",
+    "question": "親子関係にあるinterfaceのdefaultメソッドについて正しいものを2つ選びなさい.",
+    "code": "interface Basic {\n    default String label() {\n        return \"B\";\n    }\n}\ninterface Detailed extends Basic {\n    @Override\n    default String label() {\n        return Basic.super.label() + \"D\";\n    }\n}\nclass Item implements Basic, Detailed { }\n\npublic class Main {\n    public static void main(String[] args) {\n        Basic x = new Item();\n        System.out.print(x.label());\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "Bothはname()をoverrideしないとdefaultメソッド競合でコンパイルエラーになる"
+        "text": "Itemはdefault競合を解決するため必ずlabel()をoverrideしなければならない"
       },
       {
         "id": "B",
-        "text": "`Left.super.name()`はBothのinstanceメソッド内から呼べる"
+        "text": "DetailedはBasicのサブinterfaceなので、より具体的なDetailedのdefaultが選ばれる"
       },
       {
         "id": "C",
-        "text": "出力はLR"
+        "text": "出力はBD"
       },
       {
         "id": "D",
-        "text": "どちらかのdefaultが自動的に優先される"
+        "text": "出力はB"
       },
       {
         "id": "E",
-        "text": "interfaceのdefaultメソッドはsuperで呼べない"
+        "text": "`Basic.super.label()`はsubinterface Detailed内から呼べない"
       }
     ],
     "correctAnswers": [
-      "A",
-      "B"
+      "B",
+      "C"
     ],
-    "explanation": "無関係な2 interfaceの同名defaultは実装クラスで解決が必要です。`InterfaceName.super.method()`で各defaultを呼べ、実際の出力はLRです。",
+    "explanation": "DetailedはBasicをextendsしており、そのdefaultをoverrideしています。無関係なinterface同士の競合ではないためItemでの追加overrideは不要で、Detailed.label()が選ばれてBDです。",
     "choiceExplanations": {
-      "A": "無関係な2 interfaceの同名defaultは実装クラスで解決が必要です。`InterfaceName.super.method()`で各defaultを呼べ、実際の出力はLRです。",
-      "B": "無関係な2 interfaceの同名defaultは実装クラスで解決が必要です。`InterfaceName.super.method()`で各defaultを呼べ、実際の出力はLRです。",
-      "C": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
+      "A": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "B": "DetailedはBasicをextendsしており、そのdefaultをoverrideしています。無関係なinterface同士の競合ではないためItemでの追加overrideは不要で、Detailed.label()が選ばれてBDです。",
+      "C": "DetailedはBasicをextendsしており、そのdefaultをoverrideしています。無関係なinterface同士の競合ではないためItemでの追加overrideは不要で、Detailed.label()が選ばれてBDです。",
+      "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
     },
     "category": "27. default / private interface method",
     "tags": [
+      "subinterface",
       "default-method",
-      "interface-conflict",
-      "Interface.super",
-      "override"
+      "most-specific",
+      "Interface.super"
     ],
     "difficulty": 5,
     "multipleChoice": true
@@ -568,47 +568,48 @@
   },
   {
     "id": "JS17-0593",
-    "question": "抑制例外について正しいものを2つ選びなさい.",
-    "code": "class R implements AutoCloseable {\n    public void close() {\n        throw new IllegalStateException(\"close\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try {\n            try (R r = new R()) {\n                throw new RuntimeException(\"body\");\n            }\n        } catch (RuntimeException e) {\n            System.out.print(e.getMessage() + \":\");\n            System.out.print(e.getSuppressed().length);\n        }\n    }\n}",
+    "question": "複数resourceのclose時に例外が発生する場合について正しいものを2つ選びなさい.",
+    "code": "class R implements AutoCloseable {\n    private final String name;\n    R(String name) { this.name = name; }\n    public void close() {\n        System.out.print(name);\n        throw new RuntimeException(name);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R a = new R(\"A\"); R b = new R(\"B\")) {\n            System.out.print(\"T\");\n        } catch (RuntimeException e) {\n            System.out.print(\":\" + e.getMessage());\n            System.out.print(\":\" + e.getSuppressed().length);\n        }\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "主例外はbodyのRuntimeException"
+        "text": "resourceはB→Aの順にcloseされる"
       },
       {
         "id": "B",
-        "text": "closeの例外が主例外になりbodyは失われる"
+        "text": "本体が正常終了しているため、B.close()の例外が主例外になる"
       },
       {
         "id": "C",
-        "text": "suppressedの個数は1"
+        "text": "A.close()の例外が主例外になりBはsuppressedになる"
       },
       {
         "id": "D",
-        "text": "catchではIllegalStateExceptionしか捕捉できない"
+        "text": "出力の先頭はTABである"
       },
       {
         "id": "E",
-        "text": "close例外はchecked例外でなければsuppressedにならない"
+        "text": "suppressed例外は0件である"
       }
     ],
     "correctAnswers": [
       "A",
-      "C"
+      "B"
     ],
-    "explanation": "本体のRuntimeExceptionが主例外で、close時のIllegalStateExceptionがsuppressedに追加されるためbody:1です。",
+    "explanation": "resourceは逆順にB→Aでcloseされます。本体に主例外がないため最初に投げられたB.close()の例外が主例外、続くA.close()の例外がsuppressedになります。",
     "choiceExplanations": {
-      "A": "本体のRuntimeExceptionが主例外で、close時のIllegalStateExceptionがsuppressedに追加されるためbody:1です。",
-      "B": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "C": "本体のRuntimeExceptionが主例外で、close時のIllegalStateExceptionがsuppressedに追加されるためbody:1です。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
+      "A": "resourceは逆順にB→Aでcloseされます。本体に主例外がないため最初に投げられたB.close()の例外が主例外、続くA.close()の例外がsuppressedになります。",
+      "B": "resourceは逆順にB→Aでcloseされます。本体に主例外がないため最初に投げられたB.close()の例外が主例外、続くA.close()の例外がsuppressedになります。",
+      "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
     },
     "category": "31. try-with-resources",
     "tags": [
+      "multiple-resources",
+      "close-exception",
       "suppressed-exception",
-      "AutoCloseable",
-      "RuntimeException"
+      "reverse-order"
     ],
     "difficulty": 5,
     "multipleChoice": true
