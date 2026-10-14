@@ -96,49 +96,49 @@
   },
   {
     "id": "JS17-0583",
-    "question": "interfaceのprivateメソッドを含む次のコードの出力として正しいものを1つ選びなさい.",
-    "code": "interface Formatter {\n    private String wrap(String s) {\n        return \"[\" + s + \"]\";\n    }\n    default String label(String s) {\n        return wrap(s.toUpperCase());\n    }\n}\nclass Item implements Formatter { }\n\npublic class Main {\n    public static void main(String[] args) {\n        Formatter f = new Item();\n        System.out.print(f.label(\"java\"));\n    }\n}",
+    "question": "interfaceのprivateメソッドとdefaultメソッドの再利用を含む次の出力として正しいものを1つ選びなさい.",
+    "code": "interface Formatter {\n    private String normalize(String s) {\n        return s.trim().toUpperCase();\n    }\n    default String label(String s) {\n        return \"<\" + normalize(s) + \">\";\n    }\n}\nclass Loud implements Formatter {\n    @Override\n    public String label(String s) {\n        return Formatter.super.label(s) + \":\" + s.length();\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Formatter f = new Loud();\n        System.out.print(f.label(\" x \"));\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "[JAVA]"
+        "text": "<X>:3"
       },
       {
         "id": "B",
-        "text": "JAVA"
+        "text": "<X>:1"
       },
       {
         "id": "C",
-        "text": "[java]"
+        "text": "< x >:3"
       },
       {
         "id": "D",
-        "text": "privateメソッドをinterfaceに宣言できないためコンパイルエラー"
+        "text": "privateメソッドを持つinterfaceなのでコンパイルエラー"
       },
       {
         "id": "E",
-        "text": "Itemがwrapを実装していないためコンパイルエラー"
+        "text": "Formatter.super.labelは呼べない"
       }
     ],
     "correctAnswers": [
       "A"
     ],
-    "explanation": "Java 17ではinterfaceにprivate instanceメソッドを宣言でき、defaultメソッドの内部実装として使えます。出力は[JAVA]です。",
+    "explanation": "private normalizeはinterface内部のdefaultから利用できます。Loudはdefaultをoverrideし、`Formatter.super.label(\" x \")`が<X>、元文字列長は3なので<X>:3です。",
     "choiceExplanations": {
-      "A": "Java 17ではinterfaceにprivate instanceメソッドを宣言でき、defaultメソッドの内部実装として使えます。出力は[JAVA]です。",
-      "B": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "C": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
+      "A": "private normalizeはinterface内部のdefaultから利用できます。Loudはdefaultをoverrideし、`Formatter.super.label(\" x \")`が<X>、元文字列長は3なので<X>:3です。",
+      "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
     },
     "category": "27. default / private interface method",
     "tags": [
-      "interface",
-      "private-method",
+      "interface-private",
       "default-method",
-      "Java9+"
+      "Interface.super",
+      "override"
     ],
-    "difficulty": 4,
+    "difficulty": 5,
     "multipleChoice": false
   },
   {
@@ -191,47 +191,47 @@
   },
   {
     "id": "JS17-0585",
-    "question": "recordのcompact constructorを含む次のコードの出力として正しいものを1つ選びなさい.",
-    "code": "record User(String name, int age) {\n    User {\n        if (age < 0) {\n            age = 0;\n        }\n        name = name.toUpperCase();\n    }\n\n    String label() {\n        return name + \":\" + age;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        User u = new User(\"amy\", -2);\n        System.out.print(u.label());\n    }\n}",
+    "question": "recordのcompact constructorとswitch式を組み合わせた次の出力として正しいものを1つ選びなさい.",
+    "code": "record Score(String name, int point) {\n    Score {\n        name = name.trim();\n        point = switch (point) {\n            case -1 -> 0;\n            default -> point > 100 ? 100 : point;\n        };\n    }\n    String label() {\n        return name + \"=\" + point;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Score a = new Score(\" A \", 120);\n        Score b = new Score(\"B\", -1);\n        System.out.print(a.label() + \":\" + b.label());\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "AMY:0"
+        "text": "A=100:B=0"
       },
       {
         "id": "B",
-        "text": "amy:-2"
+        "text": " A =120:B=-1"
       },
       {
         "id": "C",
-        "text": "AMY:-2"
+        "text": "A=120:B=0"
       },
       {
         "id": "D",
-        "text": "compact constructorでは引数へ再代入できないためコンパイルエラー"
+        "text": "compact constructor内でpointへ再代入できない"
       },
       {
         "id": "E",
-        "text": "recordはメソッドを追加できないためコンパイルエラー"
+        "text": "switch式をrecordで使えない"
       }
     ],
     "correctAnswers": [
       "A"
     ],
-    "explanation": "compact constructorではコンポーネントと同名の引数を正規化でき、終了時に正規化後の値がフィールドへ設定されます。AMY:0です。",
+    "explanation": "compact constructorでは引数を正規化できます。nameはtrimされ、120は100へ、-1は0へ補正されるためA=100:B=0です。",
     "choiceExplanations": {
-      "A": "compact constructorではコンポーネントと同名の引数を正規化でき、終了時に正規化後の値がフィールドへ設定されます。AMY:0です。",
-      "B": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "C": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
+      "A": "compact constructorでは引数を正規化できます。nameはtrimされ、120は100へ、-1は0へ補正されるためA=100:B=0です。",
+      "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
     },
     "category": "20. record",
     "tags": [
       "record",
       "compact-constructor",
-      "normalization",
-      "final-field"
+      "switch-expression",
+      "normalization"
     ],
     "difficulty": 5,
     "multipleChoice": false
@@ -427,71 +427,71 @@
   },
   {
     "id": "JS17-0590",
-    "question": "classのinstanceメソッドとinterfaceのdefaultメソッドが同名の場合、次の出力として正しいものを1つ選びなさい.",
-    "code": "interface Named {\n    default String name() {\n        return \"I\";\n    }\n}\nclass Parent {\n    public String name() {\n        return \"P\";\n    }\n}\nclass Child extends Parent implements Named { }\n\npublic class Main {\n    public static void main(String[] args) {\n        Named n = new Child();\n        System.out.print(n.name());\n    }\n}",
+    "question": "クラスメソッド優先とabstractメソッドを組み合わせた次の出力として正しいものを1つ選びなさい.",
+    "code": "interface Named {\n    default String id() { return \"I\"; }\n}\nabstract class Parent {\n    public String id() { return \"P\"; }\n    abstract int level();\n}\nclass Child extends Parent implements Named {\n    @Override\n    int level() {\n        return id().length();\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Named n = new Child();\n        Parent p = (Parent) n;\n        System.out.print(n.id() + \":\" + p.level());\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "I"
+        "text": "P:1"
       },
       {
         "id": "B",
-        "text": "P"
+        "text": "I:1"
       },
       {
         "id": "C",
-        "text": "IP"
+        "text": "P:0"
       },
       {
         "id": "D",
-        "text": "defaultメソッド競合でコンパイルエラー"
+        "text": "defaultとParent.idが競合してコンパイルエラー"
       },
       {
         "id": "E",
-        "text": "参照型がNamedなのでIが固定される"
+        "text": "ClassCastException"
       }
     ],
     "correctAnswers": [
-      "B"
+      "A"
     ],
-    "explanation": "クラスから継承した具体メソッドはinterface defaultより優先されます。ChildはParent.name()を継承するためPです。",
+    "explanation": "Parentの具体的id()がinterface defaultより優先されます。n.id()はP、Child.level()内のid()もPで長さ1なのでP:1です。",
     "choiceExplanations": {
-      "A": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "B": "クラスから継承した具体メソッドはinterface defaultより優先されます。ChildはParent.name()を継承するためPです。",
-      "C": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
+      "A": "Parentの具体的id()がinterface defaultより優先されます。n.id()はP、Child.level()内のid()もPで長さ1なのでP:1です。",
+      "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
     },
     "category": "27. default / private interface method",
     "tags": [
       "class-method-priority",
+      "abstract",
       "default-method",
-      "inheritance",
-      "polymorphism"
+      "cast"
     ],
     "difficulty": 5,
     "multipleChoice": false
   },
   {
     "id": "JS17-0591",
-    "question": "finallyのreturnを含む次のコードの実行結果として正しいものを1つ選びなさい.",
-    "code": "public class Main {\n    static int calc() {\n        try {\n            System.out.print(\"T\");\n            return 1;\n        } finally {\n            System.out.print(\"F\");\n            return 2;\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.print(\":\" + calc());\n    }\n}",
+    "question": "tryで返す参照とfinallyでのオブジェクト変更について、出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static StringBuilder make() {\n        StringBuilder b = new StringBuilder(\"A\");\n        try {\n            return b;\n        } finally {\n            b.append(\"F\");\n            b = new StringBuilder(\"X\");\n        }\n    }\n    public static void main(String[] args) {\n        StringBuilder result = make();\n        System.out.print(result);\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": ":TF2"
+        "text": "A"
       },
       {
         "id": "B",
-        "text": "T:F2"
+        "text": "AF"
       },
       {
         "id": "C",
-        "text": "TF:2"
+        "text": "X"
       },
       {
         "id": "D",
-        "text": "T:1F"
+        "text": "AX"
       },
       {
         "id": "E",
@@ -499,45 +499,46 @@
       }
     ],
     "correctAnswers": [
-      "C"
+      "B"
     ],
-    "explanation": "calc()評価中にT、finallyでFが出力され、finallyのreturn 2がtryのreturn 1を上書きします。その後mainが:2を出してTF:2です。",
+    "explanation": "return対象の参照はfinally前に確定します。その参照先オブジェクトへfinallyでFを追加する変更は見えますが、ローカルbのXへの再代入は戻り参照を変えません。",
     "choiceExplanations": {
-      "A": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "B": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "C": "calc()評価中にT、finallyでFが出力され、finallyのreturn 2がtryのreturn 1を上書きします。その後mainが:2を出してTF:2です。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
+      "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "B": "return対象の参照はfinally前に確定します。その参照先オブジェクトへfinallyでFを追加する変更は見えますが、ローカルbのXへの再代入は戻り参照を変えません。",
+      "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
     },
     "category": "30. try-catch",
     "tags": [
       "finally",
-      "return",
-      "evaluation-order"
+      "return-reference",
+      "StringBuilder",
+      "mutation"
     ],
     "difficulty": 5,
     "multipleChoice": false
   },
   {
     "id": "JS17-0592",
-    "question": "try-with-resourcesのclose順序を問う次のコードの出力として正しいものを1つ選びなさい.",
-    "code": "class R implements AutoCloseable {\n    private final String name;\n    R(String name) {\n        this.name = name;\n        System.out.print(\"+\" + name);\n    }\n    public void close() {\n        System.out.print(\"-\" + name);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R a = new R(\"A\"); R b = new R(\"B\")) {\n            System.out.print(\"*\");\n        }\n    }\n}",
+    "question": "resourceの生成途中で例外が起きるtry-with-resourcesの出力として正しいものを1つ選びなさい.",
+    "code": "class R implements AutoCloseable {\n    private final String name;\n    R(String name, boolean fail) {\n        this.name = name;\n        System.out.print(\"+\" + name);\n        if (fail) throw new RuntimeException(\"boom\");\n    }\n    public void close() {\n        System.out.print(\"-\" + name);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R a = new R(\"A\", false);\n             R b = new R(\"B\", true)) {\n            System.out.print(\"*\");\n        } catch (RuntimeException e) {\n            System.out.print(\":E\");\n        }\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "+A+B*-B-A"
+        "text": "+A+B-A:E"
       },
       {
         "id": "B",
-        "text": "+A+B*-A-B"
+        "text": "+A+B-B-A:E"
       },
       {
         "id": "C",
-        "text": "+A-B+B-A"
+        "text": "+A+B*:E"
       },
       {
         "id": "D",
-        "text": "*+A+B-B-A"
+        "text": "+A-A+B:E"
       },
       {
         "id": "E",
@@ -547,21 +548,22 @@
     "correctAnswers": [
       "A"
     ],
-    "explanation": "resourceは左から右に生成され、終了時は逆順にcloseされるため+A+B*-B-Aです。",
+    "explanation": "Aの生成は成功しBのconstructorで例外が発生します。Bはresourceとして完成していないためcloseされず、既に生成済みのAだけがcloseされ、その後catchへ進みます。",
     "choiceExplanations": {
-      "A": "resourceは左から右に生成され、終了時は逆順にcloseされるため+A+B*-B-Aです。",
-      "B": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "C": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
+      "A": "Aの生成は成功しBのconstructorで例外が発生します。Bはresourceとして完成していないためcloseされず、既に生成済みのAだけがcloseされ、その後catchへ進みます。",
+      "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
     },
     "category": "31. try-with-resources",
     "tags": [
-      "try-with-resources",
+      "resource-construction",
+      "close-on-failure",
       "AutoCloseable",
-      "close-order"
+      "exception"
     ],
-    "difficulty": 4,
+    "difficulty": 5,
     "multipleChoice": false
   },
   {
@@ -613,95 +615,94 @@
   },
   {
     "id": "JS17-0594",
-    "question": "multi-catchのcatchパラメータについて正しいものを1つ選びなさい.",
-    "code": "import java.io.IOException;\n\npublic class Main {\n    static void work(int x) throws IOException {\n        if (x == 0) throw new IOException();\n        if (x == 1) throw new IllegalArgumentException();\n    }\n\n    public static void main(String[] args) {\n        try {\n            work(0);\n        } catch (IOException | IllegalArgumentException e) {\n            e = new IOException();\n            System.out.print(\"caught\");\n        }\n    }\n}",
+    "question": "multi-catchで捕捉される実体型を確認する次の出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static void work(int mode) {\n        if (mode == 1) {\n            throw new IllegalArgumentException();\n        }\n        throw new IllegalStateException();\n    }\n    public static void main(String[] args) {\n        try {\n            work(2);\n        } catch (IllegalArgumentException | IllegalStateException e) {\n            System.out.print(e.getClass().getSimpleName());\n        }\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "caughtと出力する"
+        "text": "IllegalArgumentException"
       },
       {
         "id": "B",
-        "text": "multi-catchのパラメータeへ再代入しているためコンパイルエラー"
+        "text": "IllegalStateException"
       },
       {
         "id": "C",
-        "text": "IOExceptionとIllegalArgumentExceptionは同じ継承系列なのでmulti-catch不可"
+        "text": "RuntimeException"
       },
       {
         "id": "D",
-        "text": "IOExceptionがchecked例外なのでmulti-catch不可"
+        "text": "Exception"
       },
       {
         "id": "E",
-        "text": "実行時にIOExceptionがcatchされない"
+        "text": "multi-catchではgetClassを呼べないためコンパイルエラー"
       }
     ],
     "correctAnswers": [
       "B"
     ],
-    "explanation": "multi-catchの例外パラメータは暗黙的にfinal相当で再代入できないため`e = new IOException()`がコンパイルエラーです。",
+    "explanation": "mode=2なのでIllegalStateExceptionが投げられ、multi-catchがその同じ例外オブジェクトを捕捉します。実体型名はIllegalStateExceptionです。",
     "choiceExplanations": {
-      "A": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "B": "multi-catchの例外パラメータは暗黙的にfinal相当で再代入できないため`e = new IOException()`がコンパイルエラーです。",
-      "C": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
+      "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "B": "mode=2なのでIllegalStateExceptionが投げられ、multi-catchがその同じ例外オブジェクトを捕捉します。実体型名はIllegalStateExceptionです。",
+      "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
     },
     "category": "33. multi-catch",
     "tags": [
       "multi-catch",
-      "effectively-final",
-      "catch-parameter",
-      "compile-error"
+      "runtime-type",
+      "RuntimeException"
     ],
-    "difficulty": 5,
+    "difficulty": 4,
     "multipleChoice": false
   },
   {
     "id": "JS17-0595",
-    "question": "overrideとchecked exceptionの組み合わせについて正しいものを2つ選びなさい.",
-    "code": "import java.io.IOException;\nimport java.io.FileNotFoundException;\n\nclass Base {\n    void load() throws IOException { }\n}\nclass Child extends Base {\n    @Override\n    void load() throws FileNotFoundException { }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Base b = new Child();\n    }\n}",
+    "question": "overrideでchecked例外を狭めた場合の呼び出し側について正しいものを2つ選びなさい.",
+    "code": "class DataException extends Exception { }\nclass SmallException extends DataException { }\n\nclass Base {\n    void read() throws DataException { }\n}\nclass Child extends Base {\n    @Override\n    void read() throws SmallException { }\n}\npublic class Main {\n    static void byChild(Child c) throws SmallException {\n        c.read();\n    }\n    static void byBase(Base b) throws DataException {\n        b.read();\n    }\n    public static void main(String[] args) { }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "Child.loadはコンパイル可能"
+        "text": "Child.readのthrows SmallExceptionは有効"
       },
       {
         "id": "B",
-        "text": "Child.loadは親より広いchecked例外を宣言しているためエラー"
+        "text": "byChildはDataExceptionまで宣言しないとコンパイルエラー"
       },
       {
         "id": "C",
-        "text": "FileNotFoundExceptionはIOExceptionのサブクラスなので許可される"
+        "text": "byBaseは参照型Baseの宣言に従いDataExceptionを扱う必要がある"
       },
       {
         "id": "D",
-        "text": "参照型Baseならoverride側のthrows宣言は無視されるため何でも宣言できる"
+        "text": "override側は親より広いExceptionを宣言してもよい"
       },
       {
         "id": "E",
-        "text": "overrideではchecked例外を一切宣言できない"
+        "text": "Child.readはchecked例外を宣言できない"
       }
     ],
     "correctAnswers": [
       "A",
       "C"
     ],
-    "explanation": "overrideでは親が宣言したchecked例外と同じ型またはそのサブクラスへ狭められます。FileNotFoundExceptionはIOExceptionのサブクラスです。",
+    "explanation": "overrideではchecked例外を同じ型かサブタイプへ狭められます。呼び出し側で必要な処理は呼び出し式のコンパイル時宣言に基づくため、Child参照ならSmallException、Base参照ならDataExceptionです。",
     "choiceExplanations": {
-      "A": "overrideでは親が宣言したchecked例外と同じ型またはそのサブクラスへ狭められます。FileNotFoundExceptionはIOExceptionのサブクラスです。",
-      "B": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "C": "overrideでは親が宣言したchecked例外と同じ型またはそのサブクラスへ狭められます。FileNotFoundExceptionはIOExceptionのサブクラスです。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
+      "A": "overrideではchecked例外を同じ型かサブタイプへ狭められます。呼び出し側で必要な処理は呼び出し式のコンパイル時宣言に基づくため、Child参照ならSmallException、Base参照ならDataExceptionです。",
+      "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "C": "overrideではchecked例外を同じ型かサブタイプへ狭められます。呼び出し側で必要な処理は呼び出し式のコンパイル時宣言に基づくため、Child参照ならSmallException、Base参照ならDataExceptionです。",
+      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
     },
     "category": "23. override",
     "tags": [
       "checked-exception",
       "override",
-      "throws",
-      "IOException"
+      "compile-time-type",
+      "throws"
     ],
     "difficulty": 5,
     "multipleChoice": true
@@ -754,117 +755,24 @@
   },
   {
     "id": "JS17-0597",
-    "question": "ExceptionとErrorの関係を含む次のコードの結果として正しいものを1つ選びなさい.",
-    "code": "public class Main {\n    static void fail() {\n        throw new AssertionError(\"boom\");\n    }\n\n    public static void main(String[] args) {\n        try {\n            fail();\n            System.out.print(\"A\");\n        } catch (Exception e) {\n            System.out.print(\"E\");\n        } finally {\n            System.out.print(\"F\");\n        }\n    }\n}",
+    "question": "ErrorをThrowableで捕捉する次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static void fail() {\n        throw new AssertionError(\"A\");\n    }\n    public static void main(String[] args) {\n        try {\n            System.out.print(\"T\");\n            fail();\n        } catch (Throwable t) {\n            System.out.print(t.getMessage());\n        } finally {\n            System.out.print(\"F\");\n        }\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "EFと出力して正常終了"
+        "text": "TAF"
       },
       {
         "id": "B",
-        "text": "Fを出力した後AssertionErrorが伝播する"
+        "text": "TFの後AssertionErrorが伝播する"
       },
       {
         "id": "C",
-        "text": "Eだけ出力する"
+        "text": "TEF"
       },
       {
         "id": "D",
-        "text": "catch(Exception)がErrorも捕捉するためEを出力する"
-      },
-      {
-        "id": "E",
-        "text": "コンパイルエラー"
-      }
-    ],
-    "correctAnswers": [
-      "B"
-    ],
-    "explanation": "AssertionErrorはErrorのサブクラスでExceptionではないためcatchされません。finallyのFは実行された後、AssertionErrorが伝播します。",
-    "choiceExplanations": {
-      "A": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "B": "AssertionErrorはErrorのサブクラスでExceptionではないためcatchされません。finallyのFは実行された後、AssertionErrorが伝播します。",
-      "C": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
-    },
-    "category": "29. 例外",
-    "tags": [
-      "Error",
-      "Exception",
-      "finally",
-      "AssertionError"
-    ],
-    "difficulty": 5,
-    "multipleChoice": false
-  },
-  {
-    "id": "JS17-0598",
-    "question": "catch節の順序について正しいものを1つ選びなさい.",
-    "code": "class MyException extends Exception { }\n\npublic class Main {\n    static void work() throws MyException {\n        throw new MyException();\n    }\n\n    public static void main(String[] args) {\n        try {\n            work();\n        } catch (Exception e) {\n            System.out.print(\"E\");\n        } catch (MyException e) {\n            System.out.print(\"M\");\n        }\n    }\n}",
-    "choices": [
-      {
-        "id": "A",
-        "text": "Eと出力する"
-      },
-      {
-        "id": "B",
-        "text": "Mと出力する"
-      },
-      {
-        "id": "C",
-        "text": "後ろのMyException catchが到達不能なのでコンパイルエラー"
-      },
-      {
-        "id": "D",
-        "text": "checked例外なのでcatchを2つ書けない"
-      },
-      {
-        "id": "E",
-        "text": "実行時にどちらのcatchか決まる"
-      }
-    ],
-    "correctAnswers": [
-      "C"
-    ],
-    "explanation": "先にcatch(Exception)があるとMyExceptionも必ずそこで捕捉されるため後続catch(MyException)が到達不能となります。",
-    "choiceExplanations": {
-      "A": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "B": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "C": "先にcatch(Exception)があるとMyExceptionも必ずそこで捕捉されるため後続catch(MyException)が到達不能となります。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
-    },
-    "category": "30. try-catch",
-    "tags": [
-      "catch-order",
-      "unreachable-catch",
-      "custom-exception"
-    ],
-    "difficulty": 5,
-    "multipleChoice": false
-  },
-  {
-    "id": "JS17-0599",
-    "question": "tryでreturnする値とfinallyでの変数変更について、出力として正しいものを1つ選びなさい.",
-    "code": "public class Main {\n    static int value() {\n        int x = 1;\n        try {\n            x = 2;\n            return x;\n        } finally {\n            x = 3;\n            System.out.print(\"F\" + x + \":\");\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.print(value());\n    }\n}",
-    "choices": [
-      {
-        "id": "A",
-        "text": "F3:2"
-      },
-      {
-        "id": "B",
-        "text": "F3:3"
-      },
-      {
-        "id": "C",
-        "text": "2F3:"
-      },
-      {
-        "id": "D",
-        "text": "3F3:"
+        "text": "AF"
       },
       {
         "id": "E",
@@ -874,69 +782,163 @@
     "correctAnswers": [
       "A"
     ],
-    "explanation": "return式の値2はfinally実行前に確定します。finallyでxを3へ変えてF3:を出しても戻り値は2のままです。",
+    "explanation": "AssertionErrorはExceptionではありませんがThrowableのサブクラスなのでcatch(Throwable)では捕捉できます。T、メッセージA、finallyのFでTAFです。",
     "choiceExplanations": {
-      "A": "return式の値2はfinally実行前に確定します。finallyでxを3へ変えてF3:を出しても戻り値は2のままです。",
-      "B": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "C": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
+      "A": "AssertionErrorはExceptionではありませんがThrowableのサブクラスなのでcatch(Throwable)では捕捉できます。T、メッセージA、finallyのFでTAFです。",
+      "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "29. 例外",
+    "tags": [
+      "Error",
+      "Throwable",
+      "catch",
+      "finally"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0598",
+    "question": "multi-catchの代替型に関する次のコードはどうなるか。正しいものを1つ選びなさい.",
+    "code": "import java.io.FileNotFoundException;\nimport java.io.IOException;\n\npublic class Main {\n    static void read() throws IOException {\n        throw new FileNotFoundException();\n    }\n    public static void main(String[] args) {\n        try {\n            read();\n        } catch (IOException | FileNotFoundException e) {\n            System.out.print(\"E\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Eと出力する"
+      },
+      {
+        "id": "B",
+        "text": "FileNotFoundExceptionがIOExceptionのサブクラスなので同じmulti-catchの代替型に並べられずコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "より具体的なFileNotFoundExceptionが自動優先される"
+      },
+      {
+        "id": "D",
+        "text": "実行時にだけエラーになる"
+      },
+      {
+        "id": "E",
+        "text": "throws IOExceptionがあるのでcatch自体を書けない"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "multi-catchの代替型同士にサブタイプ関係があってはいけません。FileNotFoundExceptionはIOExceptionのサブクラスなのでこのcatch宣言はコンパイルエラーです。",
+    "choiceExplanations": {
+      "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "B": "multi-catchの代替型同士にサブタイプ関係があってはいけません。FileNotFoundExceptionはIOExceptionのサブクラスなのでこのcatch宣言はコンパイルエラーです。",
+      "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "33. multi-catch",
+    "tags": [
+      "multi-catch",
+      "subtype-alternative",
+      "IOException",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0599",
+    "question": "finallyから例外が投げられる場合の結果として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static int value() {\n        try {\n            return 10;\n        } finally {\n            if (true) {\n                throw new IllegalStateException(\"F\");\n            }\n        }\n    }\n    public static void main(String[] args) {\n        try {\n            System.out.print(value());\n        } catch (RuntimeException e) {\n            System.out.print(e.getMessage());\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "10"
+      },
+      {
+        "id": "B",
+        "text": "F"
+      },
+      {
+        "id": "C",
+        "text": "10F"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "finallyの例外は無視される"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "tryのreturn値が準備されても、finallyが正常終了せずIllegalStateExceptionを投げるとreturnは完了しません。main側で捕捉されメッセージFが出ます。",
+    "choiceExplanations": {
+      "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "B": "tryのreturn値が準備されても、finallyが正常終了せずIllegalStateExceptionを投げるとreturnは完了しません。main側で捕捉されメッセージFが出ます。",
+      "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
     },
     "category": "30. try-catch",
     "tags": [
       "finally",
-      "return-value",
-      "local-variable"
+      "abrupt-completion",
+      "return",
+      "RuntimeException"
     ],
     "difficulty": 5,
     "multipleChoice": false
   },
   {
     "id": "JS17-0600",
-    "question": "Java 17のtry-with-resourcesについて正しいものを2つ選びなさい.",
-    "code": "class R implements AutoCloseable {\n    private final String name;\n    R(String name) { this.name = name; }\n    public void close() {\n        System.out.print(\"C\" + name);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        R r = new R(\"A\");\n        try (r) {\n            System.out.print(\"B\");\n        }\n    }\n}",
+    "question": "effectively finalとtry-with-resourcesについて正しいものを1つ選びなさい.",
+    "code": "class R implements AutoCloseable {\n    public void close() { }\n}\npublic class Main {\n    public static void main(String[] args) {\n        R r = new R();\n        if (args.length > 0) {\n            r = new R();\n        }\n        try (r) {\n            System.out.print(\"OK\");\n        }\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "Java 17では既存のeffectively final変数rを`try (r)`でresourceにできる"
+        "text": "OKと出力できる"
       },
       {
         "id": "B",
-        "text": "resource宣言には必ず`R x = ...`形式が必要"
+        "text": "rは条件付きでも再代入され得るためeffectively finalではなく、`try (r)`がコンパイルエラー"
       },
       {
         "id": "C",
-        "text": "出力はBCA"
+        "text": "AutoCloseable変数は必ずfinalと明記する必要がある"
       },
       {
         "id": "D",
-        "text": "出力はCAB"
+        "text": "argsが空ならコンパイル時にも再代入が起きないので成功する"
       },
       {
         "id": "E",
-        "text": "rをtry直前に別オブジェクトへ再代入しても常にeffectively finalのままである"
+        "text": "実行時にIllegalStateException"
       }
     ],
     "correctAnswers": [
-      "A",
-      "C"
+      "B"
     ],
-    "explanation": "Java 9以降はfinal/effectively finalな既存変数をresourceに直接指定できます。本文Bの後closeでCAが出てBCAです。",
+    "explanation": "effectively finalかどうかは実行時経路ではなくソース上の代入で判定されます。rには再代入文があるため既存変数resourceとして使えません。",
     "choiceExplanations": {
-      "A": "Java 9以降はfinal/effectively finalな既存変数をresourceに直接指定できます。本文Bの後closeでCAが出てBCAです。",
-      "B": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "C": "Java 9以降はfinal/effectively finalな既存変数をresourceに直接指定できます。本文Bの後closeでCAが出てBCAです。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
+      "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "B": "effectively finalかどうかは実行時経路ではなくソース上の代入で判定されます。rには再代入文があるため既存変数resourceとして使えません。",
+      "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
     },
     "category": "31. try-with-resources",
     "tags": [
       "effectively-final",
-      "try-with-resources",
-      "AutoCloseable",
-      "Java9+"
+      "resource-variable",
+      "assignment",
+      "compile-error"
     ],
     "difficulty": 5,
-    "multipleChoice": true
+    "multipleChoice": false
   }
 ]
