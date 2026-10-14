@@ -1,48 +1,49 @@
 [
   {
     "id": "JS17-0641",
-    "question": "`Runner.java`というファイルに次のコードを保存し、`javac Runner.java`を実行した。結果として正しいものを1つ選びなさい.",
-    "code": "class Helper {\n    static void run() {\n        System.out.print(\"H\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Helper.run();\n    }\n}",
+    "question": "package-privateなトップレベルクラスをJavaランチャーで実行する場合について正しいものを1つ選びなさい.",
+    "code": "// Launch.java\nclass Launch {\n    public static void main(String[] args) {\n        System.out.print(\"OK\");\n    }\n}\n\nclass Helper {\n    static int value() {\n        return 1;\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "コンパイル成功しHと出力できる"
+        "text": "`javac Launch.java`は失敗する。mainを持つクラスはpublic必須"
       },
       {
         "id": "B",
-        "text": "public class Mainの名前とファイル名Runner.javaが一致しないためコンパイルエラー"
+        "text": "`javac Launch.java`は成功し、`java Launch`でOKと出力できる"
       },
       {
         "id": "C",
-        "text": "Helperがpublicでないためコンパイルエラー"
+        "text": "1ファイルにトップレベルクラスを2つ書けない"
       },
       {
         "id": "D",
-        "text": "Main.javaとHelper.javaの2ファイルが必須"
+        "text": "Launchがpublicでないためmainも実行時にprivate扱いになる"
       },
       {
         "id": "E",
-        "text": "コンパイルは成功するがjava Runnerでのみ起動できる"
+        "text": "`java Helper`を実行するとLaunch.mainが自動的に呼ばれる"
       }
     ],
     "correctAnswers": [
       "B"
     ],
-    "explanation": "publicなトップレベルクラスMainを宣言するソースファイル名はMain.javaでなければならないため、Runner.javaではjavacエラーです。",
+    "explanation": "トップレベルクラス自体はpublicでなくても構いません。Launch.javaにpackage-privateなLaunchとpublic static void mainがあればコンパイルでき、同じpackage/classpathから`java Launch`で起動できます。",
     "choiceExplanations": {
-      "A": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
-      "B": "publicなトップレベルクラスMainを宣言するソースファイル名はMain.javaでなければならないため、Runner.javaではjavacエラーです。",
-      "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
-      "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
-      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+      "A": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "B": "トップレベルクラス自体はpublicでなくても構いません。Launch.javaにpackage-privateなLaunchとpublic static void mainがあればコンパイルでき、同じpackage/classpathから`java Launch`で起動できます。",
+      "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
     },
     "category": "35. mainメソッド・コンパイル・実行",
     "tags": [
+      "package-private-class",
+      "main",
       "javac",
-      "public-class",
-      "file-name"
+      "launcher"
     ],
-    "difficulty": 4,
+    "difficulty": 5,
     "multipleChoice": false
   },
   {
@@ -94,47 +95,47 @@
   },
   {
     "id": "JS17-0643",
-    "question": "次のコードは`javac Main.java`には成功する。`java Main`を実行した場合として正しいものを1つ選びなさい.",
-    "code": "public class Main {\n    public static void main(Object[] args) {\n        System.out.print(\"O\");\n    }\n\n    public static int main(String[] args) {\n        System.out.print(\"S\");\n        return 0;\n    }\n}",
+    "question": "mainメソッドのオーバーロードを含む次のコードを`java Main A B`で実行した結果として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.print(\"S\" + args.length + \":\");\n        main(args.length);\n    }\n\n    public static void main(int count) {\n        System.out.print(\"I\" + count);\n    }\n\n    public static void main() {\n        System.out.print(\"N\");\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "O"
+        "text": "S2:I2"
       },
       {
         "id": "B",
-        "text": "S"
+        "text": "I2"
       },
       {
         "id": "C",
-        "text": "OS"
+        "text": "N"
       },
       {
         "id": "D",
-        "text": "起動用の`public static void main(String[]/String...)`がないためjavaランチャーがmainを見つけられない"
+        "text": "mainが3つあるためjavaランチャーが曖昧になり起動できない"
       },
       {
         "id": "E",
-        "text": "javac時にmainのoverloadは禁止されるためコンパイルエラー"
+        "text": "コンパイルエラー"
       }
     ],
     "correctAnswers": [
-      "D"
+      "A"
     ],
-    "explanation": "両方とも通常メソッドとしては有効ですが、ランチャーが要求する`public static void main(String[] args)`またはString...版がありません。",
+    "explanation": "Javaランチャーは`public static void main(String[])`をエントリポイントとして選びます。そこでargs.length=2を出し、通常のoverload呼び出し`main(2)`でI2が続きます。",
     "choiceExplanations": {
-      "A": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
-      "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
-      "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
-      "D": "両方とも通常メソッドとしては有効ですが、ランチャーが要求する`public static void main(String[] args)`またはString...版がありません。",
-      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+      "A": "Javaランチャーは`public static void main(String[])`をエントリポイントとして選びます。そこでargs.length=2を出し、通常のoverload呼び出し`main(2)`でI2が続きます。",
+      "B": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
     },
     "category": "35. mainメソッド・コンパイル・実行",
     "tags": [
-      "main",
+      "main-overload",
       "launcher",
-      "overload",
-      "return-type"
+      "command-line-args",
+      "method-call"
     ],
     "difficulty": 5,
     "multipleChoice": false
