@@ -761,11 +761,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "E14:RS:X:"
+        "text": "Rnull:RS:X:"
       },
       {
         "id": "B",
-        "text": "Rnull:RS:X:"
+        "text": "E14:RS:X:"
       },
       {
         "id": "C",
@@ -781,12 +781,12 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "B"
     ],
     "explanation": "AssertionErrorはErrorなので先頭分岐、`AssertionError`の単純名は14文字でE14。IllegalStateExceptionはRuntimeExceptionでRS、通常のExceptionはどちらでもなくXです。",
     "choiceExplanations": {
-      "A": "AssertionErrorはErrorなので先頭分岐、`AssertionError`の単純名は14文字でE14。IllegalStateExceptionはRuntimeExceptionでRS、通常のExceptionはどちらでもなくXです。",
-      "B": "誤り。Java 17の型・例外・pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "A": "誤り。Java 17の型・例外・pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "B": "AssertionErrorはErrorなので先頭分岐、`AssertionError`の単純名は14文字でE14。IllegalStateExceptionはRuntimeExceptionでRS、通常のExceptionはどちらでもなくXです。",
       "C": "誤り。Java 17の型・例外・pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "D": "誤り。Java 17の型・例外・pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "E": "誤り。Java 17の型・例外・pattern matchingの規則を順に追うとこの選択肢にはなりません。"
