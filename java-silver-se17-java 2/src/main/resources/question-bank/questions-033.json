@@ -1,0 +1,938 @@
+[
+  {
+    "id": "JS17-0621",
+    "question": "static初期化とinstance初期化の順序を含む次の出力として正しいものを1つ選びなさい.",
+    "code": "class Base {\n    static int s = mark(\"BS\");\n    int x = mark(\"BI\");\n    Base() { mark(\"BC\"); }\n    static int mark(String s) {\n        System.out.print(s + \" \");\n        return 1;\n    }\n}\nclass Child extends Base {\n    static int s2 = mark(\"CS\");\n    int y = mark(\"CI\");\n    Child() { mark(\"CC\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Child();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "BS CS BI BC CI CC "
+      },
+      {
+        "id": "B",
+        "text": "BS BI BC CS CI CC "
+      },
+      {
+        "id": "C",
+        "text": "BS CS BI CI BC CC "
+      },
+      {
+        "id": "D",
+        "text": "CS BS BI BC CI CC "
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "初回利用でクラス初期化は親→子のBS CS。その後オブジェクト初期化は親BI→BC→子CI→CCです。",
+    "choiceExplanations": {
+      "A": "初回利用でクラス初期化は親→子のBS CS。その後オブジェクト初期化は親BI→BC→子CI→CCです。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "17. static",
+    "tags": [
+      "static-initializer",
+      "instance-initializer",
+      "constructor",
+      "inheritance"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0622",
+    "question": "blank finalフィールドを含む次のコードはコンパイルできるか。正しいものを1つ選びなさい.",
+    "code": "class Config {\n    final int value;\n\n    Config(boolean flag) {\n        if (flag) {\n            value = 10;\n        }\n    }\n\n    int read() {\n        return value;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(new Config(true).read());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "10と出力する"
+      },
+      {
+        "id": "B",
+        "text": "false経路でvalueが初期化されない可能性があるためコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "finalフィールドはコンストラクタで代入できないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "valueは自動的に0で初期化されるのでコンパイルできる"
+      },
+      {
+        "id": "E",
+        "text": "実行時にだけエラーになる"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "blank final instanceフィールドは各コンストラクタのすべての正常終了経路で必ず1回初期化される必要があり、flag=false経路が未初期化です。",
+    "choiceExplanations": {
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "B": "blank final instanceフィールドは各コンストラクタのすべての正常終了経路で必ず1回初期化される必要があり、flag=false経路が未初期化です。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "25. final",
+    "tags": [
+      "blank-final",
+      "definite-assignment",
+      "constructor",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0623",
+    "question": "constructor chainingとfinalフィールドについて、出力として正しいものを1つ選びなさい.",
+    "code": "class Box {\n    final int n;\n\n    Box() {\n        this(4);\n    }\n\n    Box(int n) {\n        this.n = n;\n    }\n\n    int twice() {\n        return n * 2;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(new Box().twice());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "0"
+      },
+      {
+        "id": "B",
+        "text": "4"
+      },
+      {
+        "id": "C",
+        "text": "8"
+      },
+      {
+        "id": "D",
+        "text": "this(4)経由ではfinalを初期化できないためコンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "コンストラクタ同士は呼び出せない"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "Box()はthis(4)で別コンストラクタへ委譲し、そこでblank final nを1回初期化します。n=4なので8です。",
+    "choiceExplanations": {
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "Box()はthis(4)で別コンストラクタへ委譲し、そこでblank final nを1回初期化します。n=4なので8です。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "constructor-chaining",
+      "this",
+      "blank-final"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0624",
+    "question": "staticフィールドとinstanceフィールドの増加を含む次の出力として正しいものを1つ選びなさい.",
+    "code": "class Counter {\n    static int total = 0;\n    int id = ++total;\n\n    Counter() {\n        total += 10;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Counter a = new Counter();\n        Counter b = new Counter();\n        System.out.print(a.id + \":\" + b.id + \":\" + Counter.total);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1:2:22"
+      },
+      {
+        "id": "B",
+        "text": "1:12:22"
+      },
+      {
+        "id": "C",
+        "text": "11:22:22"
+      },
+      {
+        "id": "D",
+        "text": "1:12:12"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "1個目はid=1後total=11。2個目はid初期化でtotal=12,id=12、その後total=22なので1:12:22です。",
+    "choiceExplanations": {
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "B": "1個目はid=1後total=11。2個目はid初期化でtotal=12,id=12、その後total=22なので1:12:22です。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "17. static",
+    "tags": [
+      "static-field",
+      "instance-field",
+      "initialization-order",
+      "increment"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0625",
+    "question": "staticメソッドからinstanceメンバを参照する次のコードについて正しいものを1つ選びなさい.",
+    "code": "class Item {\n    int value = 5;\n    static int total = 10;\n\n    static int calc() {\n        return value + total;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(Item.calc());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "15"
+      },
+      {
+        "id": "B",
+        "text": "10"
+      },
+      {
+        "id": "C",
+        "text": "5"
+      },
+      {
+        "id": "D",
+        "text": "staticメソッドからinstanceフィールドvalueを直接参照しているためコンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "実行時にNullPointerException"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "staticメソッドには暗黙のthisがないため、instanceフィールドvalueをオブジェクト参照なしに使えません。",
+    "choiceExplanations": {
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "staticメソッドには暗黙のthisがないため、instanceフィールドvalueをオブジェクト参照なしに使えません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "17. static",
+    "tags": [
+      "static-context",
+      "instance-field",
+      "this",
+      "compile-error"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0626",
+    "question": "インスタンス初期化子とフィールド初期化の記述順を問う次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "class Demo {\n    int a = step(1);\n\n    {\n        a += step(2);\n    }\n\n    int b = step(3);\n\n    Demo() {\n        a += b;\n        System.out.print(\"C\" + a);\n    }\n\n    static int step(int x) {\n        System.out.print(x);\n        return x;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Demo();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "123C6"
+      },
+      {
+        "id": "B",
+        "text": "132C6"
+      },
+      {
+        "id": "C",
+        "text": "123C9"
+      },
+      {
+        "id": "D",
+        "text": "C6123"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "instanceフィールド初期化とinstance初期化子は記述順。1→2→3が出力され、a=3,b=3からconstructorでa=6となり123C6です。",
+    "choiceExplanations": {
+      "A": "instanceフィールド初期化とinstance初期化子は記述順。1→2→3が出力され、a=3,b=3からconstructorでa=6となり123C6です。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "instance-initializer",
+      "field-initializer",
+      "source-order"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0627",
+    "question": "super()の暗黙挿入に関する次のコードはどうなるか。正しいものを1つ選びなさい.",
+    "code": "class Parent {\n    Parent(int x) {\n        System.out.print(\"P\" + x);\n    }\n}\nclass Child extends Parent {\n    Child() {\n        System.out.print(\"C\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Child();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "PC"
+      },
+      {
+        "id": "B",
+        "text": "P0C"
+      },
+      {
+        "id": "C",
+        "text": "Child()先頭に暗黙のsuper()が入るがParent()が存在しないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "実行時にNoSuchMethodError"
+      },
+      {
+        "id": "E",
+        "text": "Parent(int)が自動的に0で呼ばれる"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "Child()に明示的なthis/superがないとsuper()が挿入されますが、Parentには引数なしconstructorがないためコンパイルエラーです。",
+    "choiceExplanations": {
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "Child()に明示的なthis/superがないとsuper()が挿入されますが、Parentには引数なしconstructorがないためコンパイルエラーです。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "implicit-super",
+      "constructor",
+      "compile-error",
+      "inheritance"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0628",
+    "question": "finalローカル変数の definite assignment について正しいものを2つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        final int x;\n        boolean flag = args.length > 0;\n\n        if (flag) {\n            x = 1;\n        } else {\n            x = 2;\n        }\n\n        System.out.print(x);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "xは宣言時に初期化していないのでコンパイルエラー"
+      },
+      {
+        "id": "B",
+        "text": "if/elseの両経路で1回ずつ代入されるためコンパイルできる"
+      },
+      {
+        "id": "C",
+        "text": "argsが空なら2と出力する"
+      },
+      {
+        "id": "D",
+        "text": "finalローカル変数には条件分岐内で代入できない"
+      },
+      {
+        "id": "E",
+        "text": "xには常に0が自動代入される"
+      }
+    ],
+    "correctAnswers": [
+      "B",
+      "C"
+    ],
+    "explanation": "finalローカル変数は宣言時でなくても、使用前に各経路でちょうど1回代入されれば有効です。引数なしではx=2です。",
+    "choiceExplanations": {
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "B": "finalローカル変数は宣言時でなくても、使用前に各経路でちょうど1回代入されれば有効です。引数なしではx=2です。",
+      "C": "finalローカル変数は宣言時でなくても、使用前に各経路でちょうど1回代入されれば有効です。引数なしではx=2です。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "25. final",
+    "tags": [
+      "final-local",
+      "definite-assignment",
+      "if-else"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0629",
+    "question": "同名のstaticフィールドを親子で宣言した場合の出力として正しいものを1つ選びなさい.",
+    "code": "class Parent {\n    static int value = 1;\n}\nclass Child extends Parent {\n    static int value = 2;\n}\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        Child c = new Child();\n        System.out.print(p.value + \":\");\n        System.out.print(c.value + \":\");\n        System.out.print(((Parent)c).value);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1:2:1"
+      },
+      {
+        "id": "B",
+        "text": "2:2:2"
+      },
+      {
+        "id": "C",
+        "text": "1:1:1"
+      },
+      {
+        "id": "D",
+        "text": "2:2:1"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "staticフィールドは動的ディスパッチされず、参照に使った型で解決されます。Parent, Child, Parentの順で1:2:1です。",
+    "choiceExplanations": {
+      "A": "staticフィールドは動的ディスパッチされず、参照に使った型で解決されます。Parent, Child, Parentの順で1:2:1です。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "17. static",
+    "tags": [
+      "static-field",
+      "hiding",
+      "reference-type"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0630",
+    "question": "初期化中のstaticフィールド参照について、出力として正しいものを1つ選びなさい.",
+    "code": "class Init {\n    static int a = Init.b + 1;\n    static int b = 5;\n\n    static {\n        b += a;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(Init.a + \":\" + Init.b);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1:6"
+      },
+      {
+        "id": "B",
+        "text": "6:11"
+      },
+      {
+        "id": "C",
+        "text": "1:5"
+      },
+      {
+        "id": "D",
+        "text": "0:6"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "型名で修飾した前方参照は可能で、a初期化時点のbはデフォルト値0なのでa=1。その後b=5、static初期化子でb=6です。",
+    "choiceExplanations": {
+      "A": "型名で修飾した前方参照は可能で、a初期化時点のbはデフォルト値0なのでa=1。その後b=5、static初期化子でb=6です。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "17. static",
+    "tags": [
+      "static-initialization",
+      "default-value",
+      "source-order"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0631",
+    "question": "instanceofパターン変数と&&のスコープを含む次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static int length(Object obj) {\n        if (obj instanceof String s && s.length() > 2) {\n            return s.length();\n        }\n        return -1;\n    }\n    public static void main(String[] args) {\n        System.out.print(length(\"Java\") + \":\");\n        System.out.print(length(\"A\") + \":\");\n        System.out.print(length(10));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "4:-1:-1"
+      },
+      {
+        "id": "B",
+        "text": "4:1:-1"
+      },
+      {
+        "id": "C",
+        "text": "-1:-1:-1"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "ClassCastException"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "`&&`右辺はpattern match成立時だけ評価されsを安全に使えます。Java=4、AとIntegerは-1です。",
+    "choiceExplanations": {
+      "A": "`&&`右辺はpattern match成立時だけ評価されsを安全に使えます。Java=4、AとIntegerは-1です。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "pattern-matching",
+      "flow-scoping",
+      "short-circuit",
+      "instanceof"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0632",
+    "question": "次のinstanceofパターンコードはJava 17でコンパイルできるか。正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static boolean ok(Object obj) {\n        return obj instanceof String s || s.length() > 0;\n    }\n    public static void main(String[] args) {\n        System.out.print(ok(\"A\"));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "trueと出力する"
+      },
+      {
+        "id": "B",
+        "text": "falseと出力する"
+      },
+      {
+        "id": "C",
+        "text": "`||`右辺ではpattern variable sが必ず存在するとは限らないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "instanceofパターンはif文内でしか使えないためコンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "実行時にNullPointerException"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "`||`右辺が評価されるのは左辺がfalseのときで、その場合Stringパターンsは成立していないためsを参照できません。",
+    "choiceExplanations": {
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "`||`右辺が評価されるのは左辺がfalseのときで、その場合Stringパターンsは成立していないためsを参照できません。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "pattern-variable",
+      "or",
+      "flow-scoping",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0633",
+    "question": "否定したinstanceofパターンのflow scopingについて、出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static void print(Object obj) {\n        if (!(obj instanceof String s)) {\n            System.out.print(\"N\");\n            return;\n        }\n\n        System.out.print(s.toUpperCase());\n    }\n\n    public static void main(String[] args) {\n        print(\"java\");\n        System.out.print(\":\");\n        print(10);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "JAVA:N"
+      },
+      {
+        "id": "B",
+        "text": "N:N"
+      },
+      {
+        "id": "C",
+        "text": "JAVA:10"
+      },
+      {
+        "id": "D",
+        "text": "pattern variable sはif文の外では使えないためコンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "ClassCastException"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "否定条件がtrueならreturnするため、その後に到達する経路ではStringパターンが成立済み。flow scopingによりsを使用できJAVA:Nです。",
+    "choiceExplanations": {
+      "A": "否定条件がtrueならreturnするため、その後に到達する経路ではStringパターンが成立済み。flow scopingによりsを使用できJAVA:Nです。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "pattern-matching",
+      "negation",
+      "flow-scoping",
+      "return"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0634",
+    "question": "パターン変数と通常のローカル変数の名前について、正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static void show(Object obj) {\n        String s = \"outer\";\n\n        if (obj instanceof String s) {\n            System.out.print(s);\n        }\n    }\n\n    public static void main(String[] args) {\n        show(\"inner\");\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "innerと出力する"
+      },
+      {
+        "id": "B",
+        "text": "outerと出力する"
+      },
+      {
+        "id": "C",
+        "text": "同じメソッドの重なるスコープに既存のローカル変数sがあるためpattern variable sを宣言できずコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "pattern variableが外側のsを自動的に上書きする"
+      },
+      {
+        "id": "E",
+        "text": "実行時にClassCastException"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "pattern variableもローカル変数です。すでにスコープ中のローカル変数sと同名では宣言できません。",
+    "choiceExplanations": {
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "pattern variableもローカル変数です。すでにスコープ中のローカル変数sと同名では宣言できません。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "2. 基本データ型・変数・スコープ",
+    "tags": [
+      "pattern-variable",
+      "local-variable",
+      "name-conflict",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0635",
+    "question": "`var`を使った次の宣言のうちコンパイル可能なものを2つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        // 各選択肢を、この位置に1行だけ書くものとする\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "`var a = new int[] {1, 2};`"
+      },
+      {
+        "id": "B",
+        "text": "`var b = {1, 2};`"
+      },
+      {
+        "id": "C",
+        "text": "`var c = null;`"
+      },
+      {
+        "id": "D",
+        "text": "`var d = new StringBuilder(\"x\");`"
+      },
+      {
+        "id": "E",
+        "text": "`var[] e = new int[2];`"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "D"
+    ],
+    "explanation": "`var`は初期化式から型を推論します。明示的な配列生成式とnew StringBuilderは有効ですが、配列初期化子単独・null単独・var[]は不可です。",
+    "choiceExplanations": {
+      "A": "`var`は初期化式から型を推論します。明示的な配列生成式とnew StringBuilderは有効ですが、配列初期化子単独・null単独・var[]は不可です。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "`var`は初期化式から型を推論します。明示的な配列生成式とnew StringBuilderは有効ですが、配列初期化子単独・null単独・var[]は不可です。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "3. var",
+    "tags": [
+      "var",
+      "array-initializer",
+      "null",
+      "type-inference"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0636",
+    "question": "`var`の使用箇所について正しいものを2つ選びなさい.",
+    "code": "public class Main {\n    // A: var field = 1;\n\n    static void method(/* B: var x */) {\n        // C: var local = 1;\n        for (var i = 0; i < 1; i++) {\n            System.out.print(i);\n        }\n    }\n\n    public static void main(String[] args) {\n        method();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Aのinstance/staticフィールド宣言でvarを使える"
+      },
+      {
+        "id": "B",
+        "text": "Bの通常メソッド仮引数でvarを使える"
+      },
+      {
+        "id": "C",
+        "text": "Cのローカル変数宣言でvarを使える"
+      },
+      {
+        "id": "D",
+        "text": "for初期化部のローカル変数でvarを使える"
+      },
+      {
+        "id": "E",
+        "text": "varはmainメソッド内でしか使えない"
+      }
+    ],
+    "correctAnswers": [
+      "C",
+      "D"
+    ],
+    "explanation": "`var`はローカル変数型推論で、通常のフィールドやメソッド仮引数には使えません。ローカル変数とfor初期化部では使えます。",
+    "choiceExplanations": {
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "`var`はローカル変数型推論で、通常のフィールドやメソッド仮引数には使えません。ローカル変数とfor初期化部では使えます。",
+      "D": "`var`はローカル変数型推論で、通常のフィールドやメソッド仮引数には使えません。ローカル変数とfor初期化部では使えます。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "3. var",
+    "tags": [
+      "var",
+      "local-variable",
+      "parameter",
+      "for"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0637",
+    "question": "ローカル変数のシャドーイング規則について正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 1;\n\n        {\n            int x = 2;\n            System.out.print(x);\n        }\n\n        System.out.print(x);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "21と出力する"
+      },
+      {
+        "id": "B",
+        "text": "22と出力する"
+      },
+      {
+        "id": "C",
+        "text": "外側のローカル変数xのスコープ中に内側ブロックで同名xを再宣言しているためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "内側xだけが有効になり2と出力する"
+      },
+      {
+        "id": "E",
+        "text": "実行時エラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "Javaでは外側ローカル変数のスコープと重なる内側ブロックに同名ローカル変数を再宣言できません。",
+    "choiceExplanations": {
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "Javaでは外側ローカル変数のスコープと重なる内側ブロックに同名ローカル変数を再宣言できません。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "2. 基本データ型・変数・スコープ",
+    "tags": [
+      "local-scope",
+      "shadowing",
+      "compile-error"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0638",
+    "question": "フィールドとローカル変数の同名宣言を含む次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "class Box {\n    int value = 5;\n\n    void print() {\n        int value = 2;\n        System.out.print(value + \":\");\n        System.out.print(this.value);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Box().print();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "2:5"
+      },
+      {
+        "id": "B",
+        "text": "5:2"
+      },
+      {
+        "id": "C",
+        "text": "2:2"
+      },
+      {
+        "id": "D",
+        "text": "同名なのでコンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "5:5"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "ローカルvalueがフィールドをshadowします。valueは2、this.valueはinstanceフィールド5なので2:5です。",
+    "choiceExplanations": {
+      "A": "ローカルvalueがフィールドをshadowします。valueは2、this.valueはinstanceフィールド5なので2:5です。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "2. 基本データ型・変数・スコープ",
+    "tags": [
+      "field-shadowing",
+      "this",
+      "local-variable"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0639",
+    "question": "ローカル変数のdefinite assignmentを含む次のコードはどうなるか。正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int x;\n        boolean flag = args.length > 0;\n\n        if (flag) {\n            x = 10;\n        }\n\n        System.out.print(x);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "引数ありなら10、なしなら0"
+      },
+      {
+        "id": "B",
+        "text": "xはintなので自動的に0で初期化される"
+      },
+      {
+        "id": "C",
+        "text": "xが未初期化の経路があるためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "実行時にNullPointerException"
+      },
+      {
+        "id": "E",
+        "text": "flagが実行時に決まるのでコンパイラは問題にしない"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "ローカル変数にはデフォルト値がなく、flag=false経路でxが未代入のまま使われる可能性があるためコンパイルエラーです。",
+    "choiceExplanations": {
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "ローカル変数にはデフォルト値がなく、flag=false経路でxが未代入のまま使われる可能性があるためコンパイルエラーです。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "2. 基本データ型・変数・スコープ",
+    "tags": [
+      "definite-assignment",
+      "local-variable",
+      "if",
+      "compile-error"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0640",
+    "question": "pattern variableとelse分岐のスコープについて正しいものを2つ選びなさい.",
+    "code": "public class Main {\n    static void show(Object obj) {\n        if (obj instanceof String s) {\n            System.out.print(s.length());\n        } else {\n            System.out.print(\"N\");\n        }\n    }\n\n    public static void main(String[] args) {\n        show(\"abc\");\n        System.out.print(\":\");\n        show(1);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "thenブロックではsを使える"
+      },
+      {
+        "id": "B",
+        "text": "elseブロックでもsを使える"
+      },
+      {
+        "id": "C",
+        "text": "出力は3:N"
+      },
+      {
+        "id": "D",
+        "text": "instanceofパターンは明示キャストと併用しないと使えない"
+      },
+      {
+        "id": "E",
+        "text": "Integerを渡すとClassCastException"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "C"
+    ],
+    "explanation": "pattern variable sはパターン成立経路でだけ有効です。abcは3、IntegerはelseでNなので3:Nです。",
+    "choiceExplanations": {
+      "A": "pattern variable sはパターン成立経路でだけ有効です。abcは3、IntegerはelseでNなので3:Nです。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "pattern variable sはパターン成立経路でだけ有効です。abcは3、IntegerはelseでNなので3:Nです。",
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "pattern-variable",
+      "else",
+      "flow-scoping"
+    ],
+    "difficulty": 4,
+    "multipleChoice": true
+  }
+]
