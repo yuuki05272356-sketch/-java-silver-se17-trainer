@@ -6,11 +6,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "PC7:3"
+        "text": "7:PC3"
       },
       {
         "id": "B",
-        "text": "7:PC3"
+        "text": "PC7:3"
       },
       {
         "id": "C",
@@ -26,12 +26,12 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "A"
     ],
     "explanation": "`CONST`はコンパイル時定数なのでその参照だけではParent/Childの初期化を要求しません。まず`7:`が出て、`Child.value`の初回参照で親P→子のinit Cが実行され、最後に3が出ます。",
     "choiceExplanations": {
-      "A": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
-      "B": "`CONST`はコンパイル時定数なのでその参照だけではParent/Childの初期化を要求しません。まず`7:`が出て、`Child.value`の初回参照で親P→子のinit Cが実行され、最後に3が出ます。",
+      "A": "`CONST`はコンパイル時定数なのでその参照だけではParent/Childの初期化を要求しません。まず`7:`が出て、`Child.value`の初回参照で親P→子のinit Cが実行され、最後に3が出ます。",
+      "B": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
       "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
       "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
       "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
@@ -151,15 +151,15 @@
       },
       {
         "id": "B",
-        "text": "1:12:22"
-      },
-      {
-        "id": "C",
         "text": "11:22:22"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "1:12:12"
+      },
+      {
+        "id": "D",
+        "text": "1:12:22"
       },
       {
         "id": "E",
@@ -167,14 +167,14 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "D"
     ],
     "explanation": "1個目はid=1後total=11。2個目はid初期化でtotal=12,id=12、その後total=22なので1:12:22です。",
     "choiceExplanations": {
       "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "B": "1個目はid=1後total=11。2個目はid初期化でtotal=12,id=12、その後total=22なので1:12:22です。",
+      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "1個目はid=1後total=11。2個目はid初期化でtotal=12,id=12、その後total=22なので1:12:22です。",
       "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
     },
     "category": "17. static",
@@ -206,23 +206,23 @@
       },
       {
         "id": "D",
-        "text": "staticメソッドからinstanceフィールドvalueを直接参照しているためコンパイルエラー"
+        "text": "実行時にNullPointerException"
       },
       {
         "id": "E",
-        "text": "実行時にNullPointerException"
+        "text": "staticメソッドからinstanceフィールドvalueを直接参照しているためコンパイルエラー"
       }
     ],
     "correctAnswers": [
-      "D"
+      "E"
     ],
     "explanation": "staticメソッドには暗黙のthisがないため、instanceフィールドvalueをオブジェクト参照なしに使えません。",
     "choiceExplanations": {
       "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "D": "staticメソッドには暗黙のthisがないため、instanceフィールドvalueをオブジェクト参照なしに使えません。",
-      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "staticメソッドには暗黙のthisがないため、instanceフィールドvalueをオブジェクト参照なしに使えません。"
     },
     "category": "17. static",
     "tags": [
@@ -291,11 +291,11 @@
       },
       {
         "id": "B",
-        "text": "P0C"
+        "text": "Child()先頭に暗黙のsuper()が入るがParent()が存在しないためコンパイルエラー"
       },
       {
         "id": "C",
-        "text": "Child()先頭に暗黙のsuper()が入るがParent()が存在しないためコンパイルエラー"
+        "text": "P0C"
       },
       {
         "id": "D",
@@ -307,13 +307,13 @@
       }
     ],
     "correctAnswers": [
-      "C"
+      "B"
     ],
     "explanation": "Child()に明示的なthis/superがないとsuper()が挿入されますが、Parentには引数なしconstructorがないためコンパイルエラーです。",
     "choiceExplanations": {
       "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "C": "Child()に明示的なthis/superがないとsuper()が挿入されますが、Parentには引数なしconstructorがないためコンパイルエラーです。",
+      "B": "Child()に明示的なthis/superがないとsuper()が挿入されますが、Parentには引数なしconstructorがないためコンパイルエラーです。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
     },
@@ -381,19 +381,19 @@
     "choices": [
       {
         "id": "A",
-        "text": "1:2:1"
-      },
-      {
-        "id": "B",
         "text": "2:2:2"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "1:1:1"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "2:2:1"
+      },
+      {
+        "id": "D",
+        "text": "1:2:1"
       },
       {
         "id": "E",
@@ -401,14 +401,14 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "D"
     ],
     "explanation": "staticフィールドは動的ディスパッチされず、参照に使った型で解決されます。Parent, Child, Parentの順で1:2:1です。",
     "choiceExplanations": {
-      "A": "staticフィールドは動的ディスパッチされず、参照に使った型で解決されます。Parent, Child, Parentの順で1:2:1です。",
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "staticフィールドは動的ディスパッチされず、参照に使った型で解決されます。Parent, Child, Parentの順で1:2:1です。",
       "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
     },
     "category": "17. static",
@@ -427,35 +427,35 @@
     "choices": [
       {
         "id": "A",
-        "text": "1:6"
-      },
-      {
-        "id": "B",
         "text": "6:11"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "1:5"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "0:6"
       },
       {
-        "id": "E",
+        "id": "D",
         "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "1:6"
       }
     ],
     "correctAnswers": [
-      "A"
+      "E"
     ],
     "explanation": "型名で修飾した前方参照は可能で、a初期化時点のbはデフォルト値0なのでa=1。その後b=5、static初期化子でb=6です。",
     "choiceExplanations": {
-      "A": "型名で修飾した前方参照は可能で、a初期化時点のbはデフォルト値0なのでa=1。その後b=5、static初期化子でb=6です。",
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
+      "E": "型名で修飾した前方参照は可能で、a初期化時点のbはデフォルト値0なのでa=1。その後b=5、static初期化子でb=6です。"
     },
     "category": "17. static",
     "tags": [
@@ -520,11 +520,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "J:N:N"
+        "text": "コンパイルエラー。`||`右辺でsは使えない"
       },
       {
         "id": "B",
-        "text": "コンパイルエラー。`||`右辺でsは使えない"
+        "text": "J:N:N"
       },
       {
         "id": "C",
@@ -540,12 +540,12 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "B"
     ],
     "explanation": "`||`右辺が評価されるのは左辺`!(value instanceof String s)`がfalse、つまりStringパターンが成立した場合だけなので`s`は右辺で有効です。結果はJ:N:Nです。",
     "choiceExplanations": {
-      "A": "`||`右辺が評価されるのは左辺`!(value instanceof String s)`がfalse、つまりStringパターンが成立した場合だけなので`s`は右辺で有効です。結果はJ:N:Nです。",
-      "B": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "A": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "B": "`||`右辺が評価されるのは左辺`!(value instanceof String s)`がfalse、つまりStringパターンが成立した場合だけなので`s`は右辺で有効です。結果はJ:N:Nです。",
       "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
       "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
       "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
@@ -567,15 +567,15 @@
     "choices": [
       {
         "id": "A",
-        "text": "JAVA:N"
-      },
-      {
-        "id": "B",
         "text": "N:N"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "JAVA:10"
+      },
+      {
+        "id": "C",
+        "text": "JAVA:N"
       },
       {
         "id": "D",
@@ -587,13 +587,13 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "C"
     ],
     "explanation": "否定条件がtrueならreturnするため、その後に到達する経路ではStringパターンが成立済み。flow scopingによりsを使用できJAVA:Nです。",
     "choiceExplanations": {
-      "A": "否定条件がtrueならreturnするため、その後に到達する経路ではStringパターンが成立済み。flow scopingによりsを使用できJAVA:Nです。",
+      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "否定条件がtrueならreturnするため、その後に到達する経路ではStringパターンが成立済み。flow scopingによりsを使用できJAVA:Nです。",
       "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
     },
@@ -622,11 +622,11 @@
       },
       {
         "id": "C",
-        "text": "同じメソッドの重なるスコープに既存のローカル変数sがあるためpattern variable sを宣言できずコンパイルエラー"
+        "text": "pattern variableが外側のsを自動的に上書きする"
       },
       {
         "id": "D",
-        "text": "pattern variableが外側のsを自動的に上書きする"
+        "text": "同じメソッドの重なるスコープに既存のローカル変数sがあるためpattern variable sを宣言できずコンパイルエラー"
       },
       {
         "id": "E",
@@ -634,14 +634,14 @@
       }
     ],
     "correctAnswers": [
-      "C"
+      "D"
     ],
     "explanation": "pattern variableもローカル変数です。すでにスコープ中のローカル変数sと同名では宣言できません。",
     "choiceExplanations": {
       "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "C": "pattern variableもローカル変数です。すでにスコープ中のローカル変数sと同名では宣言できません。",
-      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "pattern variableもローカル変数です。すでにスコープ中のローカル変数sと同名では宣言できません。",
       "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
     },
     "category": "2. 基本データ型・変数・スコープ",
@@ -761,11 +761,11 @@
       },
       {
         "id": "B",
-        "text": "22と出力する"
+        "text": "外側のローカル変数xのスコープ中に内側ブロックで同名xを再宣言しているためコンパイルエラー"
       },
       {
         "id": "C",
-        "text": "外側のローカル変数xのスコープ中に内側ブロックで同名xを再宣言しているためコンパイルエラー"
+        "text": "22と出力する"
       },
       {
         "id": "D",
@@ -777,13 +777,13 @@
       }
     ],
     "correctAnswers": [
-      "C"
+      "B"
     ],
     "explanation": "Javaでは外側ローカル変数のスコープと重なる内側ブロックに同名ローカル変数を再宣言できません。",
     "choiceExplanations": {
       "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "C": "Javaでは外側ローカル変数のスコープと重なる内側ブロックに同名ローカル変数を再宣言できません。",
+      "B": "Javaでは外側ローカル変数のスコープと重なる内側ブロックに同名ローカル変数を再宣言できません。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
     },
@@ -803,15 +803,15 @@
     "choices": [
       {
         "id": "A",
-        "text": "3:2:1"
-      },
-      {
-        "id": "B",
         "text": "3:1:2"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "2:2:1"
+      },
+      {
+        "id": "C",
+        "text": "3:2:1"
       },
       {
         "id": "D",
@@ -823,13 +823,13 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "C"
     ],
     "explanation": "単純名`value`は引数3、`this.value`はChildのフィールド2、`super.value`はBaseのフィールド1を表すため3:2:1です。",
     "choiceExplanations": {
-      "A": "単純名`value`は引数3、`this.value`はChildのフィールド2、`super.value`はBaseのフィールド1を表すため3:2:1です。",
+      "A": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
       "B": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
-      "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "C": "単純名`value`は引数3、`this.value`はChildのフィールド2、`super.value`はBaseのフィールド1を表すため3:2:1です。",
       "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
       "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
     },
@@ -858,11 +858,11 @@
       },
       {
         "id": "C",
-        "text": "xが未初期化の経路があるためコンパイルエラー"
+        "text": "実行時にNullPointerException"
       },
       {
         "id": "D",
-        "text": "実行時にNullPointerException"
+        "text": "xが未初期化の経路があるためコンパイルエラー"
       },
       {
         "id": "E",
@@ -870,14 +870,14 @@
       }
     ],
     "correctAnswers": [
-      "C"
+      "D"
     ],
     "explanation": "ローカル変数にはデフォルト値がなく、flag=false経路でxが未代入のまま使われる可能性があるためコンパイルエラーです。",
     "choiceExplanations": {
       "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
       "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "C": "ローカル変数にはデフォルト値がなく、flag=false経路でxが未代入のまま使われる可能性があるためコンパイルエラーです。",
-      "D": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "ローカル変数にはデフォルト値がなく、flag=false経路でxが未代入のまま使われる可能性があるためコンパイルエラーです。",
       "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
     },
     "category": "2. 基本データ型・変数・スコープ",
