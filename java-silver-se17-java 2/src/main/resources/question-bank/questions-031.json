@@ -756,47 +756,48 @@
   },
   {
     "id": "JS17-0597",
-    "question": "ErrorをThrowableで捕捉する次のコードの出力として正しいものを1つ選びなさい.",
-    "code": "public class Main {\n    static void fail() {\n        throw new AssertionError(\"A\");\n    }\n    public static void main(String[] args) {\n        try {\n            System.out.print(\"T\");\n            fail();\n        } catch (Throwable t) {\n            System.out.print(t.getMessage());\n        } finally {\n            System.out.print(\"F\");\n        }\n    }\n}",
+    "question": "Throwable配列とinstanceofパターンを組み合わせた次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static String kind(Throwable t) {\n        if (t instanceof Error e) {\n            return \"E\" + e.getClass().getSimpleName().length();\n        }\n        if (t instanceof RuntimeException r) {\n            return \"R\" + r.getMessage();\n        }\n        return \"X\";\n    }\n\n    public static void main(String[] args) {\n        Throwable[] values = {\n            new AssertionError(),\n            new IllegalStateException(\"S\"),\n            new Exception()\n        };\n        for (Throwable t : values) {\n            System.out.print(kind(t) + \":\");\n        }\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "TFの後AssertionErrorが伝播する"
+        "text": "E14:RS:X:"
       },
       {
         "id": "B",
-        "text": "TAF"
+        "text": "Rnull:RS:X:"
       },
       {
         "id": "C",
-        "text": "TEF"
+        "text": "E14:X:X:"
       },
       {
         "id": "D",
-        "text": "AF"
+        "text": "コンパイルエラー"
       },
       {
         "id": "E",
-        "text": "コンパイルエラー"
+        "text": "AssertionErrorはThrowable配列に格納できない"
       }
     ],
     "correctAnswers": [
-      "B"
+      "A"
     ],
-    "explanation": "AssertionErrorはExceptionではありませんがThrowableのサブクラスなのでcatch(Throwable)では捕捉できます。T、メッセージA、finallyのFでTAFです。",
+    "explanation": "AssertionErrorはErrorなので先頭分岐、`AssertionError`の単純名は14文字でE14。IllegalStateExceptionはRuntimeExceptionでRS、通常のExceptionはどちらでもなくXです。",
     "choiceExplanations": {
-      "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "B": "AssertionErrorはExceptionではありませんがThrowableのサブクラスなのでcatch(Throwable)では捕捉できます。T、メッセージA、finallyのFでTAFです。",
-      "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
+      "A": "AssertionErrorはErrorなので先頭分岐、`AssertionError`の単純名は14文字でE14。IllegalStateExceptionはRuntimeExceptionでRS、通常のExceptionはどちらでもなくXです。",
+      "B": "誤り。Java 17の型・例外・pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。Java 17の型・例外・pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。Java 17の型・例外・pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。Java 17の型・例外・pattern matchingの規則を順に追うとこの選択肢にはなりません。"
     },
     "category": "29. 例外",
     "tags": [
-      "Error",
       "Throwable",
-      "catch",
-      "finally"
+      "Error",
+      "RuntimeException",
+      "pattern-matching",
+      "array"
     ],
     "difficulty": 5,
     "multipleChoice": false
