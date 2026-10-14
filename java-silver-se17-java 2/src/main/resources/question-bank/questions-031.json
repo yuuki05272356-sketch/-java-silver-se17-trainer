@@ -6,11 +6,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "9"
+        "text": "18"
       },
       {
         "id": "B",
-        "text": "18"
+        "text": "9"
       },
       {
         "id": "C",
@@ -26,12 +26,12 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "A"
     ],
     "explanation": "Shape.doubled()内のarea()もinstanceメソッドなので実体Squareのoverrideが呼ばれます。9の2倍で18です。",
     "choiceExplanations": {
-      "A": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "B": "Shape.doubled()内のarea()もinstanceメソッドなので実体Squareのoverrideが呼ばれます。9の2倍で18です。",
+      "A": "Shape.doubled()内のarea()もinstanceメソッドなので実体Squareのoverrideが呼ばれます。9の2倍で18です。",
+      "B": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
       "C": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
       "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
       "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
@@ -101,15 +101,15 @@
     "choices": [
       {
         "id": "A",
-        "text": "<X>:3"
-      },
-      {
-        "id": "B",
         "text": "<X>:1"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "< x >:3"
+      },
+      {
+        "id": "C",
+        "text": "<X>:3"
       },
       {
         "id": "D",
@@ -121,13 +121,13 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "C"
     ],
     "explanation": "private normalizeはinterface内部のdefaultから利用できます。Loudはdefaultをoverrideし、`Formatter.super.label(\" x \")`が<X>、元文字列長は3なので<X>:3です。",
     "choiceExplanations": {
-      "A": "private normalizeはinterface内部のdefaultから利用できます。Loudはdefaultをoverrideし、`Formatter.super.label(\" x \")`が<X>、元文字列長は3なので<X>:3です。",
+      "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "C": "private normalizeはinterface内部のdefaultから利用できます。Loudはdefaultをoverrideし、`Formatter.super.label(\" x \")`が<X>、元文字列長は3なので<X>:3です。",
       "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
     },
@@ -196,35 +196,35 @@
     "choices": [
       {
         "id": "A",
-        "text": "A=100:B=0"
-      },
-      {
-        "id": "B",
         "text": " A =120:B=-1"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "A=120:B=0"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "compact constructor内でpointへ再代入できない"
       },
       {
-        "id": "E",
+        "id": "D",
         "text": "switch式をrecordで使えない"
+      },
+      {
+        "id": "E",
+        "text": "A=100:B=0"
       }
     ],
     "correctAnswers": [
-      "A"
+      "E"
     ],
     "explanation": "compact constructorでは引数を正規化できます。nameはtrimされ、120は100へ、-1は0へ補正されるためA=100:B=0です。",
     "choiceExplanations": {
-      "A": "compact constructorでは引数を正規化できます。nameはtrimされ、120は100へ、-1は0へ補正されるためA=100:B=0です。",
+      "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
+      "E": "compact constructorでは引数を正規化できます。nameはtrimされ、120は100へ、-1は0へ補正されるためA=100:B=0です。"
     },
     "category": "20. record",
     "tags": [
@@ -295,11 +295,11 @@
       },
       {
         "id": "B",
-        "text": "0と出力する"
+        "text": "recordに追加のinstanceフィールドsumを宣言しているためコンパイルエラー"
       },
       {
         "id": "C",
-        "text": "recordに追加のinstanceフィールドsumを宣言しているためコンパイルエラー"
+        "text": "0と出力する"
       },
       {
         "id": "D",
@@ -311,13 +311,13 @@
       }
     ],
     "correctAnswers": [
-      "C"
+      "B"
     ],
     "explanation": "recordはコンポーネント由来以外の追加instanceフィールドを宣言できません。`int sum;`がコンパイルエラーです。",
     "choiceExplanations": {
       "A": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "B": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "C": "recordはコンポーネント由来以外の追加instanceフィールドを宣言できません。`int sum;`がコンパイルエラーです。",
+      "B": "recordはコンポーネント由来以外の追加instanceフィールドを宣言できません。`int sum;`がコンパイルエラーです。",
+      "C": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
       "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
       "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
     },
@@ -389,15 +389,15 @@
       },
       {
         "id": "B",
-        "text": "Childがfinal/sealed/non-sealedのいずれも宣言していないためコンパイルエラー"
-      },
-      {
-        "id": "C",
         "text": "permits節があるとBaseはabstractでなければならない"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Childはpublicでなければならない"
+      },
+      {
+        "id": "D",
+        "text": "Childがfinal/sealed/non-sealedのいずれも宣言していないためコンパイルエラー"
       },
       {
         "id": "E",
@@ -405,14 +405,14 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "D"
     ],
     "explanation": "sealed classの直接サブクラスはfinal・sealed・non-sealedのいずれかで継承方針を明示する必要があります。",
     "choiceExplanations": {
       "A": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "B": "sealed classの直接サブクラスはfinal・sealed・non-sealedのいずれかで継承方針を明示する必要があります。",
+      "B": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
       "C": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
+      "D": "sealed classの直接サブクラスはfinal・sealed・non-sealedのいずれかで継承方針を明示する必要があります。",
       "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
     },
     "category": "28. sealed class",
@@ -432,35 +432,35 @@
     "choices": [
       {
         "id": "A",
-        "text": "P:1"
-      },
-      {
-        "id": "B",
         "text": "I:1"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "P:0"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "defaultとParent.idが競合してコンパイルエラー"
       },
       {
-        "id": "E",
+        "id": "D",
         "text": "ClassCastException"
+      },
+      {
+        "id": "E",
+        "text": "P:1"
       }
     ],
     "correctAnswers": [
-      "A"
+      "E"
     ],
     "explanation": "Parentの具体的id()がinterface defaultより優先されます。n.id()はP、Child.level()内のid()もPで長さ1なのでP:1です。",
     "choiceExplanations": {
-      "A": "Parentの具体的id()がinterface defaultより優先されます。n.id()はP、Child.level()内のid()もPで長さ1なのでP:1です。",
+      "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
+      "E": "Parentの具体的id()がinterface defaultより優先されます。n.id()はP、Child.level()内のid()もPで長さ1なのでP:1です。"
     },
     "category": "27. default / private interface method",
     "tags": [
@@ -479,11 +479,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "A"
+        "text": "AF"
       },
       {
         "id": "B",
-        "text": "AF"
+        "text": "A"
       },
       {
         "id": "C",
@@ -499,12 +499,12 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "A"
     ],
     "explanation": "return対象の参照はfinally前に確定します。その参照先オブジェクトへfinallyでFを追加する変更は見えますが、ローカルbのXへの再代入は戻り参照を変えません。",
     "choiceExplanations": {
-      "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "B": "return対象の参照はfinally前に確定します。その参照先オブジェクトへfinallyでFを追加する変更は見えますが、ローカルbのXへの再代入は戻り参照を変えません。",
+      "A": "return対象の参照はfinally前に確定します。その参照先オブジェクトへfinallyでFを追加する変更は見えますが、ローカルbのXへの再代入は戻り参照を変えません。",
+      "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
@@ -526,11 +526,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "+A+B-A:E"
+        "text": "+A+B-B-A:E"
       },
       {
         "id": "B",
-        "text": "+A+B-B-A:E"
+        "text": "+A+B-A:E"
       },
       {
         "id": "C",
@@ -546,12 +546,12 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "B"
     ],
     "explanation": "Aの生成は成功しBのconstructorで例外が発生します。Bはresourceとして完成していないためcloseされず、既に生成済みのAだけがcloseされ、その後catchへ進みます。",
     "choiceExplanations": {
-      "A": "Aの生成は成功しBのconstructorで例外が発生します。Bはresourceとして完成していないためcloseされず、既に生成済みのAだけがcloseされ、その後catchへ進みます。",
-      "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "B": "Aの生成は成功しBのconstructorで例外が発生します。Bはresourceとして完成していないためcloseされず、既に生成済みのAだけがcloseされ、その後catchへ進みます。",
       "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
@@ -625,15 +625,15 @@
       },
       {
         "id": "B",
-        "text": "IllegalStateException"
-      },
-      {
-        "id": "C",
         "text": "RuntimeException"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "Exception"
+      },
+      {
+        "id": "D",
+        "text": "IllegalStateException"
       },
       {
         "id": "E",
@@ -641,14 +641,14 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "D"
     ],
     "explanation": "mode=2なのでIllegalStateExceptionが投げられ、multi-catchがその同じ例外オブジェクトを捕捉します。実体型名はIllegalStateExceptionです。",
     "choiceExplanations": {
       "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "B": "mode=2なのでIllegalStateExceptionが投げられ、multi-catchがその同じ例外オブジェクトを捕捉します。実体型名はIllegalStateExceptionです。",
+      "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "D": "mode=2なのでIllegalStateExceptionが投げられ、multi-catchがその同じ例外オブジェクトを捕捉します。実体型名はIllegalStateExceptionです。",
       "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
     },
     "category": "33. multi-catch",
@@ -715,11 +715,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "親がthrowsを宣言していないのでコンパイルエラー"
+        "text": "unchecked例外なのでoverride側で追加宣言でき、xと出力する"
       },
       {
         "id": "B",
-        "text": "unchecked例外なのでoverride側で追加宣言でき、xと出力する"
+        "text": "親がthrowsを宣言していないのでコンパイルエラー"
       },
       {
         "id": "C",
@@ -735,12 +735,12 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "A"
     ],
     "explanation": "IllegalStateExceptionはuncheckedなのでoverride時のchecked例外制約を受けません。RuntimeException catchで捕捉されxが出力されます。",
     "choiceExplanations": {
-      "A": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
-      "B": "IllegalStateExceptionはuncheckedなのでoverride時のchecked例外制約を受けません。RuntimeException catchで捕捉されxが出力されます。",
+      "A": "IllegalStateExceptionはuncheckedなのでoverride時のchecked例外制約を受けません。RuntimeException catchで捕捉されxが出力されます。",
+      "B": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
       "C": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
       "D": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。",
       "E": "誤り。Java 17の型・継承・例外・初期化規則を順に適用するとこの選択肢にはなりません。"
@@ -761,11 +761,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "TAF"
+        "text": "TFの後AssertionErrorが伝播する"
       },
       {
         "id": "B",
-        "text": "TFの後AssertionErrorが伝播する"
+        "text": "TAF"
       },
       {
         "id": "C",
@@ -781,12 +781,12 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "B"
     ],
     "explanation": "AssertionErrorはExceptionではありませんがThrowableのサブクラスなのでcatch(Throwable)では捕捉できます。T、メッセージA、finallyのFでTAFです。",
     "choiceExplanations": {
-      "A": "AssertionErrorはExceptionではありませんがThrowableのサブクラスなのでcatch(Throwable)では捕捉できます。T、メッセージA、finallyのFでTAFです。",
-      "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "B": "AssertionErrorはExceptionではありませんがThrowableのサブクラスなのでcatch(Throwable)では捕捉できます。T、メッセージA、finallyのFでTAFです。",
       "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
@@ -812,11 +812,11 @@
       },
       {
         "id": "B",
-        "text": "FileNotFoundExceptionがIOExceptionのサブクラスなので同じmulti-catchの代替型に並べられずコンパイルエラー"
+        "text": "より具体的なFileNotFoundExceptionが自動優先される"
       },
       {
         "id": "C",
-        "text": "より具体的なFileNotFoundExceptionが自動優先される"
+        "text": "FileNotFoundExceptionがIOExceptionのサブクラスなので同じmulti-catchの代替型に並べられずコンパイルエラー"
       },
       {
         "id": "D",
@@ -828,13 +828,13 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "C"
     ],
     "explanation": "multi-catchの代替型同士にサブタイプ関係があってはいけません。FileNotFoundExceptionはIOExceptionのサブクラスなのでこのcatch宣言はコンパイルエラーです。",
     "choiceExplanations": {
       "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "B": "multi-catchの代替型同士にサブタイプ関係があってはいけません。FileNotFoundExceptionはIOExceptionのサブクラスなのでこのcatch宣言はコンパイルエラーです。",
-      "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "C": "multi-catchの代替型同士にサブタイプ関係があってはいけません。FileNotFoundExceptionはIOExceptionのサブクラスなのでこのcatch宣言はコンパイルエラーです。",
       "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
     },
@@ -859,15 +859,15 @@
       },
       {
         "id": "B",
-        "text": "F"
-      },
-      {
-        "id": "C",
         "text": "10F"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "コンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "F"
       },
       {
         "id": "E",
@@ -875,14 +875,14 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "D"
     ],
     "explanation": "tryのreturn値が準備されても、finallyが正常終了せずIllegalStateExceptionを投げるとreturnは完了しません。main側で捕捉されメッセージFが出ます。",
     "choiceExplanations": {
       "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "B": "tryのreturn値が準備されても、finallyが正常終了せずIllegalStateExceptionを投げるとreturnは完了しません。main側で捕捉されメッセージFが出ます。",
+      "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
+      "D": "tryのreturn値が準備されても、finallyが正常終了せずIllegalStateExceptionを投げるとreturnは完了しません。main側で捕捉されメッセージFが出ます。",
       "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
     },
     "category": "30. try-catch",
@@ -906,31 +906,31 @@
       },
       {
         "id": "B",
-        "text": "rは条件付きでも再代入され得るためeffectively finalではなく、`try (r)`がコンパイルエラー"
-      },
-      {
-        "id": "C",
         "text": "AutoCloseable変数は必ずfinalと明記する必要がある"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "argsが空ならコンパイル時にも再代入が起きないので成功する"
       },
       {
-        "id": "E",
+        "id": "D",
         "text": "実行時にIllegalStateException"
+      },
+      {
+        "id": "E",
+        "text": "rは条件付きでも再代入され得るためeffectively finalではなく、`try (r)`がコンパイルエラー"
       }
     ],
     "correctAnswers": [
-      "B"
+      "E"
     ],
     "explanation": "effectively finalかどうかは実行時経路ではなくソース上の代入で判定されます。rには再代入文があるため既存変数resourceとして使えません。",
     "choiceExplanations": {
       "A": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "B": "effectively finalかどうかは実行時経路ではなくソース上の代入で判定されます。rには再代入文があるため既存変数resourceとして使えません。",
+      "B": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "C": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
       "D": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。",
-      "E": "誤り。コードの評価順序とJava 17の規則を追うとこの選択肢にはなりません。"
+      "E": "effectively finalかどうかは実行時経路ではなくソース上の代入で判定されます。rには再代入文があるため既存変数resourceとして使えません。"
     },
     "category": "31. try-with-resources",
     "tags": [
