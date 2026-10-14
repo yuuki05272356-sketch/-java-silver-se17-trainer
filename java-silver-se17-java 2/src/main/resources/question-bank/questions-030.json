@@ -752,47 +752,47 @@
   },
   {
     "id": "JS17-0577",
-    "question": "privateメソッドと同名メソッドを持つ次のコードの出力として正しいものを1つ選びなさい.",
-    "code": "class Parent {\n    private String id() {\n        return \"P\";\n    }\n    String call() {\n        return id();\n    }\n}\nclass Child extends Parent {\n    String id() {\n        return \"C\";\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        System.out.print(p.call());\n    }\n}",
+    "question": "アクセス修飾子と継承したメソッド呼び出しを組み合わせた次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "class Base {\n    private int secret = 4;\n    protected int baseValue() {\n        return secret;\n    }\n}\nclass Child extends Base {\n    private int secret = 7;\n    int total() {\n        return secret + baseValue();\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Child c = new Child();\n        System.out.print(c.total());\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "P"
+        "text": "7"
       },
       {
         "id": "B",
-        "text": "C"
+        "text": "11"
       },
       {
         "id": "C",
-        "text": "PC"
+        "text": "14"
       },
       {
         "id": "D",
-        "text": "コンパイルエラー"
+        "text": "ChildからBaseのprivateフィールドsecretが見えるため21"
       },
       {
         "id": "E",
-        "text": "ClassCastException"
+        "text": "コンパイルエラー"
       }
     ],
     "correctAnswers": [
-      "A"
+      "B"
     ],
-    "explanation": "Parent.id()はprivateなので継承・overrideされません。Parent.call()内のid()はParent自身のprivateメソッドでPです。",
+    "explanation": "Childの`secret`はChild自身の7です。BaseのprivateフィールドへChildから直接は触れませんが、継承したprotectedメソッド`baseValue()`はBase内部でprivate secret=4を読めます。合計11です。",
     "choiceExplanations": {
-      "A": "Parent.id()はprivateなので継承・overrideされません。Parent.call()内のid()はParent自身のprivateメソッドでPです。",
-      "B": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
-      "C": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
-      "D": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。",
-      "E": "誤り。コードの型・スコープ・実行順序とJava 17の規則を順に確認するとこの選択肢にはなりません。"
+      "A": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "B": "Childの`secret`はChild自身の7です。BaseのprivateフィールドへChildから直接は触れませんが、継承したprotectedメソッド`baseValue()`はBase内部でprivate secret=4を読めます。合計11です。",
+      "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
     },
     "category": "18. アクセス修飾子",
     "tags": [
-      "private",
-      "override",
+      "private-field",
+      "protected-method",
       "inheritance",
-      "dispatch"
+      "encapsulation"
     ],
     "difficulty": 5,
     "multipleChoice": false
