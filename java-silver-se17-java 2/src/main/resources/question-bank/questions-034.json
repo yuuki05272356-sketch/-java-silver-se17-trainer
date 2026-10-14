@@ -1,0 +1,474 @@
+[
+  {
+    "id": "JS17-0641",
+    "question": "`Runner.java`というファイルに次のコードを保存し、`javac Runner.java`を実行した。結果として正しいものを1つ選びなさい.",
+    "code": "class Helper {\n    static void run() {\n        System.out.print(\"H\");\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Helper.run();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "コンパイル成功しHと出力できる"
+      },
+      {
+        "id": "B",
+        "text": "public class Mainの名前とファイル名Runner.javaが一致しないためコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "Helperがpublicでないためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "Main.javaとHelper.javaの2ファイルが必須"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルは成功するがjava Runnerでのみ起動できる"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "publicなトップレベルクラスMainを宣言するソースファイル名はMain.javaでなければならないため、Runner.javaではjavacエラーです。",
+    "choiceExplanations": {
+      "A": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "B": "publicなトップレベルクラスMainを宣言するソースファイル名はMain.javaでなければならないため、Runner.javaではjavacエラーです。",
+      "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "javac",
+      "public-class",
+      "file-name"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0642",
+    "question": "`src/app/Main.java`として保存した次のコードを`javac -d out src/app/Main.java`でコンパイルした。正しい実行コマンドを1つ選びなさい.",
+    "code": "package app;\n\npublic class Main {\n    public static void main(String[] args) {\n        String value = args.length == 0 ? \"none\" : args[0];\n        System.out.print(value);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "`java Main X`"
+      },
+      {
+        "id": "B",
+        "text": "`java out/app/Main.class X`"
+      },
+      {
+        "id": "C",
+        "text": "`java -cp out app.Main X`"
+      },
+      {
+        "id": "D",
+        "text": "`java -cp app out.Main X`"
+      },
+      {
+        "id": "E",
+        "text": "`javac -cp out app.Main X`"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "`-d out`によりout/app/Main.classが生成されるため、クラスパスのルートoutと完全修飾名app.Mainを使います。",
+    "choiceExplanations": {
+      "A": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "C": "`-d out`によりout/app/Main.classが生成されるため、クラスパスのルートoutと完全修飾名app.Mainを使います。",
+      "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "classpath",
+      "package",
+      "javac",
+      "java"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0643",
+    "question": "次のコードは`javac Main.java`には成功する。`java Main`を実行した場合として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    public static void main(Object[] args) {\n        System.out.print(\"O\");\n    }\n\n    public static int main(String[] args) {\n        System.out.print(\"S\");\n        return 0;\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "O"
+      },
+      {
+        "id": "B",
+        "text": "S"
+      },
+      {
+        "id": "C",
+        "text": "OS"
+      },
+      {
+        "id": "D",
+        "text": "起動用の`public static void main(String[]/String...)`がないためjavaランチャーがmainを見つけられない"
+      },
+      {
+        "id": "E",
+        "text": "javac時にmainのoverloadは禁止されるためコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "両方とも通常メソッドとしては有効ですが、ランチャーが要求する`public static void main(String[] args)`またはString...版がありません。",
+    "choiceExplanations": {
+      "A": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "D": "両方とも通常メソッドとしては有効ですが、ランチャーが要求する`public static void main(String[] args)`またはString...版がありません。",
+      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "main",
+      "launcher",
+      "overload",
+      "return-type"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0644",
+    "question": "`java Main A`と1個だけ引数を渡して実行した場合、何が起きるか。正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static String pick(String[] args) {\n        try {\n            return args[1];\n        } finally {\n            System.out.print(\"F:\");\n        }\n    }\n\n    public static void main(String[] args) {\n        System.out.print(pick(args));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "F:A"
+      },
+      {
+        "id": "B",
+        "text": "F:の後にArrayIndexOutOfBoundsExceptionが伝播する"
+      },
+      {
+        "id": "C",
+        "text": "A:F"
+      },
+      {
+        "id": "D",
+        "text": "null"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "args[1]でArrayIndexOutOfBoundsExceptionですが、メソッドを抜ける前にfinallyが実行されF:が出力され、その後例外が伝播します。",
+    "choiceExplanations": {
+      "A": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "B": "args[1]でArrayIndexOutOfBoundsExceptionですが、メソッドを抜ける前にfinallyが実行されF:が出力され、その後例外が伝播します。",
+      "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "command-line-args",
+      "ArrayIndexOutOfBoundsException",
+      "finally"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0645",
+    "question": "クラス初期化がmainより先に起こることを確認する次の出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static int value = init();\n\n    static int init() {\n        System.out.print(\"S\");\n        return 3;\n    }\n\n    public static void main(String[] args) {\n        System.out.print(\"M\" + value);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "SM3"
+      },
+      {
+        "id": "B",
+        "text": "MS3"
+      },
+      {
+        "id": "C",
+        "text": "M3S"
+      },
+      {
+        "id": "D",
+        "text": "3SM"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "Mainはmain呼び出し前にクラス初期化され、staticフィールド初期化でS、その後mainでM3が出るためSM3です。",
+    "choiceExplanations": {
+      "A": "Mainはmain呼び出し前にクラス初期化され、staticフィールド初期化でS、その後mainでM3が出るためSM3です。",
+      "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "class-initialization",
+      "static",
+      "main",
+      "execution-order"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0646",
+    "question": "コマンドライン引数配列を書き換える次のコードを`java Main a b`で実行した結果として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    static void upper(String[] data) {\n        for (int i = 0; i < data.length; i++) {\n            data[i] = data[i].toUpperCase();\n        }\n    }\n\n    public static void main(String[] args) {\n        String[] alias = args;\n        upper(alias);\n        System.out.print(args[0] + \":\" + alias[1] + \":\" + (args == alias));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A:B:true"
+      },
+      {
+        "id": "B",
+        "text": "a:b:true"
+      },
+      {
+        "id": "C",
+        "text": "A:B:false"
+      },
+      {
+        "id": "D",
+        "text": "a:B:true"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "argsとaliasは同じString[]を参照します。upperが要素を変更するためA:Bとなり、参照も同一なのでtrueです。",
+    "choiceExplanations": {
+      "A": "argsとaliasは同じString[]を参照します。upperが要素を変更するためA:Bとなり、参照も同一なのでtrueです。",
+      "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "5. 配列・多次元配列",
+    "tags": [
+      "main-args",
+      "array",
+      "alias",
+      "mutation"
+    ],
+    "difficulty": 4,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0647",
+    "question": "record・interface・switch式を組み合わせた次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "interface Level {\n    int score();\n    default String label() {\n        return score() >= 60 ? \"PASS\" : \"FAIL\";\n    }\n}\n\nrecord Result(int score) implements Level {\n    String grade() {\n        return switch (score / 10) {\n            case 10, 9 -> \"A\";\n            case 8 -> \"B\";\n            default -> \"C\";\n        };\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Level x = new Result(85);\n        Result r = (Result) x;\n        System.out.print(x.label() + \":\" + r.grade());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "PASS:B"
+      },
+      {
+        "id": "B",
+        "text": "PASS:A"
+      },
+      {
+        "id": "C",
+        "text": "FAIL:B"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "ClassCastException"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "recordのscore()アクセサがLevel.score()を満たします。85はPASS、score/10=8なのでgradeはBです。",
+    "choiceExplanations": {
+      "A": "recordのscore()アクセサがLevel.score()を満たします。85はPASS、score/10=8なのでgradeはBです。",
+      "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "20. record",
+    "tags": [
+      "record",
+      "interface",
+      "default-method",
+      "switch-expression",
+      "cast"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0648",
+    "question": "override・checked exception・try/catchを組み合わせた次のコードについて正しいものを2つ選びなさい.",
+    "code": "class ReadException extends Exception { }\n\nclass Base {\n    String read() throws ReadException {\n        throw new ReadException();\n    }\n}\n\nclass Child extends Base {\n    @Override\n    String read() {\n        return \"OK\";\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Base x = new Child();\n        try {\n            System.out.print(x.read());\n        } catch (ReadException e) {\n            System.out.print(\"ERR\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Child.readはthrows ReadExceptionを省略できる"
+      },
+      {
+        "id": "B",
+        "text": "参照型Baseのread宣言にchecked例外があるためmain側のtry/catchは必要"
+      },
+      {
+        "id": "C",
+        "text": "実体Childのreadが例外を投げないのでコンパイル時にもcatchは不要と判断される"
+      },
+      {
+        "id": "D",
+        "text": "出力はERR"
+      },
+      {
+        "id": "E",
+        "text": "出力はOK"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "override側はchecked例外を減らせますが、呼び出し式x.read()のコンパイル時宣言はBase.read()なので呼び出し側ではReadExceptionの処理が必要です。実行時はChild版でOKです。",
+    "choiceExplanations": {
+      "A": "override側はchecked例外を減らせますが、呼び出し式x.read()のコンパイル時宣言はBase.read()なので呼び出し側ではReadExceptionの処理が必要です。実行時はChild版でOKです。",
+      "B": "override側はchecked例外を減らせますが、呼び出し式x.read()のコンパイル時宣言はBase.read()なので呼び出し側ではReadExceptionの処理が必要です。実行時はChild版でOKです。",
+      "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "32. カスタム例外",
+    "tags": [
+      "checked-exception",
+      "override",
+      "reference-type",
+      "try-catch"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0649",
+    "question": "配列・overload・実行時型を組み合わせた次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "class Pick {\n    static String p(Object x) { return \"O\"; }\n    static String p(Object[] x) { return \"OA\"; }\n    static String p(String[] x) { return \"SA\"; }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Object x = new String[] {\"A\"};\n        Object[] y = (Object[]) x;\n        String[] z = (String[]) y;\n\n        System.out.print(Pick.p(x) + \":\");\n        System.out.print(Pick.p(y) + \":\");\n        System.out.print(Pick.p(z));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "O:OA:SA"
+      },
+      {
+        "id": "B",
+        "text": "SA:SA:SA"
+      },
+      {
+        "id": "C",
+        "text": "O:O:SA"
+      },
+      {
+        "id": "D",
+        "text": "OA:OA:SA"
+      },
+      {
+        "id": "E",
+        "text": "ClassCastException"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "overloadは引数式のコンパイル時型で決まり、xはObject、yはObject[]、zはString[]なのでO:OA:SAです。",
+    "choiceExplanations": {
+      "A": "overloadは引数式のコンパイル時型で決まり、xはObject、yはObject[]、zはString[]なのでO:OA:SAです。",
+      "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "array",
+      "overload",
+      "compile-time-type",
+      "cast"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0650",
+    "question": "複数の論点を組み合わせた次のコードの実行結果として正しいものを1つ選びなさい.",
+    "code": "interface Named {\n    default String name() { return \"N\"; }\n}\n\nclass Base {\n    static int count = 0;\n    final int id;\n\n    Base() {\n        id = ++count;\n    }\n\n    String name() { return \"B\" + id; }\n}\n\nclass Child extends Base implements Named {\n    @Override\n    public String name() {\n        return super.name() + \"C\";\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Base a = new Child();\n        Base b = new Child();\n\n        Object x = b;\n        if (x instanceof Child c && c.id == 2) {\n            System.out.print(a.name() + \":\" + c.name() + \":\" + Base.count);\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "B1C:B2C:2"
+      },
+      {
+        "id": "B",
+        "text": "N:N:2"
+      },
+      {
+        "id": "C",
+        "text": "B1:B2:2"
+      },
+      {
+        "id": "D",
+        "text": "B1C:B2C:1"
+      },
+      {
+        "id": "E",
+        "text": "defaultメソッドとBase.nameが競合してコンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "Baseの具体的name()はinterface defaultより優先され、Childがoverride。生成順にidは1,2、pattern条件成立でB1C:B2C:2です。",
+    "choiceExplanations": {
+      "A": "Baseの具体的name()はinterface defaultより優先され、Childがoverride。生成順にidは1,2、pattern条件成立でB1C:B2C:2です。",
+      "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "interface",
+      "class-method-priority",
+      "constructor",
+      "static",
+      "pattern-matching",
+      "override"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  }
+]
