@@ -6,11 +6,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "`javac Launch.java`は失敗する。mainを持つクラスはpublic必須"
+        "text": "`javac Launch.java`は成功し、`java Launch`でOKと出力できる"
       },
       {
         "id": "B",
-        "text": "`javac Launch.java`は成功し、`java Launch`でOKと出力できる"
+        "text": "`javac Launch.java`は失敗する。mainを持つクラスはpublic必須"
       },
       {
         "id": "C",
@@ -26,12 +26,12 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "A"
     ],
     "explanation": "トップレベルクラス自体はpublicでなくても構いません。Launch.javaにpackage-privateなLaunchとpublic static void mainがあればコンパイルでき、同じpackage/classpathから`java Launch`で起動できます。",
     "choiceExplanations": {
-      "A": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
-      "B": "トップレベルクラス自体はpublicでなくても構いません。Launch.javaにpackage-privateなLaunchとpublic static void mainがあればコンパイルでき、同じpackage/classpathから`java Launch`で起動できます。",
+      "A": "トップレベルクラス自体はpublicでなくても構いません。Launch.javaにpackage-privateなLaunchとpublic static void mainがあればコンパイルでき、同じpackage/classpathから`java Launch`で起動できます。",
+      "B": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
       "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
       "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
       "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
@@ -57,11 +57,11 @@
       },
       {
         "id": "B",
-        "text": "`java out/app/Main.class X`"
+        "text": "`java -cp out app.Main X`"
       },
       {
         "id": "C",
-        "text": "`java -cp out app.Main X`"
+        "text": "`java out/app/Main.class X`"
       },
       {
         "id": "D",
@@ -73,13 +73,13 @@
       }
     ],
     "correctAnswers": [
-      "C"
+      "B"
     ],
     "explanation": "`-d out`によりout/app/Main.classが生成されるため、クラスパスのルートoutと完全修飾名app.Mainを使います。",
     "choiceExplanations": {
       "A": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
-      "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
-      "C": "`-d out`によりout/app/Main.classが生成されるため、クラスパスのルートoutと完全修飾名app.Mainを使います。",
+      "B": "`-d out`によりout/app/Main.classが生成されるため、クラスパスのルートoutと完全修飾名app.Mainを使います。",
+      "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
       "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
       "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
     },
@@ -100,15 +100,15 @@
     "choices": [
       {
         "id": "A",
-        "text": "S2:I2"
-      },
-      {
-        "id": "B",
         "text": "I2"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "N"
+      },
+      {
+        "id": "C",
+        "text": "S2:I2"
       },
       {
         "id": "D",
@@ -120,13 +120,13 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "C"
     ],
     "explanation": "Javaランチャーは`public static void main(String[])`をエントリポイントとして選びます。そこでargs.length=2を出し、通常のoverload呼び出し`main(2)`でI2が続きます。",
     "choiceExplanations": {
-      "A": "Javaランチャーは`public static void main(String[])`をエントリポイントとして選びます。そこでargs.length=2を出し、通常のoverload呼び出し`main(2)`でI2が続きます。",
+      "A": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
       "B": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
-      "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
+      "C": "Javaランチャーは`public static void main(String[])`をエントリポイントとして選びます。そこでargs.length=2を出し、通常のoverload呼び出し`main(2)`でI2が続きます。",
       "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
       "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
     },
@@ -151,15 +151,15 @@
       },
       {
         "id": "B",
-        "text": "F:の後にArrayIndexOutOfBoundsExceptionが伝播する"
-      },
-      {
-        "id": "C",
         "text": "A:F"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "null"
+      },
+      {
+        "id": "D",
+        "text": "F:の後にArrayIndexOutOfBoundsExceptionが伝播する"
       },
       {
         "id": "E",
@@ -167,14 +167,14 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "D"
     ],
     "explanation": "args[1]でArrayIndexOutOfBoundsExceptionですが、メソッドを抜ける前にfinallyが実行されF:が出力され、その後例外が伝播します。",
     "choiceExplanations": {
       "A": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
-      "B": "args[1]でArrayIndexOutOfBoundsExceptionですが、メソッドを抜ける前にfinallyが実行されF:が出力され、その後例外が伝播します。",
+      "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
       "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
-      "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "D": "args[1]でArrayIndexOutOfBoundsExceptionですが、メソッドを抜ける前にfinallyが実行されF:が出力され、その後例外が伝播します。",
       "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
     },
     "category": "35. mainメソッド・コンパイル・実行",
@@ -193,35 +193,35 @@
     "choices": [
       {
         "id": "A",
-        "text": "SM3"
-      },
-      {
-        "id": "B",
         "text": "MS3"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "M3S"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "3SM"
       },
       {
-        "id": "E",
+        "id": "D",
         "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "SM3"
       }
     ],
     "correctAnswers": [
-      "A"
+      "E"
     ],
     "explanation": "Mainはmain呼び出し前にクラス初期化され、staticフィールド初期化でS、その後mainでM3が出るためSM3です。",
     "choiceExplanations": {
-      "A": "Mainはmain呼び出し前にクラス初期化され、staticフィールド初期化でS、その後mainでM3が出るためSM3です。",
+      "A": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
       "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
       "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
       "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
-      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+      "E": "Mainはmain呼び出し前にクラス初期化され、staticフィールド初期化でS、その後mainでM3が出るためSM3です。"
     },
     "category": "35. mainメソッド・コンパイル・実行",
     "tags": [
@@ -287,11 +287,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "PASS:B"
+        "text": "PASS:A"
       },
       {
         "id": "B",
-        "text": "PASS:A"
+        "text": "PASS:B"
       },
       {
         "id": "C",
@@ -307,12 +307,12 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "B"
     ],
     "explanation": "recordのscore()アクセサがLevel.score()を満たします。85はPASS、score/10=8なのでgradeはBです。",
     "choiceExplanations": {
-      "A": "recordのscore()アクセサがLevel.score()を満たします。85はPASS、score/10=8なのでgradeはBです。",
-      "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "A": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "B": "recordのscore()アクセサがLevel.score()を満たします。85はPASS、score/10=8なのでgradeはBです。",
       "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
       "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
       "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
@@ -383,19 +383,19 @@
     "choices": [
       {
         "id": "A",
-        "text": "O:OA:SA"
-      },
-      {
-        "id": "B",
         "text": "SA:SA:SA"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "O:O:SA"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "OA:OA:SA"
+      },
+      {
+        "id": "D",
+        "text": "O:OA:SA"
       },
       {
         "id": "E",
@@ -403,14 +403,14 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "D"
     ],
     "explanation": "overloadは引数式のコンパイル時型で決まり、xはObject、yはObject[]、zはString[]なのでO:OA:SAです。",
     "choiceExplanations": {
-      "A": "overloadは引数式のコンパイル時型で決まり、xはObject、yはObject[]、zはString[]なのでO:OA:SAです。",
+      "A": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
       "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
       "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
-      "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
+      "D": "overloadは引数式のコンパイル時型で決まり、xはObject、yはObject[]、zはString[]なのでO:OA:SAです。",
       "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
     },
     "category": "16. オーバーロード",
@@ -430,35 +430,35 @@
     "choices": [
       {
         "id": "A",
-        "text": "B1C:B2C:2"
-      },
-      {
-        "id": "B",
         "text": "N:N:2"
       },
       {
-        "id": "C",
+        "id": "B",
         "text": "B1:B2:2"
       },
       {
-        "id": "D",
+        "id": "C",
         "text": "B1C:B2C:1"
       },
       {
-        "id": "E",
+        "id": "D",
         "text": "defaultメソッドとBase.nameが競合してコンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "B1C:B2C:2"
       }
     ],
     "correctAnswers": [
-      "A"
+      "E"
     ],
     "explanation": "Baseの具体的name()はinterface defaultより優先され、Childがoverride。生成順にidは1,2、pattern条件成立でB1C:B2C:2です。",
     "choiceExplanations": {
-      "A": "Baseの具体的name()はinterface defaultより優先され、Childがoverride。生成順にidは1,2、pattern条件成立でB1C:B2C:2です。",
+      "A": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
       "B": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
       "C": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
       "D": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。",
-      "E": "誤り。コマンドライン、型、例外、動的ディスパッチを順に確認するとこの選択肢にはなりません。"
+      "E": "Baseの具体的name()はinterface defaultより優先され、Childがoverride。生成順にidは1,2、pattern条件成立でB1C:B2C:2です。"
     },
     "category": "19. instanceof / パターンマッチング",
     "tags": [
