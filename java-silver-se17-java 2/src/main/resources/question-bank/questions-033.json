@@ -515,47 +515,48 @@
   },
   {
     "id": "JS17-0632",
-    "question": "否定したinstanceofパターンと`||`のflow scopingについて、正しいものを1つ選びなさい.",
-    "code": "public class Main {\n    static String check(Object value) {\n        if (!(value instanceof String s) || s.isEmpty()) {\n            return \"N\";\n        }\n        return s.substring(0, 1);\n    }\n\n    public static void main(String[] args) {\n        System.out.print(check(\"Java\") + \":\");\n        System.out.print(check(\"\") + \":\");\n        System.out.print(check(10));\n    }\n}",
+    "question": "配列・拡張for・instanceofパターンを組み合わせた次のコードの出力として正しいものを1つ選びなさい.",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        Object[] values = {\n            \"A\",\n            null,\n            new StringBuilder(\"BC\"),\n            Integer.valueOf(3)\n        };\n\n        for (Object value : values) {\n            if (value instanceof CharSequence text) {\n                System.out.print(text.length());\n            } else {\n                System.out.print(\"X\");\n            }\n        }\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "コンパイルエラー。`||`右辺でsは使えない"
+        "text": "1X2X"
       },
       {
         "id": "B",
-        "text": "J:N:N"
+        "text": "1023"
       },
       {
         "id": "C",
-        "text": "J::N"
+        "text": "1X23"
       },
       {
         "id": "D",
-        "text": "N:N:N"
+        "text": "NullPointerException"
       },
       {
         "id": "E",
-        "text": "ClassCastException"
+        "text": "StringBuilderはCharSequenceではないためコンパイルエラー"
       }
     ],
     "correctAnswers": [
-      "B"
+      "A"
     ],
-    "explanation": "`||`右辺が評価されるのは左辺`!(value instanceof String s)`がfalse、つまりStringパターンが成立した場合だけなので`s`は右辺で有効です。結果はJ:N:Nです。",
+    "explanation": "StringとStringBuilderはいずれもCharSequenceなので長さ1と2を出します。nullのinstanceofはfalse、IntegerもfalseなのでXとなり1X2Xです。",
     "choiceExplanations": {
-      "A": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
-      "B": "`||`右辺が評価されるのは左辺`!(value instanceof String s)`がfalse、つまりStringパターンが成立した場合だけなので`s`は右辺で有効です。結果はJ:N:Nです。",
-      "C": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
-      "D": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。",
-      "E": "誤り。Java 17の型・初期化・スコープ・実行規則を順に適用するとこの選択肢にはなりません。"
+      "A": "StringとStringBuilderはいずれもCharSequenceなので長さ1と2を出します。nullのinstanceofはfalse、IntegerもfalseなのでXとなり1X2Xです。",
+      "B": "誤り。Java 17の型・例外・pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "C": "誤り。Java 17の型・例外・pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "D": "誤り。Java 17の型・例外・pattern matchingの規則を順に追うとこの選択肢にはなりません。",
+      "E": "誤り。Java 17の型・例外・pattern matchingの規則を順に追うとこの選択肢にはなりません。"
     },
     "category": "19. instanceof / パターンマッチング",
     "tags": [
-      "negated-pattern",
-      "or",
-      "flow-scoping",
-      "short-circuit"
+      "pattern-matching",
+      "CharSequence",
+      "array",
+      "null",
+      "enhanced-for"
     ],
     "difficulty": 5,
     "multipleChoice": false
