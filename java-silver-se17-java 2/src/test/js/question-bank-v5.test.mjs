@@ -13,36 +13,38 @@ const questions = manifest.files.flatMap(file =>
   JSON.parse(fs.readFileSync(path.join(bankDir, file), 'utf8'))
 );
 
-test('V10 question bank contains 550 unique questions and supports full mock exam default', () => {
-  assert.equal(questions.length, 550);
-  assert.equal(new Set(questions.map(q => q.id)).size, 550);
+test('V12 question bank contains 650 unique questions and supports full mock exam default', () => {
+  assert.equal(questions.length, 650);
+  assert.equal(new Set(questions.map(q => q.id)).size, 650);
   assert.equal(config.questionCount, 60);
   assert.deepEqual(
     manifest.files,
-    Array.from({ length: 28 }, (_, i) => `questions-${String(i + 1).padStart(3, '0')}.json`)
+    Array.from({ length: 33 }, (_, i) => `questions-${String(i + 1).padStart(3, '0')}.json`)
   );
 });
 
-test('new V10 questions occupy JS17-0501 through JS17-0550', () => {
-  const newIds = questions.slice(500).map(q => q.id);
-  const expected = Array.from({ length: 50 }, (_, i) => `JS17-${String(i + 501).padStart(4, '0')}`);
+test('new V12 questions occupy JS17-0551 through JS17-0650', () => {
+  const newIds = questions.slice(550).map(q => q.id);
+  const expected = Array.from({ length: 100 }, (_, i) => `JS17-${String(i + 551).padStart(4, '0')}`);
   assert.deepEqual(newIds, expected);
 });
 
-test('V10 additions are code-heavy and include multiple-selection practice', () => {
-  const added = questions.slice(500);
-  assert.equal(added.length, 50);
-  assert.equal(added.filter(q => q.code && q.code.trim()).length, 50);
-  assert.ok(added.filter(q => q.code.split('\n').length >= 15).length >= 30);
-  assert.ok(added.filter(q => q.multipleChoice).length >= 10);
-  assert.ok(added.filter(q => q.difficulty >= 4).length >= 45);
+test('V12 additions are varied, code-heavy, and exam-level', () => {
+  const added = questions.slice(550);
+  assert.equal(added.length, 100);
+  assert.equal(added.filter(q => q.code && q.code.trim()).length, 100);
+  assert.ok(added.filter(q => q.code.split('\n').length >= 15).length >= 70);
+  assert.ok(added.filter(q => q.multipleChoice).length >= 20);
+  assert.ok(added.filter(q => q.difficulty >= 4).length >= 90);
+  assert.ok(new Set(added.map(q => q.category)).size >= 20);
+  assert.ok(new Set(added.flatMap(q => q.tags)).size >= 35);
 });
 
 test('all questions have complete review data and no exact duplicate prompt/code pair', () => {
   const keys = new Set();
   for (const q of questions) {
     assert.ok(q.question && q.question.trim(), `${q.id}: question`);
-    assert.ok(Array.isArray(q.choices) && q.choices.length >= 2, `${q.id}: choices`);
+    assert.ok(Array.isArray(q.choices) && q.choices.length >= 4, `${q.id}: choices`);
     assert.ok(Array.isArray(q.correctAnswers) && q.correctAnswers.length >= 1, `${q.id}: correctAnswers`);
     assert.ok(q.explanation && q.explanation.trim(), `${q.id}: explanation`);
     assert.ok(q.choiceExplanations && typeof q.choiceExplanations === 'object', `${q.id}: choiceExplanations`);
