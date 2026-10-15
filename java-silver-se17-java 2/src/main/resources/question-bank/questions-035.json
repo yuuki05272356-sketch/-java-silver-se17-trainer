@@ -497,7 +497,8 @@
         "text": "AB"
       }
     ],
-    "correctAnswers": [      "A"
+    "correctAnswers": [
+      "A"
     ],
     "explanation": "2つのdefault衝突に対し、abstract class Xがm()を抽象メソッドとして明示的に再宣言して衝突を解消しています。Yが実装するので実行結果はYです。",
     "choiceExplanations": {
@@ -613,7 +614,7 @@
   },
   {
     "id": "JS17-0664",
-    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "question": "次のコードについて正しいものを3つ選びなさい。",
     "code": "sealed class Shape permits Circle, OpenShape { }\nfinal class Circle extends Shape { }\nnon-sealed class OpenShape extends Shape { }\nclass Child extends OpenShape { }\npublic class Main {\n    public static void main(String[] args) {\n        Shape s = new Child();\n        System.out.print(s instanceof OpenShape);\n    }\n}",
     "choices": [
       {
