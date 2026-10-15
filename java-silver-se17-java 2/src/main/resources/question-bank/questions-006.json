@@ -687,48 +687,6 @@
     "original": true
   },
   {
-    "id": "JS17-0116",
-    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
-    "code": "class A {\n    static String who() {\n        return \"A\";\n    }\n    String name() {\n        return \"a\";\n    }\n}\nclass B extends A {\n    static String who() {\n        return \"B\";\n    }\n    @Override String name() {\n        return \"b\";\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A x = new B();\n        System.out.println(x.who() + \":\" + x.name());\n    }\n}",
-    "choices": [
-      {
-        "id": "A",
-        "text": "A:a"
-      },
-      {
-        "id": "B",
-        "text": "A:b"
-      },
-      {
-        "id": "C",
-        "text": "B:a"
-      },
-      {
-        "id": "D",
-        "text": "B:b"
-      }
-    ],
-    "correctAnswers": [
-      "B"
-    ],
-    "explanation": "staticメソッドは参照型A基準で隠蔽解決されA.who()、インスタンスメソッドは実体Bのoverrideが呼ばれます。",
-    "choiceExplanations": {
-      "A": "誤り。staticメソッドは参照型A基準で隠蔽解決されA.who()、インスタンスメソッドは実体Bのoverrideが呼ばれます。",
-      "B": "正しい。staticメソッドは参照型A基準で隠蔽解決されA.who()、インスタンスメソッドは実体Bのoverrideが呼ばれます。",
-      "C": "誤り。staticメソッドは参照型A基準で隠蔽解決されA.who()、インスタンスメソッドは実体Bのoverrideが呼ばれます。",
-      "D": "誤り。staticメソッドは参照型A基準で隠蔽解決されA.who()、インスタンスメソッドは実体Bのoverrideが呼ばれます。"
-    },
-    "category": "17. static",
-    "tags": [
-      "static-hiding",
-      "override",
-      "polymorphism"
-    ],
-    "difficulty": 4,
-    "multipleChoice": false,
-    "original": true
-  },
-  {
     "id": "JS17-0117",
     "question": "次のコードについて正しいものを2つ選びなさい。",
     "code": "class C {\n    static int s = 1;\n    int i = 2;\n    static void m() {\n        System.out.println(s);\n        // line X\n    }\n    void n() {\n        System.out.println(s + i);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        C c = new C();\n        c.n();\n    }\n}",

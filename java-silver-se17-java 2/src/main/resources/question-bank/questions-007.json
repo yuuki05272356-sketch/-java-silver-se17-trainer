@@ -440,49 +440,6 @@
     "original": true
   },
   {
-    "id": "JS17-0131",
-    "question": "次のコードについて正しいものを1つ選びなさい。",
-    "code": "class R implements AutoCloseable {\n    public void close() {\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        R r = new R();\n        r = new R();\n        try (r) {\n            System.out.println(\"X\");\n        }\n    }\n}",
-    "choices": [
-      {
-        "id": "A",
-        "text": "X"
-      },
-      {
-        "id": "B",
-        "text": "rは実質的finalではないためコンパイルエラー"
-      },
-      {
-        "id": "C",
-        "text": "try(r)はJava 17では使えない"
-      },
-      {
-        "id": "D",
-        "text": "NullPointerException"
-      }
-    ],
-    "correctAnswers": [
-      "B"
-    ],
-    "explanation": "既存ローカル変数をtry-with-resourcesで使うにはfinalまたは実質的finalである必要があります。rは再代入されています。",
-    "choiceExplanations": {
-      "A": "誤り。既存ローカル変数をtry-with-resourcesで使うにはfinalまたは実質的finalである必要があります。rは再代入されています。",
-      "B": "正しい。既存ローカル変数をtry-with-resourcesで使うにはfinalまたは実質的finalである必要があります。rは再代入されています。",
-      "C": "誤り。既存ローカル変数をtry-with-resourcesで使うにはfinalまたは実質的finalである必要があります。rは再代入されています。",
-      "D": "誤り。既存ローカル変数をtry-with-resourcesで使うにはfinalまたは実質的finalである必要があります。rは再代入されています。"
-    },
-    "category": "31. try-with-resources",
-    "tags": [
-      "try-with-resources",
-      "effectively-final",
-      "resource-variable",
-      "compile-error"
-    ],
-    "difficulty": 5,
-    "multipleChoice": false,
-    "original": true
-  },
-  {
     "id": "JS17-0132",
     "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
     "code": "public class Main {\n    static void run(int x) {\n        try {\n            if (x == 0) throw new IllegalArgumentException();\n            System.out.print(\"A \");\n        }\n        catch (NullPointerException e) {\n            System.out.print(\"N \");\n        }\n        finally {\n            System.out.print(\"F \");\n        }\n        System.out.print(\"Z \");\n    }\n    public static void main(String[] args) {\n        run(0);\n    }\n}",

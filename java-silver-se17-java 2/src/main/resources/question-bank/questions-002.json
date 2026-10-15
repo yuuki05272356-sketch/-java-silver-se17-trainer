@@ -1,47 +1,5 @@
 [
   {
-    "id": "JS17-0021",
-    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
-    "code": "public class Main {\n    static String pick(long x) { return \"L\"; }\n    static String pick(Integer x) { return \"I\"; }\n\n    public static void main(String[] args) {\n        short s = 3;\n        System.out.println(pick(s));\n    }\n}",
-    "choices": [
-      {
-        "id": "A",
-        "text": "L"
-      },
-      {
-        "id": "B",
-        "text": "I"
-      },
-      {
-        "id": "C",
-        "text": "LI"
-      },
-      {
-        "id": "D",
-        "text": "コンパイルエラー"
-      }
-    ],
-    "correctAnswers": [
-      "A"
-    ],
-    "explanation": "short から long へのプリミティブ拡大変換だけで呼び出せる pick(long) が選択されます。short から Integer へは直接のボクシング変換はできません。",
-    "choiceExplanations": {
-      "A": "正しい。short は long に拡大変換できます。",
-      "B": "誤り。short のボクシング先は Short であり Integer ではありません。",
-      "C": "誤り。呼び出されるオーバーロードは1つだけです。",
-      "D": "誤り。pick(long) が適用可能なのでコンパイルできます。"
-    },
-    "category": "16. オーバーロード",
-    "tags": [
-      "overload",
-      "primitive-widening",
-      "boxing",
-      "method-resolution"
-    ],
-    "difficulty": 4,
-    "multipleChoice": false
-  },
-  {
     "id": "JS17-0022",
     "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
     "code": "class Parent {\n    String act(Object o) { return \"PO\"; }\n    String act(String s) { return \"PS\"; }\n}\nclass Child extends Parent {\n    @Override String act(Object o) { return \"CO\"; }\n    String act(StringBuilder b) { return \"CB\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Parent p = new Child();\n        System.out.println(p.act(new StringBuilder(\"x\")));\n    }\n}",
@@ -968,55 +926,6 @@
     "multipleChoice": false
   },
   {
-    "id": "JS17-0044",
-    "question": "Javaの例外階層について正しい説明を3つ選びなさい。",
-    "code": null,
-    "choices": [
-      {
-        "id": "A",
-        "text": "IOExceptionはchecked exceptionである"
-      },
-      {
-        "id": "B",
-        "text": "NullPointerExceptionはunchecked exceptionである"
-      },
-      {
-        "id": "C",
-        "text": "StackOverflowErrorはExceptionのサブクラスである"
-      },
-      {
-        "id": "D",
-        "text": "Errorは通常、catchまたはthrowsがコンパイル時に強制されない"
-      },
-      {
-        "id": "E",
-        "text": "RuntimeExceptionはchecked exceptionである"
-      }
-    ],
-    "correctAnswers": [
-      "A",
-      "B",
-      "D"
-    ],
-    "explanation": "IOExceptionは代表的なchecked exceptionです。NullPointerExceptionはRuntimeException系のunchecked exceptionです。Errorもcatch-or-declareの強制対象ではありません。StackOverflowErrorはError系でありExceptionのサブクラスではありません。",
-    "choiceExplanations": {
-      "A": "正しい。IOExceptionはchecked exceptionです。",
-      "B": "正しい。NullPointerExceptionはRuntimeExceptionのサブクラスです。",
-      "C": "誤り。StackOverflowErrorはErrorのサブクラスです。",
-      "D": "正しい。Error系はchecked exceptionではありません。",
-      "E": "誤り。RuntimeExceptionはunchecked exceptionです。"
-    },
-    "category": "29. 例外",
-    "tags": [
-      "checked-exception",
-      "unchecked-exception",
-      "Error",
-      "exception-hierarchy"
-    ],
-    "difficulty": 3,
-    "multipleChoice": true
-  },
-  {
     "id": "JS17-0045",
     "question": "次のコードについて正しいものを1つ選びなさい。",
     "code": "class R implements AutoCloseable {\n    public void close() { }\n}\npublic class Main {\n    public static void main(String[] args) {\n        R r = new R();\n        r = new R();\n        try (r) {\n            System.out.println(\"X\");\n        }\n    }\n}",
@@ -1055,90 +964,6 @@
       "AutoCloseable"
     ],
     "difficulty": 4,
-    "multipleChoice": false
-  },
-  {
-    "id": "JS17-0046",
-    "question": "プロジェクトルートに src/com/example/Main.java があり、先頭に package com.example; と書かれている。classes ディレクトリへクラスを出力し、その後実行する正しい組み合わせを1つ選びなさい。",
-    "code": "package com.example;\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"OK\");\n    }\n}",
-    "choices": [
-      {
-        "id": "A",
-        "text": "javac -d classes src/com/example/Main.java  の後に  java -cp classes com.example.Main"
-      },
-      {
-        "id": "B",
-        "text": "javac src/com/example/Main.java  の後に  java Main"
-      },
-      {
-        "id": "C",
-        "text": "javac -d classes src/com/example/Main.java  の後に  java -cp classes Main"
-      },
-      {
-        "id": "D",
-        "text": "java -d classes src/com/example/Main.java  の後に  javac com.example.Main"
-      }
-    ],
-    "correctAnswers": [
-      "A"
-    ],
-    "explanation": "javac -d でpackage構造に従った出力先を指定し、java実行時はclasspathのルートを-cpで指定して完全修飾クラス名 com.example.Main を使います。",
-    "choiceExplanations": {
-      "A": "正しい。コンパイル先と実行時のclasspath/FQNが整合しています。",
-      "B": "誤り。package付きクラスを単純名Mainだけで実行できません。",
-      "C": "誤り。実行時はcom.example.Mainという完全修飾名が必要です。",
-      "D": "誤り。javacとjavaの役割・オプションが逆です。"
-    },
-    "category": "35. mainメソッド・コンパイル・実行",
-    "tags": [
-      "javac",
-      "java",
-      "package",
-      "classpath",
-      "fully-qualified-name"
-    ],
-    "difficulty": 4,
-    "multipleChoice": false
-  },
-  {
-    "id": "JS17-0047",
-    "question": "classes/com/example/Main.class が存在するとき、通常のjavaランチャーでそのクラスを実行するコマンドとして正しいものを1つ選びなさい。",
-    "code": null,
-    "choices": [
-      {
-        "id": "A",
-        "text": "java -cp classes com.example.Main"
-      },
-      {
-        "id": "B",
-        "text": "java -cp classes com/example/Main.class"
-      },
-      {
-        "id": "C",
-        "text": "java classes/com/example/Main.class"
-      },
-      {
-        "id": "D",
-        "text": "java -cp classes Main.class"
-      }
-    ],
-    "correctAnswers": [
-      "A"
-    ],
-    "explanation": "javaランチャーには.classファイルのパスではなく、classpathのルートと完全修飾クラス名を渡します。",
-    "choiceExplanations": {
-      "A": "正しい。classesをclasspathルートにしFQNを指定します。",
-      "B": "誤り。通常のクラス実行ではスラッシュ付き.classパスをクラス名として渡しません。",
-      "C": "誤り。.classファイルのファイルパスを直接指定する形式ではありません。",
-      "D": "誤り。package名が欠け、さらに.classを付けています。"
-    },
-    "category": "35. mainメソッド・コンパイル・実行",
-    "tags": [
-      "java",
-      "classpath",
-      "fully-qualified-name"
-    ],
-    "difficulty": 3,
     "multipleChoice": false
   },
   {

@@ -751,55 +751,6 @@
     "original": true
   },
   {
-    "id": "JS17-0018",
-    "question": "ローカル変数のvarについて、コンパイルできる宣言を2つ選びなさい。各選択肢はそれぞれ独立しているものとする。",
-    "code": null,
-    "choices": [
-      {
-        "id": "A",
-        "text": "var a = 10;"
-      },
-      {
-        "id": "B",
-        "text": "var b;"
-      },
-      {
-        "id": "C",
-        "text": "var c = null;"
-      },
-      {
-        "id": "D",
-        "text": "var d = (String) null;"
-      },
-      {
-        "id": "E",
-        "text": "var[] e = new int[2];"
-      }
-    ],
-    "correctAnswers": [
-      "A",
-      "D"
-    ],
-    "explanation": "varはローカル変数で初期化子から型を推論できる場合に使用できる。Aはint、Dは明示キャストによりStringと推論できる。初期化子なし、nullだけ、var[]という型表記はいずれも不可。",
-    "choiceExplanations": {
-      "A": "正しい。10からintと推論される。",
-      "B": "誤り。varには宣言時の初期化子が必要。",
-      "C": "誤り。null単独から具体的な型を推論できない。",
-      "D": "正しい。(String)nullによりStringと推論できる。",
-      "E": "誤り。varは型名の一部としてvar[]のようには使用できない。"
-    },
-    "category": "3. var",
-    "tags": [
-      "var",
-      "type-inference",
-      "local-variable",
-      "null"
-    ],
-    "difficulty": 3,
-    "multipleChoice": true,
-    "original": true
-  },
-  {
     "id": "JS17-0019",
     "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
     "code": "public class Main {\n    public static void main(String[] args) {\n        int[] values = {1, 2, 3, 4};\n        int total = 0;\n\n        for (int n : values) {\n            if (n == 2) continue;\n            if (n == 4) break;\n            total += n;\n        }\n\n        System.out.println(total);\n    }\n}",
