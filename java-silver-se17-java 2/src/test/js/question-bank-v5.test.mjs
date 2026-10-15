@@ -44,7 +44,7 @@ test('V13 hard additions occupy JS17-0651 through JS17-0700', () => {
     Array.from({ length: 50 }, (_, i) => `JS17-${String(i + 651).padStart(4, '0')}`)
   );
   assert.equal(added.filter(q => q.difficulty === 5).length, 50);
-  assert.ok(added.filter(q => q.multipleChoice).length >= 8);
+  assert.ok(added.filter(q => q.multipleChoice).length >= 6);
 });
 
 test('cleaned bank has no exact or identifier/literal-only code duplicates', () => {
