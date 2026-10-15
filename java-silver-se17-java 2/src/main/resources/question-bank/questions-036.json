@@ -48,20 +48,20 @@
   },
   {
     "id": "JS17-0672",
-    "question": "次の呼び出しについて正しいものを1つ選びなさい。",
-    "code": "class Pick {\n    static void m(String x) { System.out.print(\"S\"); }\n    static void m(StringBuilder x) { System.out.print(\"B\"); }\n    static void m(Object x) { System.out.print(\"O\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Pick.m(null);\n    }\n}",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Pick {\n    static void m(Object x) { System.out.print(\"O\"); }\n    static void m(CharSequence x) { System.out.print(\"C\"); }\n    static void m(String x) { System.out.print(\"S\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Object x = null;\n        Pick.m((CharSequence) x);\n        Pick.m((String) x);\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "S"
+        "text": "CS"
       },
       {
         "id": "B",
-        "text": "B"
+        "text": "SS"
       },
       {
         "id": "C",
-        "text": "O"
+        "text": "OO"
       },
       {
         "id": "D",
@@ -69,26 +69,26 @@
       },
       {
         "id": "E",
-        "text": "実行時にSかB"
+        "text": "NullPointerException"
       }
     ],
     "correctAnswers": [
-      "D"
+      "A"
     ],
-    "explanation": "StringとStringBuilderはいずれもObjectより具体的で、互いに継承関係がありません。nullに対して最も具体的な候補を一意に決められないため曖昧です。",
+    "explanation": "overload解決は引数式のコンパイル時型で決まります。最初はCharSequenceへのcastによりm(CharSequence)、次はStringへのcastにより最も具体的なm(String)が選ばれます。nullであること自体は呼び出しを妨げません。",
     "choiceExplanations": {
-      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "D": "正しい。 StringとStringBuilderはいずれもObjectより具体的で、互いに継承関係がありません。nullに対して最も具体的な候補を一意に決められないため曖昧です。",
-      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+      "A": "正しい。最初はCharSequence、次はStringのoverloadが選ばれます。",
+      "B": "誤り。最初の引数式の型はCharSequenceなのでm(String)は適用できません。",
+      "C": "誤り。Objectより具体的な適用可能overloadがあります。",
+      "D": "誤り。castにより各呼び出しの候補は一意に決まります。",
+      "E": "誤り。どちらのメソッドも引数を参照解除していないためnullを渡しても例外は起きません。"
     },
     "category": "16. オーバーロード",
     "tags": [
       "overload",
+      "cast",
       "null",
-      "ambiguity",
-      "most-specific"
+      "compile-time-type"
     ],
     "difficulty": 5,
     "multipleChoice": false
@@ -497,7 +497,8 @@
     ],
     "correctAnswers": [
       "D"
-    ],    "explanation": "先にRuntimeExceptionをcatchすると、そのサブクラスIllegalArgumentException用の後続catchは到達不能になりコンパイルエラーです。",
+    ],
+    "explanation": "先にRuntimeExceptionをcatchすると、そのサブクラスIllegalArgumentException用の後続catchは到達不能になりコンパイルエラーです。",
     "choiceExplanations": {
       "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
