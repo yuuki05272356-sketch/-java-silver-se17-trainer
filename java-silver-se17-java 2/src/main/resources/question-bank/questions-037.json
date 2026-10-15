@@ -1,0 +1,476 @@
+[
+  {
+    "id": "JS17-0691",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class A {\n    A make() { return new A(); }\n    String id() { return \"A\"; }\n}\nclass B extends A {\n    @Override B make() { return new B(); }\n    @Override String id() { return \"B\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        A a = new B();\n        A made = a.make();\n        System.out.print(made.id() + \":\" + (made instanceof B));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "B:true"
+      },
+      {
+        "id": "B",
+        "text": "A:false"
+      },
+      {
+        "id": "C",
+        "text": "B:false"
+      },
+      {
+        "id": "D",
+        "text": "A:true"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "a.make()は実体Bのoverrideが呼ばれBを生成します。式の型はAとして受けても実体はBなのでid()はB、instanceofもtrueです。",
+    "choiceExplanations": {
+      "A": "正しい。 a.make()は実体Bのoverrideが呼ばれBを生成します。式の型はAとして受けても実体はBなのでid()はB、instanceofもtrueです。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "23. override",
+    "tags": [
+      "covariant-return",
+      "override",
+      "runtime-type",
+      "instanceof"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0692",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int[] a = {1, 2, 3};\n        Object o = a;\n        System.out.print(o instanceof int[] ? ((int[])o)[1] : -1);\n        System.out.print(\":\" + (o instanceof Object[]));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "2:false"
+      },
+      {
+        "id": "B",
+        "text": "2:true"
+      },
+      {
+        "id": "C",
+        "text": "-1:false"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "ClassCastException"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "primitive配列int[]もObjectではありますがObject[]ではありません。int[]パターンはtrueで要素2、Object[]のinstanceofはfalseです。",
+    "choiceExplanations": {
+      "A": "正しい。 primitive配列int[]もObjectではありますがObject[]ではありません。int[]パターンはtrueで要素2、Object[]のinstanceofはfalseです。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "primitive-array",
+      "instanceof",
+      "Object",
+      "array"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0693",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static int f(int x) {\n        int r = 0;\n        switch (x) {\n            case 1: r += 1;\n            case 2: r += 2;\n            default: r += 4;\n        }\n        return r;\n    }\n    public static void main(String[] args) {\n        System.out.print(f(1) + \":\" + f(2));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "7:6"
+      },
+      {
+        "id": "B",
+        "text": "1:2"
+      },
+      {
+        "id": "C",
+        "text": "3:2"
+      },
+      {
+        "id": "D",
+        "text": "7:2"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "従来switch文のコロン形式はbreakがなければfall-throughします。1は1+2+4=7、2は2+4=6です。",
+    "choiceExplanations": {
+      "A": "正しい。 従来switch文のコロン形式はbreakがなければfall-throughします。1は1+2+4=7、2は2+4=6です。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "9. switch文",
+    "tags": [
+      "switch-statement",
+      "fall-through",
+      "break",
+      "control-flow"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0694",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int total = 0;\n        outer:\n        for (int i = 0; i < 3; i++) {\n            for (int j = 0; j < 4; j++) {\n                if (j == 1) continue;\n                if (i == 1 && j == 2) break outer;\n                total++;\n            }\n        }\n        System.out.print(total);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "3"
+      },
+      {
+        "id": "B",
+        "text": "4"
+      },
+      {
+        "id": "C",
+        "text": "5"
+      },
+      {
+        "id": "D",
+        "text": "6"
+      },
+      {
+        "id": "E",
+        "text": "7"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "i=0ではj=0,2,3で3回加算。i=1ではj=0で1回加算後、j=1はcontinue、j=2でbreak outer。合計4です。",
+    "choiceExplanations": {
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "正しい。 i=0ではj=0,2,3で3回加算。i=1ではj=0で1回加算後、j=1はcontinue、j=2でbreak outer。合計4です。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "12. break / continue",
+    "tags": [
+      "break-label",
+      "continue",
+      "nested-loop",
+      "control-flow"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0695",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Boom {\n    static int x = init();\n    static int init() {\n        System.out.print(\"I:\");\n        if (true) throw new RuntimeException(\"boom\");\n        return 1;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try {\n            System.out.print(Boom.x);\n        } catch (Throwable e) {\n            System.out.print(e.getClass().getSimpleName());\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "I:ExceptionInInitializerError"
+      },
+      {
+        "id": "B",
+        "text": "I:RuntimeException"
+      },
+      {
+        "id": "C",
+        "text": "1"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "I:NoClassDefFoundError"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "static初期化中のRuntimeExceptionはクラス初期化失敗としてExceptionInInitializerErrorにラップされ、最初の能動的利用側へ送出されます。",
+    "choiceExplanations": {
+      "A": "正しい。 static初期化中のRuntimeExceptionはクラス初期化失敗としてExceptionInInitializerErrorにラップされ、最初の能動的利用側へ送出されます。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "17. static",
+    "tags": [
+      "static-initializer",
+      "ExceptionInInitializerError",
+      "class-initialization",
+      "exception"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0696",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "code": "record Point(int x, int y) implements Comparable<Point> {\n    @Override public int compareTo(Point other) {\n        return Integer.compare(x + y, other.x + other.y);\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Point a = new Point(1, 4);\n        Point b = new Point(2, 3);\n        System.out.print(a.equals(b) + \":\" + a.compareTo(b));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "出力は false:0"
+      },
+      {
+        "id": "B",
+        "text": "recordはinterfaceをimplementsできる"
+      },
+      {
+        "id": "C",
+        "text": "equalsはcompareToが0なら必ずtrue"
+      },
+      {
+        "id": "D",
+        "text": "recordは暗黙にabstractである"
+      },
+      {
+        "id": "E",
+        "text": "xとyは変更可能なinstance fieldである"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B"
+    ],
+    "explanation": "recordはinterfaceを実装できます。equalsはコンポーネント値で比較するので(1,4)と(2,3)はfalse。一方compareToは和だけ比較してどちらも5なので0です。",
+    "choiceExplanations": {
+      "A": "正しい。 recordはinterfaceを実装できます。equalsはコンポーネント値で比較するので(1,4)と(2,3)はfalse。一方compareToは和だけ比較してどちらも5なので0です。",
+      "B": "正しい。 recordはinterfaceを実装できます。equalsはコンポーネント値で比較するので(1,4)と(2,3)はfalse。一方compareToは和だけ比較してどちらも5なので0です。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "20. record",
+    "tags": [
+      "record",
+      "interface",
+      "equals",
+      "Comparable"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  },
+  {
+    "id": "JS17-0697",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Base {\n    static int count = 1;\n    static void inc() { count++; }\n}\nclass Sub extends Base {\n    static int count = 10;\n    static void inc() { count += 5; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Base b = new Sub();\n        b.inc();\n        ((Sub)b).inc();\n        System.out.print(Base.count + \":\" + Sub.count);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "2:15"
+      },
+      {
+        "id": "B",
+        "text": "1:16"
+      },
+      {
+        "id": "C",
+        "text": "2:10"
+      },
+      {
+        "id": "D",
+        "text": "6:15"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "staticメソッドはoverrideされず参照型で解決されます。b.inc()はBase.incでBase.countが2、cast後はSub.incでSub.countが15です。",
+    "choiceExplanations": {
+      "A": "正しい。 staticメソッドはoverrideされず参照型で解決されます。b.inc()はBase.incでBase.countが2、cast後はSub.incでSub.countが15です。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "17. static",
+    "tags": [
+      "static-hiding",
+      "static-field",
+      "reference-type",
+      "cast"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0698",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class C {\n    int x = 1;\n    C() { this(show()); }\n    C(int v) { x = v; }\n    int show() { return x + 1; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(new C().x);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "1"
+      },
+      {
+        "id": "B",
+        "text": "2"
+      },
+      {
+        "id": "C",
+        "text": "0"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "StackOverflowError"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "this(...)やsuper(...)の明示的コンストラクタ呼び出しの引数評価で、構築対象のthisを参照するinstanceメソッドshow()を呼ぶことは「cannot reference this before supertype constructor has been called」に相当し不正です。",
+    "choiceExplanations": {
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "正しい。 this(...)やsuper(...)の明示的コンストラクタ呼び出しの引数評価で、構築対象のthisを参照するinstanceメソッドshow()を呼ぶことは「cannot reference this before supertype constructor has been called」に相当し不正です。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "constructor",
+      "this-before-super",
+      "instance-method",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0699",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static int f(Object o) {\n        if (o instanceof String s && s.length() > 2) return s.length();\n        if (o instanceof String s) return s.length() * 10;\n        return -1;\n    }\n    public static void main(String[] args) {\n        System.out.print(f(\"java\") + \":\" + f(\"a\") + \":\" + f(1));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "4:10:-1"
+      },
+      {
+        "id": "B",
+        "text": "4:1:-1"
+      },
+      {
+        "id": "C",
+        "text": "40:10:-1"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "4:10:0"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "各ifのパターン変数sは別スコープで再宣言可能です。\"java\"は最初で4、\"a\"は2つ目で1*10=10、Integerはどちらにもマッチせず-1です。",
+    "choiceExplanations": {
+      "A": "正しい。 各ifのパターン変数sは別スコープで再宣言可能です。\"java\"は最初で4、\"a\"は2つ目で1*10=10、Integerはどちらにもマッチせず-1です。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "19. instanceof / パターンマッチング",
+    "tags": [
+      "instanceof",
+      "pattern-variable",
+      "scope",
+      "and"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0700",
+    "question": "次のコードについて正しいものを3つ選びなさい。",
+    "code": "interface I {\n    default String name() { return helper(); }\n    private String helper() { return \"I\"; }\n}\nabstract class A implements I {\n    public abstract String name();\n}\nclass B extends A {\n    @Override public String name() { return \"B\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        I x = new B();\n        System.out.print(x.name());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "コンパイルできる"
+      },
+      {
+        "id": "B",
+        "text": "出力はB"
+      },
+      {
+        "id": "C",
+        "text": "Aのabstract name()はIのdefaultを抽象化できる"
+      },
+      {
+        "id": "D",
+        "text": "BはI.helper()をoverrideしている"
+      },
+      {
+        "id": "E",
+        "text": "I.helper()はBから直接呼び出せる"
+      }
+    ],
+    "correctAnswers": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": "abstract classは継承したdefaultメソッドをabstractとして再宣言できます。その結果Bはname()を実装する必要があり、I参照でも動的ディスパッチでBが呼ばれます。private helperはinterface内部専用でoverride対象ではありません。",
+    "choiceExplanations": {
+      "A": "正しい。 abstract classは継承したdefaultメソッドをabstractとして再宣言できます。その結果Bはname()を実装する必要があり、I参照でも動的ディスパッチでBが呼ばれます。private helperはinterface内部専用でoverride対象ではありません。",
+      "B": "正しい。 abstract classは継承したdefaultメソッドをabstractとして再宣言できます。その結果Bはname()を実装する必要があり、I参照でも動的ディスパッチでBが呼ばれます。private helperはinterface内部専用でoverride対象ではありません。",
+      "C": "正しい。 abstract classは継承したdefaultメソッドをabstractとして再宣言できます。その結果Bはname()を実装する必要があり、I参照でも動的ディスパッチでBが呼ばれます。private helperはinterface内部専用でoverride対象ではありません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "27. default / private interface method",
+    "tags": [
+      "interface",
+      "default",
+      "private-method",
+      "abstract",
+      "override"
+    ],
+    "difficulty": 5,
+    "multipleChoice": true
+  }
+]

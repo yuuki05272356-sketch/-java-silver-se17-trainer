@@ -1,0 +1,942 @@
+[
+  {
+    "id": "JS17-0671",
+    "question": "次のコードはコンパイルできますか。正しいものを1つ選びなさい。",
+    "code": "class Box {\n    final int x;\n    Box(boolean flag) {\n        if (flag) {\n            x = 1;\n        } else {\n            x = 2;\n        }\n    }\n    Box() {\n        this(true);\n        x = 3;\n    }\n}\npublic class Main { }",
+    "choices": [
+      {
+        "id": "A",
+        "text": "コンパイルできる"
+      },
+      {
+        "id": "B",
+        "text": "Box(boolean)だけエラー"
+      },
+      {
+        "id": "C",
+        "text": "Box()でfinalフィールドxを再代入するためコンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "実行時IllegalStateException"
+      },
+      {
+        "id": "E",
+        "text": "xは常に3になる"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "this(true)で呼ばれる別コンストラクタがblank final xを必ず初期化済みです。その後Box()本体でx=3と再代入することはできません。",
+    "choiceExplanations": {
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "正しい。 this(true)で呼ばれる別コンストラクタがblank final xを必ず初期化済みです。その後Box()本体でx=3と再代入することはできません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "25. final",
+    "tags": [
+      "blank-final",
+      "constructor-chain",
+      "definite-assignment",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0672",
+    "question": "次の呼び出しについて正しいものを1つ選びなさい。",
+    "code": "class Pick {\n    static void m(String x) { System.out.print(\"S\"); }\n    static void m(StringBuilder x) { System.out.print(\"B\"); }\n    static void m(Object x) { System.out.print(\"O\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Pick.m(null);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "S"
+      },
+      {
+        "id": "B",
+        "text": "B"
+      },
+      {
+        "id": "C",
+        "text": "O"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "実行時にSかB"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],
+    "explanation": "StringとStringBuilderはいずれもObjectより具体的で、互いに継承関係がありません。nullに対して最も具体的な候補を一意に決められないため曖昧です。",
+    "choiceExplanations": {
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "正しい。 StringとStringBuilderはいずれもObjectより具体的で、互いに継承関係がありません。nullに対して最も具体的な候補を一意に決められないため曖昧です。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "overload",
+      "null",
+      "ambiguity",
+      "most-specific"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0673",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "class Pick {\n    static void m(long x) { System.out.print(\"L\"); }\n    static void m(Integer x) { System.out.print(\"I\"); }\n    static void m(int... x) { System.out.print(\"V\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        short s = 1;\n        Pick.m(s);\n        Pick.m(2);\n        Pick.m();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "LLV"
+      },
+      {
+        "id": "B",
+        "text": "LIV"
+      },
+      {
+        "id": "C",
+        "text": "IIV"
+      },
+      {
+        "id": "D",
+        "text": "LVV"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "固定長のprimitive wideningはboxingより優先されます。shortとintはいずれもlongへ拡大されL、引数なしではvarargsだけが適用可能なのでVです。",
+    "choiceExplanations": {
+      "A": "正しい。 固定長のprimitive wideningはboxingより優先されます。shortとintはいずれもlongへ拡大されL、引数なしではvarargsだけが適用可能なのでVです。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "16. オーバーロード",
+    "tags": [
+      "overload",
+      "widening",
+      "boxing",
+      "varargs"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0674",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "interface A { }\ninterface B { }\nclass X implements A { }\nclass Y extends X implements B { }\npublic class Main {\n    public static void main(String[] args) {\n        A a = new X();\n        try {\n            B b = (B) a;\n            System.out.print(\"OK\");\n        } catch (ClassCastException e) {\n            System.out.print(\"CCE\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "CCE"
+      },
+      {
+        "id": "B",
+        "text": "OK"
+      },
+      {
+        "id": "C",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "null"
+      },
+      {
+        "id": "E",
+        "text": "A"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "AからBへのcastは型の関係上コンパイル可能ですが、実体XはBを実装していないため実行時にClassCastExceptionです。",
+    "choiceExplanations": {
+      "A": "正しい。 AからBへのcastは型の関係上コンパイル可能ですが、実体XはBを実装していないため実行時にClassCastExceptionです。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "24. キャスト・ポリモーフィズム",
+    "tags": [
+      "interface-cast",
+      "ClassCastException",
+      "runtime-type",
+      "cast"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0675",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int total = 0;\n        outer:\n        for (int i = 0; i < 3; i++) {\n            for (int j = 0; j < 3; j++) {\n                if (i == j) continue outer;\n                total += i + j;\n            }\n        }\n        System.out.print(total);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "0"
+      },
+      {
+        "id": "B",
+        "text": "3"
+      },
+      {
+        "id": "C",
+        "text": "6"
+      },
+      {
+        "id": "D",
+        "text": "9"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "各外側反復でj==iに到達すると即座にouterの次反復へ移ります。i=0は加算前、i=1はj=0で1加算後j=1でcontinue、i=2はj=0で2、j=1で3を加算し合計6です。",
+    "choiceExplanations": {
+      "A": "誤り。 ラベル付きcontinueの制御フローを追う必要があります。",
+      "B": "誤り。 ラベル付きcontinueの制御フローを追う必要があります。",
+      "C": "正しい。 各外側反復でj==iに到達すると即座にouterの次反復へ移ります。i=0は加算前、i=1はj=0で1加算後j=1でcontinue、i=2はj=0で2、j=1で3を加算し合計6です。",
+      "D": "誤り。 ラベル付きcontinueの制御フローを追う必要があります。",
+      "E": "誤り。 ラベル付きcontinueの制御フローを追う必要があります。"
+    },
+    "category": "12. break / continue",
+    "tags": [
+      "labeled-continue",
+      "nested-loop",
+      "control-flow",
+      "for"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0676",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 0;\n        int total = 0;\n        do {\n            total += ++x;\n            if (x == 2) continue;\n            total += 10;\n        } while (x < 3);\n        System.out.print(x + \":\" + total);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "3:16"
+      },
+      {
+        "id": "B",
+        "text": "3:26"
+      },
+      {
+        "id": "C",
+        "text": "2:13"
+      },
+      {
+        "id": "D",
+        "text": "3:6"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "x=1で11加算、x=2では2だけ加算してcontinueして条件判定へ、x=3で3+10を加算します。合計26、x=3です。",
+    "choiceExplanations": {
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "正しい。 x=1で11加算、x=2では2だけ加算してcontinueして条件判定へ、x=3で3+10を加算します。合計26、x=3です。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "11. while / do-while / for / 拡張for",
+    "tags": [
+      "do-while",
+      "continue",
+      "pre-increment",
+      "control-flow"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0677",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        String s = \"a\";\n        StringBuilder b = new StringBuilder(s);\n        StringBuilder c = b;\n        s.concat(\"b\");\n        b.append(\"b\");\n        c.append(\"c\");\n        System.out.print(s + \":\" + b + \":\" + (b == c));\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "a:abc:true"
+      },
+      {
+        "id": "B",
+        "text": "ab:abc:true"
+      },
+      {
+        "id": "C",
+        "text": "a:ab:false"
+      },
+      {
+        "id": "D",
+        "text": "abc:abc:true"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "String.concatの戻り値を代入していないのでsはaのままです。bとcは同一StringBuilder参照なのでappendが累積しabc、==はtrueです。",
+    "choiceExplanations": {
+      "A": "正しい。 String.concatの戻り値を代入していないのでsはaのままです。bとcは同一StringBuilder参照なのでappendが累積しabc、==はtrueです。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "4. String・テキストブロック",
+    "tags": [
+      "String",
+      "StringBuilder",
+      "immutability",
+      "alias"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0678",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static int n = 0;\n    static int next() { return ++n; }\n    public static void main(String[] args) {\n        String s = \"\" + next() + next();\n        int x = next() + next();\n        System.out.print(s + \":\" + x + \":\" + n);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "12:7:4"
+      },
+      {
+        "id": "B",
+        "text": "3:7:4"
+      },
+      {
+        "id": "C",
+        "text": "12:34:4"
+      },
+      {
+        "id": "D",
+        "text": "21:7:4"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "文字列連結は左から評価され、\"\"+1で文字列になった後2が連結され\"12\"。その後next()は3と4を返し数値加算で7、nは4です。",
+    "choiceExplanations": {
+      "A": "正しい。 文字列連結は左から評価され、\"\"+1で文字列になった後2が連結され\"12\"。その後next()は3と4を返し数値加算で7、nは4です。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "7. 演算子",
+    "tags": [
+      "string-concatenation",
+      "evaluation-order",
+      "side-effect",
+      "addition"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0679",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "import java.util.ArrayList;\npublic class Main {\n    public static void main(String[] args) {\n        var list = new ArrayList<Integer>();\n        list.add(1);\n        list.add(2);\n        list.add(1);\n        list.remove(1);\n        list.remove(Integer.valueOf(1));\n        System.out.print(list);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "[1]"
+      },
+      {
+        "id": "B",
+        "text": "[2]"
+      },
+      {
+        "id": "C",
+        "text": "[1, 2]"
+      },
+      {
+        "id": "D",
+        "text": "[]"
+      },
+      {
+        "id": "E",
+        "text": "コンパイルエラー"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "remove(1)はint indexのoverloadでindex 1の要素2を削除して[1,1]。remove(Integer.valueOf(1))はObjectとして最初の1を削除し[1]です。",
+    "choiceExplanations": {
+      "A": "正しい。 remove(1)はint indexのoverloadでindex 1の要素2を削除して[1,1]。remove(Integer.valueOf(1))はObjectとして最初の1を削除し[1]です。",
+      "B": "誤り。 remove(int)とremove(Object)のoverload解決がポイントです。",
+      "C": "誤り。 remove(int)とremove(Object)のoverload解決がポイントです。",
+      "D": "誤り。 remove(int)とremove(Object)のoverload解決がポイントです。",
+      "E": "誤り。 remove(int)とremove(Object)のoverload解決がポイントです。"
+    },
+    "category": "6. ArrayList",
+    "tags": [
+      "ArrayList",
+      "remove",
+      "overload",
+      "boxing"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0680",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "import java.util.ArrayList;\npublic class Main {\n    public static void main(String[] args) {\n        var list = new ArrayList<String>();\n        list.add(\"a\");\n        list.add(\"b\");\n        try {\n            for (String s : list) {\n                if (s.equals(\"a\")) list.add(\"c\");\n            }\n            System.out.print(list);\n        } catch (RuntimeException e) {\n            System.out.print(e.getClass().getSimpleName());\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "ConcurrentModificationException"
+      },
+      {
+        "id": "B",
+        "text": "[a, b, c]"
+      },
+      {
+        "id": "C",
+        "text": "ArrayIndexOutOfBoundsException"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "IllegalStateException"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "拡張forはIterator相当で走査しており、走査中にlist自身へ構造的変更を加えると次の反復でConcurrentModificationExceptionが発生します。",
+    "choiceExplanations": {
+      "A": "正しい。 拡張forはIterator相当で走査しており、走査中にlist自身へ構造的変更を加えると次の反復でConcurrentModificationExceptionが発生します。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "6. ArrayList",
+    "tags": [
+      "ArrayList",
+      "enhanced-for",
+      "ConcurrentModificationException",
+      "iteration"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0681",
+    "question": "次のcatch節の並びについて正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        try {\n            throw new IllegalArgumentException();\n        } catch (RuntimeException e) {\n            System.out.print(\"R\");\n        } catch (IllegalArgumentException e) {\n            System.out.print(\"I\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "R"
+      },
+      {
+        "id": "B",
+        "text": "I"
+      },
+      {
+        "id": "C",
+        "text": "RI"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "何も表示されない"
+      }
+    ],
+    "correctAnswers": [
+      "D"
+    ],    "explanation": "先にRuntimeExceptionをcatchすると、そのサブクラスIllegalArgumentException用の後続catchは到達不能になりコンパイルエラーです。",
+    "choiceExplanations": {
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "正しい。 先にRuntimeExceptionをcatchすると、そのサブクラスIllegalArgumentException用の後続catchは到達不能になりコンパイルエラーです。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "30. try-catch",
+    "tags": [
+      "catch-order",
+      "unreachable-catch",
+      "RuntimeException",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0682",
+    "question": "次のmulti-catchについて正しいものを1つ選びなさい。",
+    "code": "import java.io.IOException;\npublic class Main {\n    static void work() throws IOException { }\n    public static void main(String[] args) {\n        try {\n            work();\n        } catch (IOException | Exception e) {\n            System.out.print(\"X\");\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "X"
+      },
+      {
+        "id": "B",
+        "text": "何も表示されない"
+      },
+      {
+        "id": "C",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "実行時IOException"
+      },
+      {
+        "id": "E",
+        "text": "実行時Exception"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "multi-catchの選択肢同士に継承関係があってはいけません。IOExceptionはExceptionのサブクラスなので `IOException | Exception` は不正です。",
+    "choiceExplanations": {
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "正しい。 multi-catchの選択肢同士に継承関係があってはいけません。IOExceptionはExceptionのサブクラスなので `IOException | Exception` は不正です。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "33. multi-catch",
+    "tags": [
+      "multi-catch",
+      "subclass",
+      "compile-error",
+      "IOException"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0683",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static void risky() {\n        throw new AssertionError(\"A\");\n    }\n    public static void main(String[] args) {\n        try {\n            risky();\n        } catch (RuntimeException e) {\n            System.out.print(\"R\");\n        } catch (Error e) {\n            System.out.print(e.getMessage());\n        }\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "A"
+      },
+      {
+        "id": "B",
+        "text": "R"
+      },
+      {
+        "id": "C",
+        "text": "RA"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "何も表示されない"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "AssertionErrorはRuntimeExceptionではなくError階層です。Error自体もcatch可能なので2つ目のcatchでAが表示されます。",
+    "choiceExplanations": {
+      "A": "正しい。 AssertionErrorはRuntimeExceptionではなくError階層です。Error自体もcatch可能なので2つ目のcatchでAが表示されます。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "29. 例外",
+    "tags": [
+      "Error",
+      "AssertionError",
+      "catch",
+      "hierarchy"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0684",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    static int f() {\n        try {\n            throw new RuntimeException(\"T\");\n        } finally {\n            return 5;\n        }\n    }\n    public static void main(String[] args) {\n        System.out.print(f());\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "5"
+      },
+      {
+        "id": "B",
+        "text": "T"
+      },
+      {
+        "id": "C",
+        "text": "RuntimeExceptionが伝播する"
+      },
+      {
+        "id": "D",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "E",
+        "text": "0"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "finallyのreturnはtryで発生した例外を破棄して5を返します。推奨されない書き方ですがJavaとしては有効です。",
+    "choiceExplanations": {
+      "A": "正しい。 finallyのreturnはtryで発生した例外を破棄して5を返します。推奨されない書き方ですがJavaとしては有効です。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "29. 例外",
+    "tags": [
+      "finally",
+      "return",
+      "exception-suppression",
+      "control-flow"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0685",
+    "question": "次のmainメソッドを含むクラスを `java Main x y` で起動した結果として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String... args) {\n        String[] copy = args.clone();\n        copy[0] = copy[0].toUpperCase();\n        System.out.print(args[0] + \":\" + copy[0] + \":\" + args.length);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "x:X:2"
+      },
+      {
+        "id": "B",
+        "text": "X:X:2"
+      },
+      {
+        "id": "C",
+        "text": "x:x:2"
+      },
+      {
+        "id": "D",
+        "text": "x:X:1"
+      },
+      {
+        "id": "E",
+        "text": "起動できない"
+      }
+    ],
+    "correctAnswers": [
+      "A"
+    ],
+    "explanation": "String...は有効なmainシグネチャです。配列cloneは別配列になるためcopy[0]の差し替えはargs[0]に影響せず、要素数は2です。",
+    "choiceExplanations": {
+      "A": "正しい。 String...は有効なmainシグネチャです。配列cloneは別配列になるためcopy[0]の差し替えはargs[0]に影響せず、要素数は2です。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "main",
+      "varargs",
+      "array-clone",
+      "command-line"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0686",
+    "question": "このソースを `App.java` として `javac App.java` を実行した場合として正しいものを1つ選びなさい。",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.print(\"OK\");\n    }\n}\nclass App { }",
+    "choices": [
+      {
+        "id": "A",
+        "text": "OK"
+      },
+      {
+        "id": "B",
+        "text": "コンパイル成功しjava AppでOK"
+      },
+      {
+        "id": "C",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "Main.classだけ生成"
+      },
+      {
+        "id": "E",
+        "text": "App.classだけ生成"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "publicトップレベルクラスMainを宣言するファイル名はMain.javaでなければならないため、App.javaとしてのコンパイルは失敗します。",
+    "choiceExplanations": {
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "正しい。 publicトップレベルクラスMainを宣言するファイル名はMain.javaでなければならないため、App.javaとしてのコンパイルは失敗します。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "35. mainメソッド・コンパイル・実行",
+    "tags": [
+      "javac",
+      "public-class",
+      "file-name",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0687",
+    "question": "次のアクセスについて正しいものを1つ選びなさい。",
+    "code": "package p1;\npublic class A {\n    protected int x = 7;\n}\n\n// 別ファイル p2/B.java\npackage p2;\nimport p1.A;\npublic class B extends A {\n    void show(A a, B b) {\n        System.out.print(b.x);\n        System.out.print(a.x);\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "両方アクセス可能"
+      },
+      {
+        "id": "B",
+        "text": "b.xのみアクセス可能で、a.xはコンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "a.xのみアクセス可能"
+      },
+      {
+        "id": "D",
+        "text": "どちらも不可"
+      },
+      {
+        "id": "E",
+        "text": "実行時だけエラー"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "別packageのsubclassからprotectedメンバへアクセスする場合、継承関係を通じたsubclass型の参照である必要があります。B内のb.xは可ですが、単なるA参照a.xは不可です。",
+    "choiceExplanations": {
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "正しい。 別packageのsubclassからprotectedメンバへアクセスする場合、継承関係を通じたsubclass型の参照である必要があります。B内のb.xは可ですが、単なるA参照a.xは不可です。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "18. アクセス修飾子",
+    "tags": [
+      "protected",
+      "package",
+      "inheritance",
+      "access-control"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0688",
+    "question": "次のコードはコンパイルできますか。正しいものを1つ選びなさい。",
+    "code": "class A {\n    A() { System.out.print(\"A\"); }\n}\nclass B extends A {\n    B() {\n        System.out.print(\"B\");\n        super();\n    }\n}\npublic class Main { }",
+    "choices": [
+      {
+        "id": "A",
+        "text": "AB"
+      },
+      {
+        "id": "B",
+        "text": "BA"
+      },
+      {
+        "id": "C",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "実行時エラー"
+      },
+      {
+        "id": "E",
+        "text": "何も表示されない"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "Java 17では明示的なsuper()/this()呼び出しはコンストラクタ本体の最初の文でなければなりません。",
+    "choiceExplanations": {
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "正しい。 Java 17では明示的なsuper()/this()呼び出しはコンストラクタ本体の最初の文でなければなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "constructor",
+      "super",
+      "first-statement",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0689",
+    "question": "次のコードはコンパイルできますか。正しいものを1つ選びなさい。",
+    "code": "class A {\n    A() { this(1); }\n    A(int x) { this(); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new A();\n    }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "コンパイル成功後StackOverflowError"
+      },
+      {
+        "id": "B",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "C",
+        "text": "何も表示されない"
+      },
+      {
+        "id": "D",
+        "text": "0"
+      },
+      {
+        "id": "E",
+        "text": "IllegalStateException"
+      }
+    ],
+    "correctAnswers": [
+      "B"
+    ],
+    "explanation": "コンストラクタのthis()呼び出しが循環するチェーンはコンパイル時にrecursive constructor invocationとして拒否されます。",
+    "choiceExplanations": {
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "正しい。 コンストラクタのthis()呼び出しが循環するチェーンはコンパイル時にrecursive constructor invocationとして拒否されます。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "15. コンストラクタ",
+    "tags": [
+      "constructor-chain",
+      "recursive-constructor",
+      "this",
+      "compile-error"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  },
+  {
+    "id": "JS17-0690",
+    "question": "次のコードはコンパイルできますか。正しいものを1つ選びなさい。",
+    "code": "interface A {\n    default Number value() { return 1; }\n}\ninterface B {\n    Integer value();\n}\nabstract class X implements A, B { }\nclass Y extends X {\n    public Integer value() { return 2; }\n}\npublic class Main {\n    public static void main(String[] args) { System.out.print(new Y().value()); }\n}",
+    "choices": [
+      {
+        "id": "A",
+        "text": "2"
+      },
+      {
+        "id": "B",
+        "text": "1"
+      },
+      {
+        "id": "C",
+        "text": "コンパイルエラー"
+      },
+      {
+        "id": "D",
+        "text": "NullPointerException"
+      },
+      {
+        "id": "E",
+        "text": "12"
+      }
+    ],
+    "correctAnswers": [
+      "C"
+    ],
+    "explanation": "Aのdefault実装とBのabstractメソッドは戻り値型が共変でも、Xがそのまま継承すると「一方がdefault、一方がabstract」の競合を自動解消できません。Xで明示的にoverride宣言する必要があります。",
+    "choiceExplanations": {
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "正しい。 Aのdefault実装とBのabstractメソッドは戻り値型が共変でも、Xがそのまま継承すると「一方がdefault、一方がabstract」の競合を自動解消できません。Xで明示的にoverride宣言する必要があります。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+    },
+    "category": "26. interface",
+    "tags": [
+      "interface",
+      "default",
+      "abstract",
+      "covariant-return",
+      "conflict"
+    ],
+    "difficulty": 5,
+    "multipleChoice": false
+  }
+]
