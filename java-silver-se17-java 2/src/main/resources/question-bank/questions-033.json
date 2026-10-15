@@ -845,53 +845,6 @@
     "multipleChoice": false
   },
   {
-    "id": "JS17-0639",
-    "question": "ローカル変数のdefinite assignmentを含む次のコードはどうなるか。正しいものを1つ選びなさい.",
-    "code": "public class Main {\n    public static void main(String[] args) {\n        int x;\n        boolean flag = args.length > 0;\n\n        if (flag) {\n            x = 10;\n        }\n\n        System.out.print(x);\n    }\n}",
-    "choices": [
-      {
-        "id": "A",
-        "text": "引数ありなら10、なしなら0"
-      },
-      {
-        "id": "B",
-        "text": "xはintなので自動的に0で初期化される"
-      },
-      {
-        "id": "C",
-        "text": "実行時にNullPointerException"
-      },
-      {
-        "id": "D",
-        "text": "xが未初期化の経路があるためコンパイルエラー"
-      },
-      {
-        "id": "E",
-        "text": "flagが実行時に決まるのでコンパイラは問題にしない"
-      }
-    ],
-    "correctAnswers": [
-      "D"
-    ],
-    "explanation": "ローカル変数にはデフォルト値がなく、flag=false経路でxが未代入のまま使われる可能性があるためコンパイルエラーです。",
-    "choiceExplanations": {
-      "A": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "B": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "C": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。",
-      "D": "ローカル変数にはデフォルト値がなく、flag=false経路でxが未代入のまま使われる可能性があるためコンパイルエラーです。",
-      "E": "誤り。初期化順序、final、static、スコープ、pattern matchingの規則を順に追うとこの選択肢にはなりません。"
-    },
-    "category": "2. 基本データ型・変数・スコープ",
-    "tags": [
-      "definite-assignment",
-      "local-variable",
-      "if",
-      "compile-error"
-    ],
-    "difficulty": 4,
-    "multipleChoice": false
-  },
-  {
     "id": "JS17-0640",
     "question": "pattern variableとelse分岐のスコープについて正しいものを2つ選びなさい.",
     "code": "public class Main {\n    static void show(Object obj) {\n        if (obj instanceof String s) {\n            System.out.print(s.length());\n        } else {\n            System.out.print(\"N\");\n        }\n    }\n\n    public static void main(String[] args) {\n        show(\"abc\");\n        System.out.print(\":\");\n        show(1);\n    }\n}",

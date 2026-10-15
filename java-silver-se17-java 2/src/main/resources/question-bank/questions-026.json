@@ -47,54 +47,6 @@
     "multipleChoice": false
   },
   {
-    "id": "JS17-0502",
-    "question": "次のコードについて正しいものを2つ選びなさい。",
-    "code": "class BuildException extends Exception { }\nclass Base {\n    Base() throws BuildException {\n        if (System.nanoTime() < 0) throw new BuildException();\n    }\n}\nclass Child extends Base {\n    Child() {\n        System.out.print(\"C\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Child();\n    }\n}",
-    "choices": [
-      {
-        "id": "A",
-        "text": "このままではコンパイルエラーになる"
-      },
-      {
-        "id": "B",
-        "text": "Child() に throws BuildException を付ければ、この点は解消できる"
-      },
-      {
-        "id": "C",
-        "text": "System.nanoTime() < 0 が通常falseなのでチェック例外の処理は不要"
-      },
-      {
-        "id": "D",
-        "text": "暗黙のsuper()はChild()本体の最後に実行される"
-      },
-      {
-        "id": "E",
-        "text": "BuildExceptionはRuntimeExceptionのサブクラスである"
-      }
-    ],
-    "correctAnswers": [
-      "A",
-      "B"
-    ],
-    "explanation": "Base()がチェック例外BuildExceptionを宣言しているため、暗黙のsuper()を含むChild()はその例外を処理する必要があります。Child()にthrows BuildExceptionを宣言するのは有効な修正です。",
-    "choiceExplanations": {
-      "A": "正しい。暗黙のsuper()が投げ得るチェック例外を未処理です。",
-      "B": "正しい。子コンストラクタで同じチェック例外をthrows宣言できます。",
-      "C": "誤り。到達可能なthrow文がある以上、実行時に起きにくいことはチェック例外規則を変えません。",
-      "D": "誤り。super()はコンストラクタチェーンの先頭で実行されます。",
-      "E": "誤り。BuildExceptionはException直系のチェック例外です。"
-    },
-    "category": "29. 例外",
-    "tags": [
-      "checked-exception",
-      "constructor",
-      "super",
-      "throws"
-    ],
-    "difficulty": 5,
-    "multipleChoice": true
-  },
-  {
     "id": "JS17-0503",
     "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
     "code": "class Box {\n    final int size;\n    Box() {\n        this(3);\n        System.out.print(\"A \");\n    }\n    Box(int size) {\n        this.size = size;\n        System.out.print(\"B\" + size + \" \");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Box x = new Box();\n        System.out.print(x.size);\n    }\n}",
@@ -497,7 +449,8 @@
     ],
     "correctAnswers": [
       "A"
-    ],    "explanation": "Animal型参照aの実体はCatです。Dogへの明示キャストはコンパイル可能ですが実行時型がDogではないためClassCastExceptionが発生し、DやBは出力されません。",
+    ],
+    "explanation": "Animal型参照aの実体はCatです。Dogへの明示キャストはコンパイル可能ですが実行時型がDogではないためClassCastExceptionが発生し、DやBは出力されません。",
     "choiceExplanations": {
       "A": "Animal型参照aの実体はCatです。Dogへの明示キャストはコンパイル可能ですが実行時型がDogではないためClassCastExceptionが発生し、DやBは出力されません。",
       "B": "誤り。コードの型・スコープ・実行順序を追うとこの結果にはなりません。",

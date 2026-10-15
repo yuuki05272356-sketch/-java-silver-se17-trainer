@@ -140,100 +140,6 @@
     "multipleChoice": false
   },
   {
-    "id": "JS17-0524",
-    "question": "次のコードについて正しいものを2つ選びなさい。",
-    "code": "interface Named {\n    default String name() {\n        return \"I\";\n    }\n}\nclass Parent {\n    public String name() {\n        return \"P\";\n    }\n}\nclass Child extends Parent implements Named { }\npublic class Main {\n    public static void main(String[] args) {\n        Named n = new Child();\n        System.out.print(n.name());\n    }\n}",
-    "choices": [
-      {
-        "id": "A",
-        "text": "正常にコンパイルされ、Pと表示される"
-      },
-      {
-        "id": "B",
-        "text": "クラスから継承したname()はinterfaceのdefault name()より優先される"
-      },
-      {
-        "id": "C",
-        "text": "Named型参照なので必ずdefaultメソッドのIが表示される"
-      },
-      {
-        "id": "D",
-        "text": "Childはdefaultメソッド競合を解決するためname()を必ずoverrideしなければならない"
-      },
-      {
-        "id": "E",
-        "text": "Parent.name()がstaticでないためChildへ継承されない"
-      }
-    ],
-    "correctAnswers": [
-      "A",
-      "B"
-    ],
-    "explanation": "クラス階層の具象インスタンスメソッドはinterfaceのdefaultメソッドより優先されます。参照型がNamedでも実体Childが継承したParent.name()が呼ばれます。",
-    "choiceExplanations": {
-      "A": "正しい。実行結果はPです。",
-      "B": "正しい。いわゆるclass winsの規則です。",
-      "C": "誤り。参照型だけでdefaultメソッドに固定されません。",
-      "D": "誤り。単一defaultとクラスメソッドの組合せでは競合解決overrideは不要です。",
-      "E": "誤り。通常のインスタンスメソッドとして継承されます。"
-    },
-    "category": "27. default / private interface method",
-    "tags": [
-      "default-method",
-      "class-wins",
-      "polymorphism"
-    ],
-    "difficulty": 5,
-    "multipleChoice": true
-  },
-  {
-    "id": "JS17-0525",
-    "question": "次のコードについて正しいものを2つ選びなさい。",
-    "code": "interface A {\n    default String id() {\n        return \"A\";\n    }\n}\ninterface B {\n    default String id() {\n        return \"B\";\n    }\n}\nclass C implements A, B { }\npublic class Main {\n    public static void main(String[] args) {\n        System.out.print(new C().id());\n    }\n}",
-    "choices": [
-      {
-        "id": "A",
-        "text": "このままではdefaultメソッドが競合するためコンパイルエラーになる"
-      },
-      {
-        "id": "B",
-        "text": "Cでid()をoverrideし、その中からA.super.id()を呼ぶことはできる"
-      },
-      {
-        "id": "C",
-        "text": "Aの方が先にimplementsへ書かれているのでA.id()が自動で優先される"
-      },
-      {
-        "id": "D",
-        "text": "B.id()が自動で優先される"
-      },
-      {
-        "id": "E",
-        "text": "defaultメソッド同士の競合は実行時まで決まらない"
-      }
-    ],
-    "correctAnswers": [
-      "A",
-      "B"
-    ],
-    "explanation": "無関係なinterfaceの同一defaultメソッドは実装クラスで解決する必要があります。Cでoverrideし、必要ならA.super.id()やB.super.id()を明示できます。",
-    "choiceExplanations": {
-      "A": "正しい。Cがid()を解決していないためコンパイルエラーです。",
-      "B": "正しい。実装クラスのoverride内から特定interfaceのdefaultを明示呼び出しできます。",
-      "C": "誤り。implementsの記述順に優先順位はありません。",
-      "D": "誤り。Bにも自動優先はありません。",
-      "E": "誤り。競合はコンパイル時に検出されます。"
-    },
-    "category": "27. default / private interface method",
-    "tags": [
-      "default-method",
-      "conflict",
-      "interface"
-    ],
-    "difficulty": 5,
-    "multipleChoice": true
-  },
-  {
     "id": "JS17-0526",
     "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
     "code": "interface Label {\n    private String decorate(String s) {\n        return \"[\" + s + \"]\";\n    }\n    default String label(String s) {\n        return decorate(s.toUpperCase());\n    }\n}\nclass Item implements Label { }\npublic class Main {\n    public static void main(String[] args) {\n        Label x = new Item();\n        System.out.print(x.label(\"java\"));\n    }\n}",
@@ -497,7 +403,8 @@
     ],
     "explanation": "overrideでは親が宣言するチェック例外と同じ型またはサブタイプへ狭められます。実行時はSub実体のChild.read()が呼ばれます。",
     "choiceExplanations": {
-      "A": "正しい。実行結果はCです。",      "B": "正しい。FileNotFoundExceptionはIOExceptionのサブクラスです。",
+      "A": "正しい。実行結果はCです。",
+      "B": "正しい。FileNotFoundExceptionはIOExceptionのサブクラスです。",
       "C": "誤り。チェック例外は狭めたり省略できます。",
       "D": "誤り。instanceメソッドのoverrideは実体型で選ばれます。",
       "E": "誤り。継承関係が逆です。"
@@ -744,53 +651,6 @@
     ],
     "difficulty": 5,
     "multipleChoice": false
-  },
-  {
-    "id": "JS17-0537",
-    "question": "次のコードについて正しいものを2つ選びなさい。",
-    "code": "class R implements AutoCloseable {\n    public void close() throws Exception {\n        throw new Exception(\"close\");\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        try (R r = new R()) {\n            throw new IllegalStateException(\"body\");\n        } catch (Exception e) {\n            System.out.print(e.getMessage() + \":\");\n            System.out.print(e.getSuppressed().length + \":\");\n            System.out.print(e.getSuppressed()[0].getMessage());\n        }\n    }\n}",
-    "choices": [
-      {
-        "id": "A",
-        "text": "主例外のmessageはbodyである"
-      },
-      {
-        "id": "B",
-        "text": "close()のExceptionは抑制例外として1件格納される"
-      },
-      {
-        "id": "C",
-        "text": "close()の例外が主例外になりbody例外は失われる"
-      },
-      {
-        "id": "D",
-        "text": "getSuppressed().lengthは0である"
-      },
-      {
-        "id": "E",
-        "text": "try-with-resourcesではclose()は本体より前に実行される"
-      }
-    ],
-    "correctAnswers": [
-      "A",
-      "B"
-    ],
-    "explanation": "try本体で先に発生したIllegalStateExceptionが主例外となり、リソースclose時のExceptionは抑制例外として保持されます。",
-    "choiceExplanations": {
-      "A": "正しい。先に発生したbody例外が主例外です。",
-      "B": "正しい。close例外はsuppressedとして追加されます。",
-      "C": "誤り。主例外はbody側です。",
-      "D": "誤り。抑制例外が1件あります。",
-      "E": "誤り。close()はtry本体を抜ける際に実行されます。"
-    },
-    "category": "31. try-with-resources",
-    "tags": [
-      "try-with-resources",
-      "suppressed-exception",
-      "AutoCloseable"
-    ],
-    "difficulty": 5,
-    "multipleChoice": true
   },
   {
     "id": "JS17-0538",
