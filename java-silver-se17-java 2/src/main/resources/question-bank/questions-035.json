@@ -1,41 +1,40 @@
 [
   {
     "id": "JS17-0651",
-    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
     "code": "class Base {\n    Base() { show(); }\n    void show() { System.out.print(\"B \"); }\n}\nclass Sub extends Base {\n    int x = 7;\n    Sub() { System.out.print(\"C\" + x); }\n    @Override void show() { System.out.print(\"S\" + x + \" \"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Sub();\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "出力は S0 C7"
+        "text": "S0 C7"
       },
       {
         "id": "B",
-        "text": "Baseのコンストラクタ内のshow()でもSub.show()が動的ディスパッチされる"
+        "text": "S7 C7"
       },
       {
         "id": "C",
-        "text": "Sub.xはBaseのコンストラクタ実行前に7へ初期化される"
+        "text": "B C7"
       },
       {
         "id": "D",
-        "text": "Base.show()が呼ばれるため出力は B C7"
+        "text": "コンパイルエラー"
       },
       {
         "id": "E",
-        "text": "コンストラクタからoverrideメソッドを呼ぶコードはコンパイルエラー"
+        "text": "NullPointerException"
       }
     ],
     "correctAnswers": [
-      "A",
-      "B"
+      "A"
     ],
-    "explanation": "Baseのコンストラクタ中でもoverrideされたSub.show()が動的ディスパッチされます。その時点ではSubのフィールド初期化前なのでxは既定値0です。その後x=7、Sub()本体の順に実行されます。",
+    "explanation": "Baseのコンストラクタ中でもoverrideされたSub.show()が動的ディスパッチされます。その時点ではSubのフィールド初期化前なのでxは既定値0です。その後x=7、Sub()本体の順です。",
     "choiceExplanations": {
-      "A": "正しい。Base構築中の動的ディスパッチではSub.show()が呼ばれ、その時点のxは0なのでS0、その後C7です。",
-      "B": "正しい。instanceメソッドのoverrideはコンストラクタ実行中でも実体型に基づいて動的ディスパッチされます。",
-      "C": "誤り。Subのinstance field初期化はBaseコンストラクタ完了後です。",
-      "D": "誤り。show()はoverrideされているためSub.show()が呼ばれます。",
-      "E": "誤り。危険な設計になり得ますが、Java文法上はコンパイルできます。"
+      "A": "正しい。 Baseのコンストラクタ中でもoverrideされたSub.show()が動的ディスパッチされます。その時点ではSubのフィールド初期化前なのでxは既定値0です。その後x=7、Sub()本体の順です。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
     },
     "category": "15. コンストラクタ",
     "tags": [
@@ -45,7 +44,7 @@
       "default-value"
     ],
     "difficulty": 5,
-    "multipleChoice": true
+    "multipleChoice": false
   },
   {
     "id": "JS17-0652",
@@ -102,7 +101,7 @@
     "choices": [
       {
         "id": "A",
-        "text": "4:-1"
+        "text": "コンパイルエラー。sはifの外では使えない"
       },
       {
         "id": "B",
@@ -110,7 +109,7 @@
       },
       {
         "id": "C",
-        "text": "コンパイルエラー。sはifの外では使えない"
+        "text": "4:-1"
       },
       {
         "id": "D",
@@ -122,13 +121,13 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "C"
     ],
     "explanation": "否定したinstanceofパターンの分岐でreturnしているため、その後の経路ではsが必ずマッチ済みと解析され、sはスコープ内です。",
     "choiceExplanations": {
-      "A": "正しい。 否定したinstanceofパターンの分岐でreturnしているため、その後の経路ではsが必ずマッチ済みと解析され、sはスコープ内です。",
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "正しい。 否定したinstanceofパターンの分岐でreturnしているため、その後の経路ではsが必ずマッチ済みと解析され、sはスコープ内です。",
       "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
     },
@@ -157,7 +156,7 @@
       },
       {
         "id": "C",
-        "text": "コンパイルエラー"
+        "text": "NullPointerException"
       },
       {
         "id": "D",
@@ -165,19 +164,19 @@
       },
       {
         "id": "E",
-        "text": "NullPointerException"
+        "text": "コンパイルエラー"
       }
     ],
     "correctAnswers": [
-      "C"
+      "E"
     ],
     "explanation": "|| の右辺は左辺がfalseのとき評価されます。その経路ではStringパターンが成立していないため、sを右辺やif本体で安全に使えるスコープにはできません。",
     "choiceExplanations": {
       "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "C": "正しい。 || の右辺は左辺がfalseのとき評価されます。その経路ではStringパターンが成立していないため、sを右辺やif本体で安全に使えるスコープにはできません。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+      "E": "正しい。 || の右辺は左辺がfalseのとき評価されます。その経路ではStringパターンが成立していないため、sを右辺やif本体で安全に使えるスコープにはできません。"
     },
     "category": "19. instanceof / パターンマッチング",
     "tags": [
@@ -191,41 +190,40 @@
   },
   {
     "id": "JS17-0655",
-    "question": "次のコードについて正しいものを2つ選びなさい。",
+    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
     "code": "enum Level { LOW, HIGH }\npublic class Main {\n    static int value(Level l) {\n        return switch (l) {\n            case LOW -> 1;\n            case HIGH -> 2;\n        };\n    }\n    public static void main(String[] args) {\n        Level x = null;\n        System.out.print(value(x));\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "enumの全定数をcaseで網羅しているため、このswitch式自体は網羅的である"
+        "text": "1"
       },
       {
         "id": "B",
-        "text": "value(null)を呼ぶとNullPointerExceptionになる"
+        "text": "NullPointerException"
       },
       {
         "id": "C",
-        "text": "nullは自動的にdefault相当として扱われ0を返す"
+        "text": "0"
       },
       {
         "id": "D",
-        "text": "nullを渡す可能性があるためコンパイルエラーになる"
+        "text": "2"
       },
       {
         "id": "E",
-        "text": "Level.HIGHを渡してもNullPointerExceptionになる"
+        "text": "コンパイルエラー"
       }
     ],
     "correctAnswers": [
-      "A",
       "B"
     ],
-    "explanation": "LOWとHIGHをcaseで網羅しているためswitch式はコンパイルできます。ただしselectorがnullの場合、case照合の前にNullPointerExceptionが発生します。",
+    "explanation": "enumの全定数をcaseで網羅しているのでswitch式はコンパイルできます。ただしselectorがnullならcase照合前にNullPointerExceptionです。",
     "choiceExplanations": {
-      "A": "正しい。enumの全定数LOW/HIGHを列挙しており、switch式は網羅的です。",
-      "B": "正しい。Java 17のこのswitchではnull selectorはNullPointerExceptionになります。",
-      "C": "誤り。nullが暗黙にdefaultへ流れるわけではありません。",
-      "D": "誤り。nullが実行時に渡り得ること自体はコンパイルエラー理由ではありません。",
-      "E": "誤り。HIGHはcase HIGHに一致して2を返します。"
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "正しい。 enumの全定数をcaseで網羅しているのでswitch式はコンパイルできます。ただしselectorがnullならcase照合前にNullPointerExceptionです。",
+      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
     },
     "category": "10. switch式 / yield",
     "tags": [
@@ -235,7 +233,7 @@
       "NullPointerException"
     ],
     "difficulty": 5,
-    "multipleChoice": true
+    "multipleChoice": false
   },
   {
     "id": "JS17-0656",
@@ -244,7 +242,7 @@
     "choices": [
       {
         "id": "A",
-        "text": "7:-1"
+        "text": "コンパイルエラー"
       },
       {
         "id": "B",
@@ -256,7 +254,7 @@
       },
       {
         "id": "D",
-        "text": "コンパイルエラー"
+        "text": "7:-1"
       },
       {
         "id": "E",
@@ -264,14 +262,14 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "D"
     ],
     "explanation": "case 1,2 のブロックではn=2なのでx=6、yield 7。-3はdefaultの条件式で-1です。",
     "choiceExplanations": {
-      "A": "正しい。 case 1,2 のブロックではn=2なのでx=6、yield 7。-3はdefaultの条件式で-1です。",
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "正しい。 case 1,2 のブロックではn=2なのでx=6、yield 7。-3はdefaultの条件式で-1です。",
       "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
     },
     "category": "10. switch式 / yield",
@@ -338,7 +336,7 @@
     "choices": [
       {
         "id": "A",
-        "text": "body:close-B:close-A:"
+        "text": "close-B:close-A:"
       },
       {
         "id": "B",
@@ -346,7 +344,7 @@
       },
       {
         "id": "C",
-        "text": "close-B:close-A:"
+        "text": "body:close-B:close-A:"
       },
       {
         "id": "D",
@@ -358,13 +356,13 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "C"
     ],
     "explanation": "try本体の例外が主例外です。resourceは逆順B→Aでcloseされ、そのclose例外がその順でsuppressedに追加されます。",
     "choiceExplanations": {
-      "A": "正しい。 try本体の例外が主例外です。resourceは逆順B→Aでcloseされ、そのclose例外がその順でsuppressedに追加されます。",
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "正しい。 try本体の例外が主例外です。resourceは逆順B→Aでcloseされ、そのclose例外がその順でsuppressedに追加されます。",
       "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
     },
@@ -385,7 +383,7 @@
     "choices": [
       {
         "id": "A",
-        "text": "open-A:close-A:ctor-B"
+        "text": "ctor-B:close-A"
       },
       {
         "id": "B",
@@ -401,19 +399,19 @@
       },
       {
         "id": "E",
-        "text": "ctor-B:close-A"
+        "text": "open-A:close-A:ctor-B"
       }
     ],
     "correctAnswers": [
-      "A"
+      "E"
     ],
     "explanation": "2つ目のresource生成に失敗すると、すでに正常生成済みのaだけがcloseされます。try本体には到達しません。",
     "choiceExplanations": {
-      "A": "正しい。 2つ目のresource生成に失敗すると、すでに正常生成済みのaだけがcloseされます。try本体には到達しません。",
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+      "E": "正しい。 2つ目のresource生成に失敗すると、すでに正常生成済みのaだけがcloseされます。try本体には到達しません。"
     },
     "category": "31. try-with-resources",
     "tags": [
@@ -480,11 +478,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "Y"
+        "text": "A"
       },
       {
         "id": "B",
-        "text": "A"
+        "text": "Y"
       },
       {
         "id": "C",
@@ -499,13 +497,12 @@
         "text": "AB"
       }
     ],
-    "correctAnswers": [
-      "A"
+    "correctAnswers": [      "B"
     ],
     "explanation": "2つのdefault衝突に対し、abstract class Xがm()を抽象メソッドとして明示的に再宣言して衝突を解消しています。Yが実装するので実行結果はYです。",
     "choiceExplanations": {
-      "A": "正しい。 2つのdefault衝突に対し、abstract class Xがm()を抽象メソッドとして明示的に再宣言して衝突を解消しています。Yが実装するので実行結果はYです。",
-      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "正しい。 2つのdefault衝突に対し、abstract class Xがm()を抽象メソッドとして明示的に再宣言して衝突を解消しています。Yが実装するので実行結果はYです。",
       "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
@@ -527,7 +524,7 @@
     "choices": [
       {
         "id": "A",
-        "text": "[JAVA]"
+        "text": "コンパイルエラー"
       },
       {
         "id": "B",
@@ -539,7 +536,7 @@
       },
       {
         "id": "D",
-        "text": "コンパイルエラー"
+        "text": "[JAVA]"
       },
       {
         "id": "E",
@@ -547,14 +544,14 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "D"
     ],
     "explanation": "interfaceのprivate instance/staticメソッドはinterface内部のdefaultメソッドから利用できます。upでJAVA、wrapで[JAVA]です。",
     "choiceExplanations": {
-      "A": "正しい。 interfaceのprivate instance/staticメソッドはinterface内部のdefaultメソッドから利用できます。upでJAVA、wrapで[JAVA]です。",
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "正しい。 interfaceのprivate instance/staticメソッドはinterface内部のdefaultメソッドから利用できます。upでJAVA、wrapで[JAVA]です。",
       "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
     },
     "category": "27. default / private interface method",
@@ -616,7 +613,7 @@
   },
   {
     "id": "JS17-0664",
-    "question": "次のコードについて正しいものを3つ選びなさい。",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
     "code": "sealed class Shape permits Circle, OpenShape { }\nfinal class Circle extends Shape { }\nnon-sealed class OpenShape extends Shape { }\nclass Child extends OpenShape { }\npublic class Main {\n    public static void main(String[] args) {\n        Shape s = new Child();\n        System.out.print(s instanceof OpenShape);\n    }\n}",
     "choices": [
       {
@@ -670,7 +667,7 @@
     "choices": [
       {
         "id": "A",
-        "text": "ok"
+        "text": "ClassCastException"
       },
       {
         "id": "B",
@@ -678,7 +675,7 @@
       },
       {
         "id": "C",
-        "text": "ClassCastException"
+        "text": "ok"
       },
       {
         "id": "D",
@@ -690,13 +687,13 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "C"
     ],
     "explanation": "配列は共変なのでObject[]参照にString[]を代入できますが、実体型に合わないStringBuilder格納時にArrayStoreExceptionです。String[]へのcastは実体がString[]なので成功します。",
     "choiceExplanations": {
-      "A": "正しい。 配列は共変なのでObject[]参照にString[]を代入できますが、実体型に合わないStringBuilder格納時にArrayStoreExceptionです。String[]へのcastは実体がString[]なので成功します。",
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "C": "正しい。 配列は共変なのでObject[]参照にString[]を代入できますが、実体型に合わないStringBuilder格納時にArrayStoreExceptionです。String[]へのcastは実体がString[]なので成功します。",
       "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
     },
@@ -717,7 +714,7 @@
     "choices": [
       {
         "id": "A",
-        "text": "9:3:7"
+        "text": "コンパイルエラー"
       },
       {
         "id": "B",
@@ -733,19 +730,19 @@
       },
       {
         "id": "E",
-        "text": "コンパイルエラー"
+        "text": "9:3:7"
       }
     ],
     "correctAnswers": [
-      "A"
+      "E"
     ],
     "explanation": "2次元配列cloneは外側配列だけの浅いコピーです。b[0]はa[0]と共有するため9が反映されますが、b[1]自体の差し替えはa[1]に影響しません。",
     "choiceExplanations": {
-      "A": "正しい。 2次元配列cloneは外側配列だけの浅いコピーです。b[0]はa[0]と共有するため9が反映されますが、b[1]自体の差し替えはa[1]に影響しません。",
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+      "E": "正しい。 2次元配列cloneは外側配列だけの浅いコピーです。b[0]はa[0]と共有するため9が反映されますが、b[1]自体の差し替えはa[1]に影響しません。"
     },
     "category": "5. 配列・多次元配列",
     "tags": [
@@ -812,11 +809,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "10:I:20"
+        "text": "I:10:20"
       },
       {
         "id": "B",
-        "text": "I:10:20"
+        "text": "10:I:20"
       },
       {
         "id": "C",
@@ -832,12 +829,12 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "B"
     ],
     "explanation": "primitiveのstatic final定数Aはコンパイル時定数なので参照だけではConfig初期化を起こしません。IntegerのBはコンパイル時定数ではないため、その参照で初期化されI:が出ます。",
     "choiceExplanations": {
-      "A": "正しい。 primitiveのstatic final定数Aはコンパイル時定数なので参照だけではConfig初期化を起こしません。IntegerのBはコンパイル時定数ではないため、その参照で初期化されI:が出ます。",
-      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "B": "正しい。 primitiveのstatic final定数Aはコンパイル時定数なので参照だけではConfig初期化を起こしません。IntegerのBはコンパイル時定数ではないため、その参照で初期化されI:が出ます。",
       "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
@@ -859,7 +856,7 @@
     "choices": [
       {
         "id": "A",
-        "text": "1:P:CN:2"
+        "text": "1:P:PN:1"
       },
       {
         "id": "B",
@@ -871,7 +868,7 @@
       },
       {
         "id": "D",
-        "text": "1:P:PN:1"
+        "text": "1:P:CN:2"
       },
       {
         "id": "E",
@@ -879,14 +876,14 @@
       }
     ],
     "correctAnswers": [
-      "A"
+      "D"
     ],
     "explanation": "フィールドとstaticメソッドは参照型Parent基準、instanceメソッドは実体Childへの動的ディスパッチ、明示cast後のフィールドはChild.xです。",
     "choiceExplanations": {
-      "A": "正しい。 フィールドとstaticメソッドは参照型Parent基準、instanceメソッドは実体Childへの動的ディスパッチ、明示cast後のフィールドはChild.xです。",
+      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
+      "D": "正しい。 フィールドとstaticメソッドは参照型Parent基準、instanceメソッドは実体Childへの動的ディスパッチ、明示cast後のフィールドはChild.xです。",
       "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
     },
     "category": "24. キャスト・ポリモーフィズム",
@@ -906,11 +903,11 @@
     "choices": [
       {
         "id": "A",
-        "text": "コンパイルできる"
+        "text": "Sub()だけコンパイルエラー"
       },
       {
         "id": "B",
-        "text": "Sub()だけコンパイルエラー"
+        "text": "コンパイルできる"
       },
       {
         "id": "C",
@@ -926,12 +923,12 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "A"
     ],
     "explanation": "Sub(int)はthrows Eを宣言してsuper()のチェック例外を伝播できます。しかしSub()がthis(1)を呼ぶ以上、そのコンストラクタが投げ得るEを処理またはthrows宣言する必要があります。",
     "choiceExplanations": {
-      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "B": "正しい。 Sub(int)はthrows Eを宣言してsuper()のチェック例外を伝播できます。しかしSub()がthis(1)を呼ぶ以上、そのコンストラクタが投げ得るEを処理またはthrows宣言する必要があります。",
+      "A": "正しい。 Sub(int)はthrows Eを宣言してsuper()のチェック例外を伝播できます。しかしSub()がthis(1)を呼ぶ以上、そのコンストラクタが投げ得るEを処理またはthrows宣言する必要があります。",
+      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
       "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
