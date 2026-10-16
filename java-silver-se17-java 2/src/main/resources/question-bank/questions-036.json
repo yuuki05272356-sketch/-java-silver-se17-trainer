@@ -237,23 +237,23 @@
   {
     "id": "JS17-0676",
     "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
-    "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 0;\n        int total = 0;\n        do {\n            total += ++x;\n            if (x == 2) continue;\n            total += 10;\n        } while (x < 3);\n        System.out.print(x + \":\" + total);\n    }\n}",
+    "code": "public class Main {\n    static int sum(int[][] data) {\n        int total = 0;\n        outer:\n        for (int i = 0; i < data.length; i++) {\n            for (int value : data[i]) {\n                if (value < 0) {\n                    continue outer;\n                }\n                total += value;\n            }\n            total += 10;\n        }\n        return total;\n    }\n    public static void main(String[] args) {\n        int[][] data = {{1, 2}, {3, -1, 4}, {5}};\n        System.out.print(sum(data));\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "3:16"
+        "text": "31"
       },
       {
         "id": "B",
-        "text": "3:26"
+        "text": "35"
       },
       {
         "id": "C",
-        "text": "2:13"
+        "text": "21"
       },
       {
         "id": "D",
-        "text": "3:6"
+        "text": "16"
       },
       {
         "id": "E",
@@ -261,22 +261,22 @@
       }
     ],
     "correctAnswers": [
-      "B"
+      "A"
     ],
-    "explanation": "x=1で11加算、x=2では2だけ加算してcontinueして条件判定へ、x=3で3+10を加算します。合計26、x=3です。",
+    "explanation": "1行目は1+2の後に10を加えて13。2行目は3を加えて16になった後、-1でcontinue outerとなり4と行末の+10を飛ばします。3行目は5+10を加えるので最終的に31です。",
     "choiceExplanations": {
-      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "B": "正しい。 x=1で11加算、x=2では2だけ加算してcontinueして条件判定へ、x=3で3+10を加算します。合計26、x=3です。",
-      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+      "A": "正しい。ラベル付きcontinueは外側forの次の反復へ進むため、負数が出た行の残りと行末加算を飛ばします。",
+      "B": "誤り。-1の後の4と、その行の+10は実行されません。",
+      "C": "誤り。1行目と3行目の+10を忘れています。",
+      "D": "誤り。3行目も処理されます。",
+      "E": "誤り。ラベル付きcontinueはこの位置で有効です。"
     },
-    "category": "11. while / do-while / for / 拡張for",
+    "category": "12. break / continue",
     "tags": [
-      "do-while",
-      "continue",
-      "pre-increment",
-      "control-flow"
+      "labeled-continue",
+      "nested-loop",
+      "multidimensional-array",
+      "enhanced-for"
     ],
     "difficulty": 5,
     "multipleChoice": false
@@ -378,46 +378,47 @@
   {
     "id": "JS17-0679",
     "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
-    "code": "import java.util.ArrayList;\npublic class Main {\n    public static void main(String[] args) {\n        var list = new ArrayList<Integer>();\n        list.add(1);\n        list.add(2);\n        list.add(1);\n        list.remove(1);\n        list.remove(Integer.valueOf(1));\n        System.out.print(list);\n    }\n}",
+    "code": "import java.util.ArrayList;\npublic class Main {\n    public static void main(String[] args) {\n        var list = new ArrayList<Integer>();\n        list.add(0);\n        list.add(1);\n        list.add(2);\n\n        var alias = list;\n        int old = alias.set(list.indexOf(1), list.get(2) + 10);\n        list.add(list.remove(0));\n\n        System.out.print(old + \":\" + alias);\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "[1]"
+        "text": "1:[12, 2, 0]"
       },
       {
         "id": "B",
-        "text": "[2]"
+        "text": "12:[1, 2, 0]"
       },
       {
         "id": "C",
-        "text": "[1, 2]"
+        "text": "1:[0, 12, 2]"
       },
       {
         "id": "D",
-        "text": "[]"
+        "text": "0:[12, 2, 1]"
       },
       {
         "id": "E",
-        "text": "コンパイルエラー"
+        "text": "IndexOutOfBoundsException"
       }
     ],
     "correctAnswers": [
       "A"
     ],
-    "explanation": "remove(1)はint indexのoverloadでindex 1の要素2を削除して[1,1]。remove(Integer.valueOf(1))はObjectとして最初の1を削除し[1]です。",
+    "explanation": "aliasとlistは同じArrayListを参照します。set(indexOf(1), get(2)+10)はindex 1の1を12へ置換し、戻り値oldは1です。その後remove(0)で0を取り出して末尾へaddするため[12, 2, 0]になります。",
     "choiceExplanations": {
-      "A": "正しい。 remove(1)はint indexのoverloadでindex 1の要素2を削除して[1,1]。remove(Integer.valueOf(1))はObjectとして最初の1を削除し[1]です。",
-      "B": "誤り。 remove(int)とremove(Object)のoverload解決がポイントです。",
-      "C": "誤り。 remove(int)とremove(Object)のoverload解決がポイントです。",
-      "D": "誤り。 remove(int)とremove(Object)のoverload解決がポイントです。",
-      "E": "誤り。 remove(int)とremove(Object)のoverload解決がポイントです。"
+      "A": "正しい。setの戻り値は置換前の要素1で、同一リストは最終的に[12, 2, 0]です。",
+      "B": "誤り。setは新しい値ではなく置換前の値を返します。",
+      "C": "誤り。remove(0)で先頭0を取り除き、その0を末尾へ追加します。",
+      "D": "誤り。oldはindex 1にあった1です。",
+      "E": "誤り。すべてのindexは有効範囲内です。"
     },
     "category": "6. ArrayList",
     "tags": [
       "ArrayList",
+      "alias",
+      "set",
       "remove",
-      "overload",
-      "boxing"
+      "evaluation-order"
     ],
     "difficulty": 5,
     "multipleChoice": false
