@@ -1,40 +1,41 @@
 [
   {
     "id": "JS17-0651",
-    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
     "code": "class Base {\n    Base() { show(); }\n    void show() { System.out.print(\"B \"); }\n}\nclass Sub extends Base {\n    int x = 7;\n    Sub() { System.out.print(\"C\" + x); }\n    @Override void show() { System.out.print(\"S\" + x + \" \"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        new Sub();\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "S0 C7"
+        "text": "出力は S0 C7"
       },
       {
         "id": "B",
-        "text": "S7 C7"
+        "text": "Baseのコンストラクタ内のshow()でもSub.show()が動的ディスパッチされる"
       },
       {
         "id": "C",
-        "text": "B C7"
+        "text": "Sub.xはBaseのコンストラクタ実行前に7へ初期化される"
       },
       {
         "id": "D",
-        "text": "コンパイルエラー"
+        "text": "Base.show()が呼ばれるため出力は B C7"
       },
       {
         "id": "E",
-        "text": "NullPointerException"
+        "text": "コンストラクタからoverrideメソッドを呼ぶコードはコンパイルエラー"
       }
     ],
     "correctAnswers": [
-      "A"
+      "A",
+      "B"
     ],
-    "explanation": "Baseのコンストラクタ中でもoverrideされたSub.show()が動的ディスパッチされます。その時点ではSubのフィールド初期化前なのでxは既定値0です。その後x=7、Sub()本体の順です。",
+    "explanation": "Baseのコンストラクタ中でもoverrideされたSub.show()が動的ディスパッチされます。その時点ではSubのフィールド初期化前なのでxは既定値0です。その後x=7、Sub()本体の順に実行されます。",
     "choiceExplanations": {
-      "A": "正しい。 Baseのコンストラクタ中でもoverrideされたSub.show()が動的ディスパッチされます。その時点ではSubのフィールド初期化前なのでxは既定値0です。その後x=7、Sub()本体の順です。",
-      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "D": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+      "A": "正しい。Base構築中の動的ディスパッチではSub.show()が呼ばれ、その時点のxは0なのでS0、その後C7です。",
+      "B": "正しい。instanceメソッドのoverrideはコンストラクタ実行中でも実体型に基づいて動的ディスパッチされます。",
+      "C": "誤り。Subのinstance field初期化はBaseコンストラクタ完了後です。",
+      "D": "誤り。show()はoverrideされているためSub.show()が呼ばれます。",
+      "E": "誤り。危険な設計になり得ますが、Java文法上はコンパイルできます。"
     },
     "category": "15. コンストラクタ",
     "tags": [
@@ -44,7 +45,7 @@
       "default-value"
     ],
     "difficulty": 5,
-    "multipleChoice": false
+    "multipleChoice": true
   },
   {
     "id": "JS17-0652",
@@ -190,40 +191,41 @@
   },
   {
     "id": "JS17-0655",
-    "question": "次のコードの実行結果として正しいものを1つ選びなさい。",
+    "question": "次のコードについて正しいものを2つ選びなさい。",
     "code": "enum Level { LOW, HIGH }\npublic class Main {\n    static int value(Level l) {\n        return switch (l) {\n            case LOW -> 1;\n            case HIGH -> 2;\n        };\n    }\n    public static void main(String[] args) {\n        Level x = null;\n        System.out.print(value(x));\n    }\n}",
     "choices": [
       {
         "id": "A",
-        "text": "1"
+        "text": "enumの全定数をcaseで網羅しているため、このswitch式自体は網羅的である"
       },
       {
         "id": "B",
-        "text": "2"
+        "text": "value(null)を呼ぶとNullPointerExceptionになる"
       },
       {
         "id": "C",
-        "text": "0"
+        "text": "nullは自動的にdefault相当として扱われ0を返す"
       },
       {
         "id": "D",
-        "text": "NullPointerException"
+        "text": "nullを渡す可能性があるためコンパイルエラーになる"
       },
       {
         "id": "E",
-        "text": "コンパイルエラー"
+        "text": "Level.HIGHを渡してもNullPointerExceptionになる"
       }
     ],
     "correctAnswers": [
-      "D"
+      "A",
+      "B"
     ],
-    "explanation": "enumの全定数をcaseで網羅しているのでswitch式はコンパイルできます。ただしselectorがnullならcase照合前にNullPointerExceptionです。",
+    "explanation": "LOWとHIGHをcaseで網羅しているためswitch式はコンパイルできます。ただしselectorがnullの場合、case照合の前にNullPointerExceptionが発生します。",
     "choiceExplanations": {
-      "A": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "B": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "C": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。",
-      "D": "正しい。 enumの全定数をcaseで網羅しているのでswitch式はコンパイルできます。ただしselectorがnullならcase照合前にNullPointerExceptionです。",
-      "E": "誤り。 コードの型、評価順序、スコープ、例外規則を追うとこの選択肢にはなりません。"
+      "A": "正しい。enumの全定数LOW/HIGHを列挙しており、switch式は網羅的です。",
+      "B": "正しい。Java 17のこのswitchではnull selectorはNullPointerExceptionになります。",
+      "C": "誤り。nullが暗黙にdefaultへ流れるわけではありません。",
+      "D": "誤り。nullが実行時に渡り得ること自体はコンパイルエラー理由ではありません。",
+      "E": "誤り。HIGHはcase HIGHに一致して2を返します。"
     },
     "category": "10. switch式 / yield",
     "tags": [
@@ -233,7 +235,7 @@
       "NullPointerException"
     ],
     "difficulty": 5,
-    "multipleChoice": false
+    "multipleChoice": true
   },
   {
     "id": "JS17-0656",
